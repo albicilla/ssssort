@@ -71,7 +71,7 @@ struct Classifier {
         const value_type *mid = lo + (ssize_t)(hi - lo)/2;
         value_type key = splitters[pos] = *mid;
 
-        if (2 * pos < numBuckets) {
+        if (2 * pos < num_splitters) {
             build_recursive(lo, mid, 2*pos);
             build_recursive(mid + 1, hi , 2*pos + 1);
         }
@@ -174,19 +174,20 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin, bool begin_is_hom
 
     // classify elements
     Classifier<Iterator, logBuckets, value_type> classifier(samples, sample_size, n);
+    delete[] samples;
     classifier.template classify_unroll<4>(begin, end);
     classifier.template distribute<4>(begin, end, out_begin);
 
     size_t offset = 0;
     for (size_t i = 0; i < numBuckets; ++i) {
         auto size = classifier.bktsize[i] - offset;
-        if (size < 2) continue; // empty or only one element
+        if (size == 0) continue; // empty bucket
         if (size <= 1024) {
             // small bucket
-            std::sort(out_begin, out_begin + n);
+            std::sort(out_begin + offset, out_begin + classifier.bktsize[i]);
             if (begin_is_home) {
                 // uneven recursion level, we have to move the result
-                memcpy(begin, out_begin, n*sizeof(value_type));
+                memcpy(begin + offset, out_begin + offset, size*sizeof(value_type));
             }
         } else {
             ssssort(out_begin + offset,
