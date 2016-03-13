@@ -28,7 +28,7 @@
 constexpr size_t logBuckets = 8;
 constexpr size_t numBuckets = 1 << logBuckets;
 
-constexpr size_t oversampling_factor(size_t n) {
+inline size_t oversampling_factor(size_t n) {
     double r = std::sqrt(double(n)/(2*numBuckets*(logBuckets+4)));
     return std::max(static_cast<size_t>(r), 1UL);
 }
@@ -88,16 +88,18 @@ struct Classifier {
     }
 
     template <int U>
-    __attribute__((optimize("unroll-all-loops")))
     inline void find_bucket_unroll(const value_type *key, unsigned int *obkt)
     {
         unsigned int i[U];
+        #pragma unroll U
         for (int u = 0; u < U; ++u) i[u] = 1;
 
         for (size_t l = 0; l < treebits; ++l) {
             // step on all U keys
+            #pragma unroll U
             for (int u = 0; u < U; ++u) i[u] = step(i[u], key[u]);
         }
+        #pragma unroll U
         for (int u = 0; u < U; ++u) {
             unsigned int bucket = i[u] - splitters_size;
             obkt[u] = bucket;
@@ -116,13 +118,13 @@ struct Classifier {
     }
 
     template <int U>
-    __attribute__((optimize("unroll-all-loops")))
     inline void
     classify_unroll(Iterator begin, Iterator end) {
         unsigned int* bktout = this->bktout;
         value_type key[U];
         Iterator it = begin;
         for (; it + U < end; it += U, bktout += U) {
+            #pragma unroll U
             for (int u = 0; u < U; ++u) key[u] = *(it+u);
             find_bucket_unroll<U>(key, bktout);
         }
@@ -131,7 +133,6 @@ struct Classifier {
     }
 
     template <int U>
-    __attribute__((optimize("unroll-all-loops")))
     inline void
     distribute(Iterator in_begin, Iterator in_end, Iterator out_begin)
     {
@@ -144,6 +145,7 @@ struct Classifier {
         const size_t n = in_end - in_begin;
         size_t i;
         for (i = 0; i + U < n; i += U) {
+            #pragma unroll U
             for (int u = 0; u < U; ++u) {
                 *(out_begin + bktsize[bktout[i+u]]++) = *(in_begin + i + u);
             }
