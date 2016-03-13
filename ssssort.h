@@ -54,22 +54,22 @@ struct Classifier {
     unsigned int* const bktout;
     size_t* const bktsize;
 
-    Classifier(const value_type *samples, const size_t sample_size, size_t n)
-        : bktout(new unsigned int[n]) // need not be initialised
-        , bktsize(new size_t[n])
+    Classifier(const value_type *samples, const size_t sample_size,
+               unsigned int* const bktout)
+        : bktout(bktout)
+        , bktsize(new size_t[1 << treebits])
     {
-        std::fill(bktsize, bktsize + n, 0);
+        std::fill(bktsize, bktsize + (1 << treebits), 0);
         build_recursive(samples, samples + sample_size, 1);
     }
 
     ~Classifier() {
-        delete[] bktout;
         delete[] bktsize;
     }
 
     void build_recursive(const value_type* lo, const value_type* hi, unsigned int pos) {
         const value_type *mid = lo + (ssize_t)(hi - lo)/2;
-        value_type key = splitters[pos] = *mid;
+        splitters[pos] = *mid;
 
         if (2 * pos < num_splitters) {
             build_recursive(lo, mid, 2*pos);
@@ -159,14 +159,9 @@ struct Classifier {
 };
 
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
-void ssssort(Iterator begin, Iterator end, Iterator out_begin, bool begin_is_home = true) {
+void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
+                 unsigned int *bktout, bool begin_is_home) {
     const size_t n = end - begin;
-
-    if (n < 1024) {
-        // base case
-        std::sort(begin, end);
-        return;
-    }
 
     // draw and sort sample
     const size_t sample_size = oversampling_factor(n) * numBuckets;
@@ -175,7 +170,7 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin, bool begin_is_hom
     std::sort(samples, samples + sample_size);
 
     // classify elements
-    Classifier<Iterator, logBuckets, value_type> classifier(samples, sample_size, n);
+    Classifier<Iterator, logBuckets, value_type> classifier(samples, sample_size, bktout);
     delete[] samples;
     classifier.template classify_unroll<4>(begin, end);
     classifier.template distribute<4>(begin, end, out_begin);
@@ -192,13 +187,28 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin, bool begin_is_hom
                 memcpy(begin + offset, out_begin + offset, size*sizeof(value_type));
             }
         } else {
-            ssssort(out_begin + offset,
-                    out_begin + classifier.bktsize[i], // = out_begin + offset + size
-                    begin + offset,
-                    !begin_is_home);
+            ssssort_int(out_begin + offset,
+                        out_begin + classifier.bktsize[i], // = out_begin + offset + size
+                        begin + offset,
+                        bktout + offset,
+                        !begin_is_home);
         }
         offset += size;
     }
+}
+
+template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
+void ssssort(Iterator begin, Iterator end, Iterator out_begin, bool begin_is_home = false) {
+    size_t n = end - begin;
+    if (n < 1024) {
+        // base case
+        std::sort(begin, end);
+        return;
+    }
+
+    unsigned int *bktout = new unsigned int[n];
+    ssssort_int(begin, end, out_begin, bktout, begin_is_home);
+    delete[] bktout;
 }
 
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
