@@ -91,15 +91,12 @@ struct Classifier {
     inline void find_bucket_unroll(const value_type *key, unsigned int *obkt)
     {
         unsigned int i[U];
-        #pragma unroll U
         for (int u = 0; u < U; ++u) i[u] = 1;
 
         for (size_t l = 0; l < treebits; ++l) {
             // step on all U keys
-            #pragma unroll U
             for (int u = 0; u < U; ++u) i[u] = step(i[u], key[u]);
         }
-        #pragma unroll U
         for (int u = 0; u < U; ++u) {
             unsigned int bucket = i[u] - splitters_size;
             obkt[u] = bucket;
@@ -124,7 +121,6 @@ struct Classifier {
         value_type key[U];
         Iterator it = begin;
         for (; it + U < end; it += U, bktout += U) {
-            #pragma unroll U
             for (int u = 0; u < U; ++u) key[u] = *(it+u);
             find_bucket_unroll<U>(key, bktout);
         }
@@ -145,7 +141,6 @@ struct Classifier {
         const size_t n = in_end - in_begin;
         size_t i;
         for (i = 0; i + U < n; i += U) {
-            #pragma unroll U
             for (int u = 0; u < U; ++u) {
                 *(out_begin + bktsize[bktout[i+u]]++) = *(in_begin + i + u);
             }
