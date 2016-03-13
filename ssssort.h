@@ -4,6 +4,7 @@
  * Super Scalar Sample Sort
  *
  *******************************************************************************
+ * Copyright (C) 2014 Timo Bingmann <tb@panthema.net>
  * Copyright (C) 2016 Lorenz Hübschle-Schneider <lorenz@4z2.de>
  *
  * This program is free software: you can redistribute it and/or modify it
