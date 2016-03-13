@@ -1,4 +1,4 @@
-FLAGS=-std=c++14
+FLAGS=-std=c++14 -Wall
 
 all: debug
 
@@ -7,3 +7,6 @@ debug:
 
 release:
 	$(CXX) $(FLAGS) -O3 -g -DNDEBUG -o sort sort.cpp
+
+run:
+	./sort
