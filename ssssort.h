@@ -38,7 +38,10 @@ template <typename Iterator,
 void draw_sample(Iterator begin, Iterator end,
                  value_type* samples, size_t sample_size)
 {
-    // TODO
+    // TODO random samples
+    for (size_t i = 0; i < sample_size; ++i) {
+        samples[i] = *(begin + i);
+    }
 }
 
 template <typename Iterator, size_t treebits = logBuckets,
@@ -56,7 +59,7 @@ struct Classifier {
         , bktsize(new size_t[n])
     {
         std::fill(bktsize, bktsize + n, 0);
-        build_recursive(splitters, splitters + sample_size, 1);
+        build_recursive(samples, samples + sample_size, 1);
     }
 
     ~Classifier() {
@@ -64,8 +67,8 @@ struct Classifier {
         delete[] bktsize;
     }
 
-    void build_recursive(value_type* lo, value_type* hi, unsigned int pos) {
-        value_type *mid = lo + (ssize_t)(hi - lo)/2;
+    void build_recursive(const value_type* lo, const value_type* hi, unsigned int pos) {
+        const value_type *mid = lo + (ssize_t)(hi - lo)/2;
         value_type key = splitters[pos] = *mid;
 
         if (2 * pos < numBuckets) {
@@ -80,20 +83,20 @@ struct Classifier {
 
     constexpr unsigned int find_bucket(const value_type &key) {
         unsigned int i = 1;
-        while (i <= num_splitters) step(i, key);
+        while (i <= num_splitters) i = step(i, key);
         return (i - splitters_size);
     }
 
     template <int U>
     __attribute__((optimize("unroll-all-loops")))
-    inline void find_bucket_unroll(const value_type key[U], unsigned int obkt[U])
+    inline void find_bucket_unroll(const value_type *key, unsigned int *obkt)
     {
         unsigned int i[U];
         for (int u = 0; u < U; ++u) i[u] = 1;
 
         for (size_t l = 0; l < treebits; ++l) {
             // step on all U keys
-            for (int u = 0; u < U; ++u) step(i[u], key[u]);
+            for (int u = 0; u < U; ++u) i[u] = step(i[u], key[u]);
         }
         for (int u = 0; u < U; ++u) {
             unsigned int bucket = i[u] - splitters_size;
@@ -177,7 +180,7 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin, bool begin_is_hom
     size_t offset = 0;
     for (size_t i = 0; i < numBuckets; ++i) {
         auto size = classifier.bktsize[i] - offset;
-        if (size == 0) continue; // empty bucket
+        if (size < 2) continue; // empty or only one element
         if (size <= 1024) {
             // small bucket
             std::sort(out_begin, out_begin + n);

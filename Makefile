@@ -6,4 +6,4 @@ debug:
 	$(CXX) $(FLAGS) -O0 -ggdb -o sort sort.cpp
 
 release:
-	$(CXX) $(FLAGS) -O3 -DNDEBUG -o sort sort.cpp
+	$(CXX) $(FLAGS) -O3 -g -DNDEBUG -o sort sort.cpp
