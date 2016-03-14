@@ -51,10 +51,9 @@ void draw_sample_fisheryates(Iterator begin, Iterator end,
     assert(gen.max() >= max);
 
     for (size_t i = 0; i < sample_size; ++i) {
-        size_t index = gen() % max; // biased, don't care
+        size_t index = gen() % max--; // biased, don't care
         std::swap(*(begin + index), *(begin + max));
         samples[i] = *(begin + max);
-        max--;
     }
 }
 
