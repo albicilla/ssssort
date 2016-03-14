@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 
     // 1. Super Scalar Sample Sort
     // warmup
-    ssssort(data, data + size, out, false);
+    ssssort(data, data + size, out);
 
     double t_ssssort = 0.0;
     for (size_t it = 0; it < iterations; ++it) {
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
         std::fill(out, out+size, 0);
         timer.reset();
 
-        ssssort(data, data + size, out, false);
+        ssssort(data, data + size, out);
 
         t_ssssort += timer.get();
     }

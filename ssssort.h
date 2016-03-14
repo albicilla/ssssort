@@ -194,7 +194,7 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
 }
 
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
-void ssssort(Iterator begin, Iterator end, Iterator out_begin, bool begin_is_home = false) {
+void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
     size_t n = end - begin;
     if (n < 1024) {
         // base case
@@ -203,7 +203,7 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin, bool begin_is_hom
     }
 
     unsigned int *bktout = new unsigned int[n];
-    ssssort_int(begin, end, out_begin, bktout, begin_is_home);
+    ssssort_int(begin, end, out_begin, bktout, false);
     delete[] bktout;
 }
 
@@ -218,5 +218,8 @@ void ssssort(Iterator begin, Iterator end) {
     }
 
     value_type* out = new value_type[n];
-    ssssort(begin, end, out);
+    unsigned int *bktout = new unsigned int[n];
+    ssssort_int(begin, end, out, bktout, true);
+    delete[] bktout;
+    delete[] out;
 }
