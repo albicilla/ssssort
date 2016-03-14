@@ -40,11 +40,6 @@ constexpr size_t numBuckets = 1 << logBuckets;
 
 using bucket_t = uint32_t;
 
-constexpr size_t oversampling_factor(size_t n) {
-    double r = std::sqrt(double(n)/(2*numBuckets*(logBuckets+4)));
-    return std::max(static_cast<size_t>(r), 1UL);
-}
-
 
 // Random number generation engine for sampling.  Declared out-of-class for
 // simplicity.  You can swap this out for std::minstd_rand if the Mersenne
@@ -217,6 +212,23 @@ struct Classifier {
 
 };
 
+
+// Factor to multiply number of buckets by to obtain the number of samples drawn
+constexpr size_t oversampling_factor(size_t n) {
+    double r = std::sqrt(double(n)/(2*numBuckets*(logBuckets+4)));
+    return std::max(static_cast<size_t>(r), 1UL);
+}
+
+
+/**
+ * Internal sorter (argument list isn't all that pretty).
+ *
+ * begin_is_home indicates whether the output should be stored in the range
+ * given by begin and end (=true) or out_begin and out_begin + (end - begin)
+ * (=false).
+ *
+ * It is assumed that the range out_begin to out_begin + (end - begin) is valid.
+ */
 template <typename Iterator, typename value_type>
 void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
                  bucket_t *bktout, bool begin_is_home) {
@@ -257,6 +269,11 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
     }
 }
 
+/*
+ * Sort [begin, end), output is stored in [out_begin, out_begin + (end-begin))
+ *
+ * The elements in [begin, end) will be permuted after calling this.
+ */
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
 void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
     size_t n = end - begin;
@@ -271,6 +288,9 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
     delete[] bktout;
 }
 
+/*
+ * Sort the range [begin, end).
+ */
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
 void ssssort(Iterator begin, Iterator end) {
     const size_t n = end - begin;
