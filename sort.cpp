@@ -29,6 +29,7 @@
 #include "ssssort.h"
 #include "timer.h"
 
+const bool debug = false;
 
 int main(int argc, char *argv[]) {
     size_t size = 1024*1024;
@@ -82,11 +83,22 @@ int main(int argc, char *argv[]) {
     timer.reset();
 
     // verify
-    bool incorrect = false;
+    bool incorrect = !std::is_sorted(out, out + size);
+    if (incorrect) {
+        std::cerr << "Output data isn't sorted" << std::endl;
+    }
     for (size_t i = 0; i < size; ++i) {
         incorrect |= (out[i] != data[i]);
+        if (debug && out[i] != data[i]) {
+            std::cerr << "Err at pos " << i << " expected " << data[i]
+                      << " got " << out[i] << std::endl;
+        }
     }
     double t_verify = timer.get_and_reset();
+
+    delete[] out;
+    delete[] data;
+    delete[] copy;
 
     std::cout << "RESULT size=" << size
               << " iterations=" << iterations
