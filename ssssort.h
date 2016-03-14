@@ -32,13 +32,15 @@
 
 #include <cmath>
 #include <cstring>
+#include <iterator>
+#include <random>
 
 constexpr size_t logBuckets = 8;
 constexpr size_t numBuckets = 1 << logBuckets;
 
 using bucket_t = uint32_t;
 
-inline size_t oversampling_factor(size_t n) {
+constexpr size_t oversampling_factor(size_t n) {
     double r = std::sqrt(double(n)/(2*numBuckets*(logBuckets+4)));
     return std::max(static_cast<size_t>(r), 1UL);
 }
