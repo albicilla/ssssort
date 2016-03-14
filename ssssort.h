@@ -29,6 +29,8 @@
 constexpr size_t logBuckets = 8;
 constexpr size_t numBuckets = 1 << logBuckets;
 
+using bucket_t = uint32_t;
+
 inline size_t oversampling_factor(size_t n) {
     double r = std::sqrt(double(n)/(2*numBuckets*(logBuckets+4)));
     return std::max(static_cast<size_t>(r), 1UL);
@@ -103,11 +105,11 @@ struct Classifier {
     const size_t splitters_size = 1 << treebits;
     value_type splitters[1 << treebits];
 
-    unsigned int* const bktout;
+    bucket_t* const bktout;
     size_t* const bktsize;
 
     Classifier(const value_type *samples, const size_t sample_size,
-               unsigned int* const bktout)
+               bucket_t* const bktout)
         : bktout(bktout)
         , bktsize(new size_t[1 << treebits])
     {
@@ -119,7 +121,7 @@ struct Classifier {
         delete[] bktsize;
     }
 
-    void build_recursive(const value_type* lo, const value_type* hi, unsigned int pos) {
+    void build_recursive(const value_type* lo, const value_type* hi, size_t pos) {
         const value_type *mid = lo + (ssize_t)(hi - lo)/2;
         splitters[pos] = *mid;
 
@@ -129,20 +131,20 @@ struct Classifier {
         }
     }
 
-    constexpr unsigned int step(unsigned int i, const value_type &key) {
+    constexpr bucket_t step(bucket_t i, const value_type &key) {
         return 2*i + (key > splitters[i]);
     }
 
-    constexpr unsigned int find_bucket(const value_type &key) {
-        unsigned int i = 1;
+    constexpr bucket_t find_bucket(const value_type &key) {
+        bucket_t i = 1;
         while (i <= num_splitters) i = step(i, key);
         return (i - splitters_size);
     }
 
     template <int U>
-    inline void find_bucket_unroll(const value_type *key, unsigned int *obkt)
+    inline void find_bucket_unroll(const value_type *key, bucket_t *obkt)
     {
-        unsigned int i[U];
+        bucket_t i[U];
         for (int u = 0; u < U; ++u) i[u] = 1;
 
         for (size_t l = 0; l < treebits; ++l) {
@@ -150,17 +152,17 @@ struct Classifier {
             for (int u = 0; u < U; ++u) i[u] = step(i[u], key[u]);
         }
         for (int u = 0; u < U; ++u) {
-            unsigned int bucket = i[u] - splitters_size;
+            bucket_t bucket = i[u] - splitters_size;
             obkt[u] = bucket;
             bktsize[bucket]++;
         }
     }
 
     // classify all elements by walking tree and saving bucket id
-    inline void classify(Iterator begin, Iterator end, unsigned int* bktout = nullptr)  {
+    inline void classify(Iterator begin, Iterator end, bucket_t* bktout = nullptr)  {
         if (bktout == nullptr) bktout = this->bktout;
         for (Iterator it = begin; it != end;) {
-            unsigned int bucket = find_bucket(*it++);
+            bucket_t bucket = find_bucket(*it++);
             *bktout++ = bucket;
             bktsize[bucket]++;
         }
@@ -169,7 +171,7 @@ struct Classifier {
     template <int U>
     inline void
     classify_unroll(Iterator begin, Iterator end) {
-        unsigned int* bktout = this->bktout;
+        bucket_t* bktout = this->bktout;
         value_type key[U];
         Iterator it = begin;
         for (; it + U < end; it += U, bktout += U) {
@@ -207,7 +209,7 @@ struct Classifier {
 
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
 void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
-                 unsigned int *bktout, bool begin_is_home) {
+                 bucket_t *bktout, bool begin_is_home) {
     const size_t n = end - begin;
 
     // draw and sort sample
@@ -253,7 +255,7 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
         return;
     }
 
-    unsigned int *bktout = new unsigned int[n];
+    bucket_t *bktout = new bucket_t[n];
     ssssort_int(begin, end, out_begin, bktout, false);
     delete[] bktout;
 }
@@ -269,7 +271,7 @@ void ssssort(Iterator begin, Iterator end) {
     }
 
     value_type* out = new value_type[n];
-    unsigned int *bktout = new unsigned int[n];
+    bucket_t *bktout = new bucket_t[n];
     ssssort_int(begin, end, out, bktout, true);
     delete[] bktout;
     delete[] out;
