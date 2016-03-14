@@ -50,8 +50,7 @@ static std::mt19937 gen{std::random_device{}()};
 
 // Draw a random sample without replacement using the Fisher-Yates Shuffle.
 // This reorders the input somewhat but the sorting does that anyway.
-template <typename Iterator,
-          typename value_type = typename std::iterator_traits<Iterator>::value_type>
+template <typename Iterator, typename value_type>
 void draw_sample_fisheryates(Iterator begin, Iterator end,
                              value_type* samples, size_t sample_size)
 {
@@ -70,8 +69,7 @@ void draw_sample_fisheryates(Iterator begin, Iterator end,
 // Draw a random sample with replacement by generating random indices. On my
 // machine this results in measurably slower sorting than a Fisher-Yates-based
 // sample, so beware the apparent simplicity.
-template <typename Iterator,
-          typename value_type = typename std::iterator_traits<Iterator>::value_type>
+template <typename Iterator, typename value_type>
 void draw_sample_simplerand(Iterator begin, Iterator end,
                              value_type* samples, size_t sample_size)
 {
@@ -87,8 +85,7 @@ void draw_sample_simplerand(Iterator begin, Iterator end,
 
 
 // A completely non-random sample that's beyond terrible on sorted inputs
-template <typename Iterator,
-          typename value_type = typename std::iterator_traits<Iterator>::value_type>
+template <typename Iterator, typename value_type>
 void draw_sample_first(Iterator begin, Iterator end,
                        value_type *samples, size_t sample_size) {
     for (size_t i = 0; i < sample_size; ++i) {
@@ -96,8 +93,7 @@ void draw_sample_first(Iterator begin, Iterator end,
     }
 }
 
-template <typename Iterator,
-          typename value_type = typename std::iterator_traits<Iterator>::value_type>
+template <typename Iterator, typename value_type>
 void draw_sample(Iterator begin, Iterator end,
                  value_type *samples, size_t sample_size)
 {
@@ -105,8 +101,11 @@ void draw_sample(Iterator begin, Iterator end,
 }
 
 
-template <typename Iterator, size_t treebits = logBuckets,
-          typename value_type = typename std::iterator_traits<Iterator>::value_type>
+/*
+ * Classify elements into buckets. Template parameter treebits specifies the
+ * log2 of the number of buckets (= 1 << treebits).
+ */
+template <typename Iterator, typename value_type, size_t treebits = logBuckets>
 struct Classifier {
     const size_t num_splitters = (1 << treebits) - 1;
     const size_t splitters_size = 1 << treebits;
@@ -138,11 +137,11 @@ struct Classifier {
         }
     }
 
-    constexpr bucket_t step(bucket_t i, const value_type &key) {
+    constexpr bucket_t step(bucket_t i, const value_type &key) const {
         return 2*i + (key > splitters[i]);
     }
 
-    constexpr bucket_t find_bucket(const value_type &key) {
+    constexpr bucket_t find_bucket(const value_type &key) const {
         bucket_t i = 1;
         while (i <= num_splitters) i = step(i, key);
         return (i - splitters_size);
@@ -214,7 +213,7 @@ struct Classifier {
 
 };
 
-template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
+template <typename Iterator, typename value_type>
 void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
                  bucket_t *bktout, bool begin_is_home) {
     const size_t n = end - begin;
@@ -222,11 +221,11 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
     // draw and sort sample
     const size_t sample_size = oversampling_factor(n) * numBuckets;
     value_type *samples = new value_type[sample_size];
-    draw_sample(begin, end, samples, sample_size);
+    Sampler<Iterator, value_type>::draw_sample(begin, end, samples, sample_size);
     std::sort(samples, samples + sample_size);
 
     // classify elements
-    Classifier<Iterator, logBuckets, value_type> classifier(samples, sample_size, bktout);
+    Classifier<Iterator, value_type, logBuckets> classifier(samples, sample_size, bktout);
     delete[] samples;
     classifier.template classify_unroll<4>(begin, end);
     classifier.template distribute<4>(begin, end, out_begin);
@@ -243,11 +242,12 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
                 memcpy(begin + offset, out_begin + offset, size*sizeof(value_type));
             }
         } else {
-            ssssort_int(out_begin + offset,
-                        out_begin + classifier.bktsize[i], // = out_begin + offset + size
-                        begin + offset,
-                        bktout + offset,
-                        !begin_is_home);
+            ssssort_int<Iterator, value_type>(
+                out_begin + offset,
+                out_begin + classifier.bktsize[i], // = out_begin + offset + size
+                begin + offset,
+                bktout + offset,
+                !begin_is_home);
         }
         offset += size;
     }
@@ -263,7 +263,7 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
     }
 
     bucket_t *bktout = new bucket_t[n];
-    ssssort_int(begin, end, out_begin, bktout, false);
+    ssssort_int<Iterator, value_type>(begin, end, out_begin, bktout, false);
     delete[] bktout;
 }
 
@@ -279,7 +279,7 @@ void ssssort(Iterator begin, Iterator end) {
 
     value_type* out = new value_type[n];
     bucket_t *bktout = new bucket_t[n];
-    ssssort_int(begin, end, out, bktout, true);
+    ssssort_int<Iterator, value_type>(begin, end, out, bktout, true);
     delete[] bktout;
     delete[] out;
 }
