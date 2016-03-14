@@ -34,16 +34,68 @@ inline size_t oversampling_factor(size_t n) {
     return std::max(static_cast<size_t>(r), 1UL);
 }
 
+// Random number generation engine for sampling.  You can swap this out for
+// std::minstd_rand if the Mersenne Twister is too slow on your hardware.
+// It's only minimally slower on mine (Haswell i7-4790T).
+static std::mt19937 gen{std::random_device{}()};
+
+// Draw a random sample without replacement using the Fisher-Yates Shuffle.
+// This reorders the input somewhat but the sorting does that anyway.
 template <typename Iterator,
           typename value_type = typename std::iterator_traits<Iterator>::value_type>
-void draw_sample(Iterator begin, Iterator end,
-                 value_type* samples, size_t sample_size)
+void draw_sample_fisheryates(Iterator begin, Iterator end,
+                             value_type* samples, size_t sample_size)
 {
-    // TODO random samples
+    // Random generator
+    size_t max = end - begin;
+    assert(gen.max() >= max);
+
+    for (size_t i = 0; i < sample_size; ++i) {
+        size_t index = gen() % max; // biased, don't care
+        std::swap(*(begin + index), *(begin + max));
+        samples[i] = *(begin + max);
+        max--;
+    }
+}
+
+
+// Draw a random sample with replacement by generating random indices. On my
+// machine this results in measurably slower sorting than a Fisher-Yates-based
+// sample, so beware the apparent simplicity.
+template <typename Iterator,
+          typename value_type = typename std::iterator_traits<Iterator>::value_type>
+void draw_sample_simplerand(Iterator begin, Iterator end,
+                             value_type* samples, size_t sample_size)
+{
+    // Random generator
+    size_t size = end - begin;
+    assert(gen.max() >= size);
+
+    for (size_t i = 0; i < sample_size; ++i) {
+        size_t index = gen() % size; // biased, don't care
+        samples[i] = *(begin + index);
+    }
+}
+
+
+// A completely non-random sample that's beyond terrible on sorted inputs
+template <typename Iterator,
+          typename value_type = typename std::iterator_traits<Iterator>::value_type>
+void draw_sample_first(Iterator begin, Iterator end,
+                       value_type *samples, size_t sample_size) {
     for (size_t i = 0; i < sample_size; ++i) {
         samples[i] = *(begin + i);
     }
 }
+
+template <typename Iterator,
+          typename value_type = typename std::iterator_traits<Iterator>::value_type>
+void draw_sample(Iterator begin, Iterator end,
+                 value_type *samples, size_t sample_size)
+{
+    draw_sample_fisheryates(begin, end, samples, sample_size);
+}
+
 
 template <typename Iterator, size_t treebits = logBuckets,
           typename value_type = typename std::iterator_traits<Iterator>::value_type>
