@@ -37,9 +37,21 @@
 #include <iterator>
 #include <random>
 
+/**
+ * logBuckets determines how many splitters are used.  Sample Sort partitions
+ * the data into buckets, whose number is typically a power of two.  Thus, we
+ * specify its base-2 logarithms.  For the partitioning into k buckets, we then
+ * need k-1 splitters.  logBuckets is a tuning parameter, typically 7 or 8.
+ */
 constexpr size_t logBuckets = 8;
 constexpr size_t numBuckets = 1 << logBuckets;
 
+/**
+ * Type to be used for bucket indices.  In this case, a uint32_t is overkill,
+ * but turned out to be fastest.  16-bit arithmetic is peculiarly slow on recent
+ * Intel CPUs.  Needs to fit 2*numBuckets-1 (for the step() function), so
+ * uint8_t would work for logBuckets = 7
+ */
 using bucket_t = uint32_t;
 
 
@@ -102,7 +114,7 @@ struct Sampler {
 
 };
 
-/*
+/**
  * Classify elements into buckets. Template parameter treebits specifies the
  * log2 of the number of buckets (= 1 << treebits).
  */
@@ -112,9 +124,14 @@ struct Classifier {
     const size_t splitters_size = 1 << treebits;
     value_type splitters[1 << treebits];
 
+    /// maps items to buckets
     bucket_t* const bktout;
+    /// counts bucket sizes
     size_t* const bktsize;
 
+    /**
+     * Constructs the splitter tree from the given samples
+     */
     Classifier(const value_type *samples, const size_t sample_size,
                bucket_t* const bktout)
         : bktout(bktout)
@@ -128,6 +145,7 @@ struct Classifier {
         delete[] bktsize;
     }
 
+    /// recursively builds splitter tree. Used by constructor.
     void build_recursive(const value_type* lo, const value_type* hi, size_t pos) {
         const value_type *mid = lo + (ssize_t)(hi - lo)/2;
         splitters[pos] = *mid;
@@ -138,16 +156,23 @@ struct Classifier {
         }
     }
 
+    /// Push an element down the tree one step. Inlined.
     constexpr bucket_t step(bucket_t i, const value_type &key) const {
         return 2*i + (key > splitters[i]);
     }
 
+    /// Find the bucket for a single element
     constexpr bucket_t find_bucket(const value_type &key) const {
         bucket_t i = 1;
         while (i <= num_splitters) i = step(i, key);
         return (i - splitters_size);
     }
 
+    /**
+     * Find the bucket for U elements at the same time. This version will be
+     * unrolled by the compiler.  Degree of unrolling is a template parameter, 4
+     * is a good choice usually.
+     */
     template <int U>
     inline void find_bucket_unroll(const value_type *key, bucket_t *obkt)
     {
@@ -165,7 +190,7 @@ struct Classifier {
         }
     }
 
-    // classify all elements by walking tree and saving bucket id
+    /// classify all elements by pushing them down the tree and saving bucket id
     inline void classify(Iterator begin, Iterator end, bucket_t* bktout = nullptr)  {
         if (bktout == nullptr) bktout = this->bktout;
         for (Iterator it = begin; it != end;) {
@@ -175,6 +200,7 @@ struct Classifier {
         }
     }
 
+    /// Classify all elements with unrolled bucket finding implementation
     template <int U>
     inline void
     classify_unroll(Iterator begin, Iterator end) {
@@ -189,6 +215,11 @@ struct Classifier {
         classify(it, end, bktout);
     }
 
+    /**
+     * Distribute the elements in [in_begin, in_end) into consecutive buckets,
+     * storage for which begins at out_begin.  Need to class classify or
+     * classify_unroll before to fill the bktout and bktsize arrays.
+     */
     template <int U>
     inline void
     distribute(Iterator in_begin, Iterator in_end, Iterator out_begin)
@@ -248,18 +279,21 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
     classifier.template classify_unroll<4>(begin, end);
     classifier.template distribute<4>(begin, end, out_begin);
 
+    // Recursive calls. offset is the offset into the arrays (/iterators) for
+    // the current bucket.
     size_t offset = 0;
     for (size_t i = 0; i < numBuckets; ++i) {
         auto size = classifier.bktsize[i] - offset;
         if (size == 0) continue; // empty bucket
         if (size <= 1024) {
-            // small bucket
+            // small bucket, use std::sort base case
             std::sort(out_begin + offset, out_begin + classifier.bktsize[i]);
             if (begin_is_home) {
                 // uneven recursion level, we have to move the result
                 memcpy(begin + offset, out_begin + offset, size*sizeof(value_type));
             }
         } else {
+            // large bucket, apply sample sort recursively
             ssssort_int<Iterator, value_type>(
                 out_begin + offset,
                 out_begin + classifier.bktsize[i], // = out_begin + offset + size
@@ -271,10 +305,11 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
     }
 }
 
-/*
+/**
  * Sort [begin, end), output is stored in [out_begin, out_begin + (end-begin))
  *
  * The elements in [begin, end) will be permuted after calling this.
+ * Uses <= 2*(end-begin)*sizeof(value_type) bytes of additional memory.
  */
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
 void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
@@ -290,8 +325,10 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
     delete[] bktout;
 }
 
-/*
+/**
  * Sort the range [begin, end).
+ *
+ * Uses <= 3*(end-begin)*sizeof(value_type) bytes of additional memory
  */
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
 void ssssort(Iterator begin, Iterator end) {
