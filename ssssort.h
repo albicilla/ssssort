@@ -135,7 +135,7 @@ struct Classifier {
      */
     Classifier(const value_type *samples, const size_t sample_size,
                bucket_t* const bktout)
-        : bktout((bucket_t*)__builtin_assume_aligned(bktout, 4*sizeof(bucket_t)))
+        : bktout(bktout)
         , bktsize(new size_t[1 << treebits])
     {
         std::fill(bktsize, bktsize + (1 << treebits), 0);
