@@ -99,7 +99,8 @@ struct Sampler {
 
 
     // A completely non-random sample that's beyond terrible on sorted inputs
-    static void draw_sample_first(Iterator begin, Iterator end,
+    static void draw_sample_first(Iterator begin,
+                                  __attribute__((unused)) Iterator end,
                                   value_type *samples, size_t sample_size) {
         for (size_t i = 0; i < sample_size; ++i) {
             samples[i] = *(begin + i);
@@ -134,7 +135,7 @@ struct Classifier {
      */
     Classifier(const value_type *samples, const size_t sample_size,
                bucket_t* const bktout)
-        : bktout(bktout)
+        : bktout((bucket_t*)__builtin_assume_aligned(bktout, 4*sizeof(bucket_t)))
         , bktsize(new size_t[1 << treebits])
     {
         std::fill(bktsize, bktsize + (1 << treebits), 0);
@@ -174,24 +175,26 @@ struct Classifier {
      * is a good choice usually.
      */
     template <int U>
-    inline void find_bucket_unroll(const value_type *key, bucket_t *obkt)
+    inline void find_bucket_unroll(Iterator key, bucket_t* __restrict__ obkt)
     {
         bucket_t i[U];
         for (int u = 0; u < U; ++u) i[u] = 1;
 
         for (size_t l = 0; l < treebits; ++l) {
             // step on all U keys
-            for (int u = 0; u < U; ++u) i[u] = step(i[u], key[u]);
+            for (int u = 0; u < U; ++u) i[u] = step(i[u], *(key + u));
         }
+        bucket_t bucket[U];
         for (int u = 0; u < U; ++u) {
-            bucket_t bucket = i[u] - splitters_size;
-            obkt[u] = bucket;
-            bktsize[bucket]++;
+            bucket[u] = i[u] - splitters_size;
+            obkt[u] = bucket[u];
+            bktsize[bucket[u]]++;
         }
     }
 
     /// classify all elements by pushing them down the tree and saving bucket id
-    inline void classify(Iterator begin, Iterator end, bucket_t* bktout = nullptr)  {
+    inline void classify(Iterator begin, Iterator end,
+                         bucket_t* __restrict__ bktout = nullptr)  {
         if (bktout == nullptr) bktout = this->bktout;
         for (Iterator it = begin; it != end;) {
             bucket_t bucket = find_bucket(*it++);
@@ -205,11 +208,9 @@ struct Classifier {
     inline void
     classify_unroll(Iterator begin, Iterator end) {
         bucket_t* bktout = this->bktout;
-        value_type key[U];
         Iterator it = begin;
         for (; it + U < end; it += U, bktout += U) {
-            for (int u = 0; u < U; ++u) key[u] = *(it+u);
-            find_bucket_unroll<U>(key, bktout);
+            find_bucket_unroll<U>(it, bktout);
         }
         // process remainder
         classify(it, end, bktout);
@@ -264,7 +265,7 @@ inline size_t oversampling_factor(size_t n) {
  */
 template <typename Iterator, typename value_type>
 void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
-                 bucket_t *bktout, bool begin_is_home) {
+                 bucket_t __restrict__ *bktout, bool begin_is_home) {
     const size_t n = end - begin;
 
     // draw and sort sample

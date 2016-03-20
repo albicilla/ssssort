@@ -38,7 +38,7 @@
 
 const bool debug = false;
 
-int main(int argc, char *argv[]) {
+int main() {
     size_t size = 1024*1024;
     size_t iterations = 10;
 
