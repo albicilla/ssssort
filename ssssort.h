@@ -265,7 +265,7 @@ inline size_t oversampling_factor(size_t n) {
  */
 template <typename Iterator, typename value_type>
 void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
-                 bucket_t __restrict__ *bktout, bool begin_is_home) {
+                 bucket_t* __restrict__ bktout, bool begin_is_home) {
     const size_t n = end - begin;
 
     // draw and sort sample
