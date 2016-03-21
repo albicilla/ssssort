@@ -3,3 +3,5 @@ sort
 sort_*
 G*
 perf.*
+*.txt
+*.pdf

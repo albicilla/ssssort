@@ -108,15 +108,23 @@ void benchmark(size_t size, size_t iterations, Generator generator,
     delete[] data;
     delete[] copy;
 
-    std::cout << "RESULT"
+    std::cout << "RESULT algo=ssssort"
               << " name=" << name
               << " size=" << size
               << " iterations=" << iterations
-              << " t_ssssort=" << t_ssssort/iterations
-              << " t_stdsort=" << t_stdsort/iterations
+              << " time=" << t_ssssort/iterations
               << " t_generate=" << t_generate
               << " t_verify=" << t_verify
               << " correct=" << !incorrect
+              << std::endl
+              << "RESULT algo=stdsort"
+              << " name=" << name
+              << " size=" << size
+              << " iterations=" << iterations
+              << " time=" << t_stdsort/iterations
+              << " t_generate=" << t_generate
+              << " t_verify=0"
+              << " correct=1"
               << std::endl;
 
 }
@@ -148,4 +156,12 @@ int main(int argc, char *argv[]) {
                 data[i] = i;
             }
         }, "sorted", iterations);
+
+
+    benchmark_generator<size_t>([](auto data, size_t size){
+            for (size_t i = 0; i < size; ++i) {
+                data[i] = size - i;
+            }
+        }, "reverse", iterations);
+
 }
