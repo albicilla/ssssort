@@ -30,6 +30,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cstdlib>
 #include <iostream>
 #include <random>
 
@@ -38,58 +39,58 @@
 
 const bool debug = false;
 
-int main() {
-    size_t size = 1024*1024;
-    size_t iterations = 10;
+template <typename T, typename Sorter>
+double run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
+           size_t iterations, bool reset_out = true) {
+    // warmup
+    sorter(data, out, size);
 
-    size_t *data = new size_t[size],
-        *out = new size_t[size],
-        *copy = new size_t[size];
+    double time = 0.0;
+    Timer timer;
+    for (size_t it = 0; it < iterations; ++it) {
+        // reset data and timer
+        memcpy(data, copy, size * sizeof(T));
+        if (reset_out)
+            memset(out, 0, size * sizeof(T));
+        timer.reset();
+
+        sorter(data, out, size);
+
+        time += timer.get();
+    }
+    return time;
+}
+
+template <typename T, typename Generator>
+void benchmark(size_t size, size_t iterations, Generator generator,
+               const std::string &name) {
+    size_t *data = new T[size],
+        *out = new T[size],
+        *copy = new T[size];
 
     Timer timer;
     // Generate random numbers as input
-    std::mt19937 rng{ std::random_device{}() };
-    for (size_t i = 0; i < size; ++i) {
-        data[i] = rng();
-    }
+    generator(data, size);
 
     // create a copy to be able to sort it multiple times
-    memcpy(copy, data, size * sizeof(size_t));
+    memcpy(copy, data, size * sizeof(T));
     double t_generate = timer.get_and_reset();
 
     // 1. Super Scalar Sample Sort
-    // warmup
-    ssssort(data, data + size, out);
-
-    double t_ssssort = 0.0;
-    for (size_t it = 0; it < iterations; ++it) {
-        // reset data and timer
-        memcpy(data, copy, size * sizeof(size_t));
-        std::fill(out, out+size, 0);
-        timer.reset();
-
-        ssssort(data, data + size, out);
-
-        t_ssssort += timer.get();
-    }
-    timer.reset();
+    double t_ssssort = run(data, copy, out, size,
+                           [](T* data, T* out, size_t size)
+                           { ssssort(data, data + size, out); },
+                           iterations);
 
     // 2. std::sort
-    // warmup
-    memcpy(data, copy, size * sizeof(size_t));
-    std::sort(data, data + size);
+    double t_stdsort = run(data, copy, out, size,
+                           [](T* data, T* /*ignored*/, size_t size)
+                           { std::sort(data, data + size); },
+                           iterations, false);
 
-    double t_stdsort = 0.0;
-    for (size_t it = 0; it < iterations; ++it) {
-        memcpy(data, copy, size * sizeof(size_t));
-
-        timer.reset();
-        std::sort(data, data + size);
-        t_stdsort += timer.get();
-    }
-    timer.reset();
 
     // verify
+    timer.reset();
     bool incorrect = !std::is_sorted(out, out + size);
     if (incorrect) {
         std::cerr << "Output data isn't sorted" << std::endl;
@@ -107,7 +108,9 @@ int main() {
     delete[] data;
     delete[] copy;
 
-    std::cout << "RESULT size=" << size
+    std::cout << "RESULT"
+              << " name=" << name
+              << " size=" << size
               << " iterations=" << iterations
               << " t_ssssort=" << t_ssssort/iterations
               << " t_stdsort=" << t_stdsort/iterations
@@ -116,5 +119,33 @@ int main() {
               << " correct=" << !incorrect
               << std::endl;
 
-    return 0;
+}
+
+template <typename T, typename Generator>
+void benchmark_generator(Generator generator, const std::string &name,
+                         size_t iterations = 10) {
+    for (size_t log_size = 10; log_size < 27; ++log_size) {
+        size_t size = 1 << log_size;
+        benchmark<T>(size, iterations, generator, name);
+    }
+}
+
+int main(int argc, char *argv[]) {
+    size_t iterations = 10;
+
+    if (argc > 1) iterations = atoi(argv[1]);
+
+    benchmark_generator<size_t>([](auto data, size_t size){
+            std::mt19937 rng{ std::random_device{}() };
+            for (size_t i = 0; i < size; ++i) {
+                data[i] = rng();
+            }
+        }, "random", iterations);
+
+
+    benchmark_generator<size_t>([](auto data, size_t size){
+            for (size_t i = 0; i < size; ++i) {
+                data[i] = i;
+            }
+        }, "sorted", iterations);
 }
