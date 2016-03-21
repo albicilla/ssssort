@@ -64,7 +64,7 @@ double run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
 template <typename T, typename Generator>
 void benchmark(size_t size, size_t iterations, Generator generator,
                const std::string &name) {
-    size_t *data = new T[size],
+    T *data = new T[size],
         *out = new T[size],
         *copy = new T[size];
 
@@ -144,23 +144,26 @@ int main(int argc, char *argv[]) {
     if (argc > 1) iterations = atoi(argv[1]);
 
     benchmark_generator<size_t>([](auto data, size_t size){
+            using T = std::remove_reference_t<decltype(*data)>;
             std::mt19937 rng{ std::random_device{}() };
             for (size_t i = 0; i < size; ++i) {
-                data[i] = rng();
+                data[i] = static_cast<T>(rng());
             }
         }, "random", iterations);
 
 
     benchmark_generator<size_t>([](auto data, size_t size){
+            using T = std::remove_reference_t<decltype(*data)>;
             for (size_t i = 0; i < size; ++i) {
-                data[i] = i;
+                data[i] = static_cast<T>(i);
             }
         }, "sorted", iterations);
 
 
     benchmark_generator<size_t>([](auto data, size_t size){
+            using T = std::remove_reference_t<decltype(*data)>;
             for (size_t i = 0; i < size; ++i) {
-                data[i] = size - i;
+                data[i] = static_cast<T>(size - i);
             }
         }, "reverse", iterations);
 
