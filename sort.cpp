@@ -152,6 +152,26 @@ int main(int argc, char *argv[]) {
         }, "random", iterations);
 
 
+    // nearly sorted data generator factory
+    auto nearly_sorted_gen = [](size_t rfrac) {
+        return [rfrac=rfrac](auto data, size_t size) {
+            using T = std::remove_reference_t<decltype(*data)>;
+            std::mt19937 rng{ std::random_device{}() };
+            // fill with sorted data, using entire range of RNG
+            T factor = static_cast<T>(static_cast<double>(rng.max()) / size);
+            for (size_t i = 0; i < size; ++i) {
+                data[i] = i * factor;
+            }
+            // set 1/rfrac of the items to random values
+            for (size_t i = 0; i < size/rfrac; ++i) {
+                data[rng() % size] = static_cast<T>(rng());
+            }
+        };
+    };
+
+    benchmark_generator<size_t>(nearly_sorted_gen(10), "90pcsorted", iterations);
+    benchmark_generator<size_t>(nearly_sorted_gen(100), "99pcsorted", iterations);
+
     benchmark_generator<size_t>([](auto data, size_t size){
             using T = std::remove_reference_t<decltype(*data)>;
             for (size_t i = 0; i < size; ++i) {
