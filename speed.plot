@@ -32,6 +32,17 @@ plot \
     'speed-data.txt' index 1 title "algo=stdsort" with linespoints
 
 
+set title 'Super Scalar Sample Sort Test: 80% Sorted'
+## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
+## MEDIAN(time / iterations / size * 1e6) AS y,
+## MULTIPLOT
+## FROM stats WHERE name = "80pcsorted"
+## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
+plot \
+    'speed-data.txt' index 2 title "algo=ssssort" with linespoints, \
+    'speed-data.txt' index 3 title "algo=stdsort" with linespoints
+
+
 set title 'Super Scalar Sample Sort Test: 90% Sorted'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / iterations / size * 1e6) AS y,
@@ -39,8 +50,8 @@ set title 'Super Scalar Sample Sort Test: 90% Sorted'
 ## FROM stats WHERE name = "90pcsorted"
 ## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
 plot \
-    'speed-data.txt' index 2 title "algo=ssssort" with linespoints, \
-    'speed-data.txt' index 3 title "algo=stdsort" with linespoints
+    'speed-data.txt' index 4 title "algo=ssssort" with linespoints, \
+    'speed-data.txt' index 5 title "algo=stdsort" with linespoints
 
 
 set title 'Super Scalar Sample Sort Test: 99% Sorted'
@@ -50,9 +61,41 @@ set title 'Super Scalar Sample Sort Test: 99% Sorted'
 ## FROM stats WHERE name = "99pcsorted"
 ## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
 plot \
-    'speed-data.txt' index 4 title "algo=ssssort" with linespoints, \
-    'speed-data.txt' index 5 title "algo=stdsort" with linespoints
+    'speed-data.txt' index 6 title "algo=ssssort" with linespoints, \
+    'speed-data.txt' index 7 title "algo=stdsort" with linespoints
 
+
+set title 'Super Scalar Sample Sort Test: 99.9% Sorted'
+## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
+## MEDIAN(time / iterations / size * 1e6) AS y,
+## MULTIPLOT
+## FROM stats WHERE name = "99.9pcsorted"
+## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
+plot \
+    'speed-data.txt' index 8 title "algo=ssssort" with linespoints, \
+    'speed-data.txt' index 9 title "algo=stdsort" with linespoints
+
+
+set title 'Super Scalar Sample Sort Test: 90% Sorted + 10% Random Tail'
+## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
+## MEDIAN(time / iterations / size * 1e6) AS y,
+## MULTIPLOT
+## FROM stats WHERE name = "tail90"
+## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
+plot \
+    'speed-data.txt' index 10 title "algo=ssssort" with linespoints, \
+    'speed-data.txt' index 11 title "algo=stdsort" with linespoints
+
+
+set title 'Super Scalar Sample Sort Test: 99% Sorted + 1% Random Tail'
+## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
+## MEDIAN(time / iterations / size * 1e6) AS y,
+## MULTIPLOT
+## FROM stats WHERE name = "tail99"
+## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
+plot \
+    'speed-data.txt' index 12 title "algo=ssssort" with linespoints, \
+    'speed-data.txt' index 13 title "algo=stdsort" with linespoints
 
 
 set title 'Super Scalar Sample Sort Test: Sorted'
@@ -62,8 +105,8 @@ set title 'Super Scalar Sample Sort Test: Sorted'
 ## FROM stats WHERE name = "sorted"
 ## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
 plot \
-    'speed-data.txt' index 6 title "algo=ssssort" with linespoints, \
-    'speed-data.txt' index 7 title "algo=stdsort" with linespoints
+    'speed-data.txt' index 14 title "algo=ssssort" with linespoints, \
+    'speed-data.txt' index 15 title "algo=stdsort" with linespoints
 
 
 set title 'Super Scalar Sample Sort Test: Reverse Sorted'
@@ -73,5 +116,5 @@ set title 'Super Scalar Sample Sort Test: Reverse Sorted'
 ## FROM stats WHERE name = "reverse"
 ## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
 plot \
-    'speed-data.txt' index 8 title "algo=ssssort" with linespoints, \
-    'speed-data.txt' index 9 title "algo=stdsort" with linespoints
+    'speed-data.txt' index 16 title "algo=ssssort" with linespoints, \
+    'speed-data.txt' index 17 title "algo=stdsort" with linespoints

@@ -170,8 +170,33 @@ int main(int argc, char *argv[]) {
         };
     };
 
+    benchmark_generator<data_t>(nearly_sorted_gen(5), "80pcsorted", iterations);
     benchmark_generator<data_t>(nearly_sorted_gen(10), "90pcsorted", iterations);
     benchmark_generator<data_t>(nearly_sorted_gen(100), "99pcsorted", iterations);
+    benchmark_generator<data_t>(nearly_sorted_gen(1000), "99.9pcsorted", iterations);
+
+
+    // nearly sorted data generator factory
+    auto unsorted_tail_gen = [](size_t rfrac) {
+        return [rfrac=rfrac](auto data, size_t size) {
+            using T = std::remove_reference_t<decltype(*data)>;
+            std::mt19937 rng{ std::random_device{}() };
+            // fill with sorted data, using entire range of RNG
+            size_t ordered_max = size - (size / rfrac);
+            T factor = static_cast<T>(static_cast<double>(rng.max()) / ordered_max);
+            for (size_t i = 0; i < ordered_max; ++i) {
+                data[i] = i * factor;
+            }
+            // set 1/rfrac of the items to random values
+            for (size_t i = ordered_max; i < size; ++i) {
+                data[i] = static_cast<T>(rng());
+            }
+        };
+    };
+
+    benchmark_generator<data_t>(unsorted_tail_gen(10), "tail90", iterations);
+    benchmark_generator<data_t>(unsorted_tail_gen(100), "tail99", iterations);
+
 
     benchmark_generator<data_t>([](auto data, size_t size){
             using T = std::remove_reference_t<decltype(*data)>;
@@ -181,7 +206,7 @@ int main(int argc, char *argv[]) {
         }, "sorted", iterations);
 
 
-    benchmark_generator<data _t>([](auto data, size_t size){
+    benchmark_generator<data_t>([](auto data, size_t size){
             using T = std::remove_reference_t<decltype(*data)>;
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(size - i);
