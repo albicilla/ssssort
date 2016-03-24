@@ -36,14 +36,18 @@
 
 #include "ssssort.h"
 #include "timer.h"
+#include "progress_bar.h"
 
 const bool debug = false;
 
 template <typename T, typename Sorter>
 double run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
-           size_t iterations, bool reset_out = true) {
+           size_t iterations, const std::string &algoname,
+           bool reset_out = true) {
+    progress_bar bar(iterations + 1, algoname);
     // warmup
     sorter(data, out, size);
+    ++bar;
 
     double time = 0.0;
     Timer timer;
@@ -57,7 +61,9 @@ double run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
         sorter(data, out, size);
 
         time += timer.get();
+        ++bar;
     }
+    bar.undraw();
     return time;
 }
 
@@ -80,13 +86,13 @@ void benchmark(size_t size, size_t iterations, Generator generator,
     double t_ssssort = run(data, copy, out, size,
                            [](T* data, T* out, size_t size)
                            { ssssort(data, data + size, out); },
-                           iterations);
+                           iterations, "ssssort: ");
 
     // 2. std::sort
     double t_stdsort = run(data, copy, out, size,
                            [](T* data, T* /*ignored*/, size_t size)
                            { std::sort(data, data + size); },
-                           iterations, false);
+                           iterations, "std::sort: ", false);
 
 
     // verify
