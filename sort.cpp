@@ -142,8 +142,9 @@ int main(int argc, char *argv[]) {
     size_t iterations = 10;
 
     if (argc > 1) iterations = atoi(argv[1]);
+    using data_t = int;
 
-    benchmark_generator<size_t>([](auto data, size_t size){
+    benchmark_generator<data_t>([](auto data, size_t size){
             using T = std::remove_reference_t<decltype(*data)>;
             std::mt19937 rng{ std::random_device{}() };
             for (size_t i = 0; i < size; ++i) {
@@ -169,10 +170,10 @@ int main(int argc, char *argv[]) {
         };
     };
 
-    benchmark_generator<size_t>(nearly_sorted_gen(10), "90pcsorted", iterations);
-    benchmark_generator<size_t>(nearly_sorted_gen(100), "99pcsorted", iterations);
+    benchmark_generator<data_t>(nearly_sorted_gen(10), "90pcsorted", iterations);
+    benchmark_generator<data_t>(nearly_sorted_gen(100), "99pcsorted", iterations);
 
-    benchmark_generator<size_t>([](auto data, size_t size){
+    benchmark_generator<data_t>([](auto data, size_t size){
             using T = std::remove_reference_t<decltype(*data)>;
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(i);
@@ -180,7 +181,7 @@ int main(int argc, char *argv[]) {
         }, "sorted", iterations);
 
 
-    benchmark_generator<size_t>([](auto data, size_t size){
+    benchmark_generator<data _t>([](auto data, size_t size){
             using T = std::remove_reference_t<decltype(*data)>;
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(size - i);
