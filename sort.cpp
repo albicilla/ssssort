@@ -138,7 +138,7 @@ void benchmark(size_t size, size_t iterations, Generator generator,
 template <typename T, typename Generator>
 void benchmark_generator(Generator generator, const std::string &name,
                          size_t iterations = 10) {
-    for (size_t log_size = 10; log_size < 27; ++log_size) {
+    for (size_t log_size = 12; log_size < 27; ++log_size) {
         size_t size = 1 << log_size;
         benchmark<T>(size, iterations, generator, name);
     }
