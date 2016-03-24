@@ -18,7 +18,7 @@ set grid xtics ytics
 set key top left
 
 set xlabel 'Item Count [log_2(n)]'
-set ylabel 'Run Time per Item [Microseconds / Item]'
+set ylabel 'Run Time per Item [Nanoseconds / Item]'
 
 
 set title 'Super Scalar Sample Sort Test: Random'
