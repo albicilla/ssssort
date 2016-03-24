@@ -20,6 +20,7 @@ set key top left
 set xlabel 'Item Count [log_2(n)]'
 set ylabel 'Run Time / n log_2n [Nanoseconds]'
 
+#SQL DELETE FROM stats WHERE LOG(2, size) < 12
 
 set title 'Super Scalar Sample Sort Test: Random'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
