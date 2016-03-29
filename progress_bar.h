@@ -70,7 +70,8 @@ public:
     void undraw() {
         out << "\r";
         // "[" + "] " + percent (3) + " %" = up to 8 chars
-        for (int i = 0; i < barwidth + 8; ++i) {
+        uint width = barwidth + 8 + extra.length();
+        for (uint i = 0; i < width; ++i) {
             out << " ";
         }
         out << "\r";

@@ -1,4 +1,4 @@
-FLAGS=-std=c++14 -Wall -Wextra -Werror
+FLAGS=-std=c++14 -Wall -Wextra -Werror -fsanitize=address
 
 all: debug
 

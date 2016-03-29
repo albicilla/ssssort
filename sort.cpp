@@ -31,8 +31,10 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <random>
+#include <sstream>
 
 #include "ssssort.h"
 #include "timer.h"
@@ -69,7 +71,7 @@ double run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
 
 template <typename T, typename Generator>
 void benchmark(size_t size, size_t iterations, Generator generator,
-               const std::string &name) {
+               const std::string &name, std::ofstream *stat_stream) {
     T *data = new T[size],
         *out = new T[size],
         *copy = new T[size];
@@ -114,40 +116,52 @@ void benchmark(size_t size, size_t iterations, Generator generator,
     delete[] data;
     delete[] copy;
 
-    std::cout << "RESULT algo=ssssort"
-              << " name=" << name
-              << " size=" << size
-              << " iterations=" << iterations
-              << " time=" << t_ssssort/iterations
-              << " t_generate=" << t_generate
-              << " t_verify=" << t_verify
-              << " correct=" << !incorrect
-              << std::endl
-              << "RESULT algo=stdsort"
-              << " name=" << name
-              << " size=" << size
-              << " iterations=" << iterations
-              << " time=" << t_stdsort/iterations
-              << " t_generate=" << t_generate
-              << " t_verify=0"
-              << " correct=1"
-              << std::endl;
-
+    std::stringstream output;
+    output << "RESULT algo=ssssort"
+           << " name=" << name
+           << " size=" << size
+           << " iterations=" << iterations
+           << " time=" << t_ssssort/iterations
+           << " t_generate=" << t_generate
+           << " t_verify=" << t_verify
+           << " correct=" << !incorrect
+           << std::endl
+           << "RESULT algo=stdsort"
+           << " name=" << name
+           << " size=" << size
+           << " iterations=" << iterations
+           << " time=" << t_stdsort/iterations
+           << " t_generate=" << t_generate
+           << " t_verify=0"
+           << " correct=1"
+           << std::endl;
+    auto result_str = output.str();
+    std::cout << result_str;
+    if (stat_stream != nullptr)
+        *stat_stream << result_str;
 }
 
 template <typename T, typename Generator>
 void benchmark_generator(Generator generator, const std::string &name,
-                         size_t iterations = 10) {
-    for (size_t log_size = 10; log_size < 27; ++log_size) {
+                         size_t iterations, std::ofstream *stat_stream) {
+    for (size_t log_size = 10; log_size < 20; ++log_size) {
         size_t size = 1 << log_size;
-        benchmark<T>(size, iterations, generator, name);
+        benchmark<T>(size, iterations, generator, name, stat_stream);
     }
 }
 
 int main(int argc, char *argv[]) {
     size_t iterations = 10;
-
     if (argc > 1) iterations = atoi(argv[1]);
+
+    std::string stat_file = "stats.txt";
+    if (argc > 2) stat_file = std::string{argv[2]};
+    std::ofstream *stat_stream = nullptr;
+    if (stat_file != "-") {
+        stat_stream = new std::ofstream;
+        stat_stream->open(stat_file);
+    }
+
     using data_t = int;
 
     benchmark_generator<data_t>([](auto data, size_t size){
@@ -156,7 +170,7 @@ int main(int argc, char *argv[]) {
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(rng());
             }
-        }, "random", iterations);
+        }, "random", iterations, stat_stream);
 
 
     // nearly sorted data generator factory
@@ -176,10 +190,10 @@ int main(int argc, char *argv[]) {
         };
     };
 
-    benchmark_generator<data_t>(nearly_sorted_gen(5), "80pcsorted", iterations);
-    benchmark_generator<data_t>(nearly_sorted_gen(10), "90pcsorted", iterations);
-    benchmark_generator<data_t>(nearly_sorted_gen(100), "99pcsorted", iterations);
-    benchmark_generator<data_t>(nearly_sorted_gen(1000), "99.9pcsorted", iterations);
+    benchmark_generator<data_t>(nearly_sorted_gen(5), "80pcsorted", iterations, stat_stream);
+    benchmark_generator<data_t>(nearly_sorted_gen(10), "90pcsorted", iterations, stat_stream);
+    benchmark_generator<data_t>(nearly_sorted_gen(100), "99pcsorted", iterations, stat_stream);
+    benchmark_generator<data_t>(nearly_sorted_gen(1000), "99.9pcsorted", iterations, stat_stream);
 
 
     // nearly sorted data generator factory
@@ -200,8 +214,8 @@ int main(int argc, char *argv[]) {
         };
     };
 
-    benchmark_generator<data_t>(unsorted_tail_gen(10), "tail90", iterations);
-    benchmark_generator<data_t>(unsorted_tail_gen(100), "tail99", iterations);
+    benchmark_generator<data_t>(unsorted_tail_gen(10), "tail90", iterations, stat_stream);
+    benchmark_generator<data_t>(unsorted_tail_gen(100), "tail99", iterations, stat_stream);
 
 
     benchmark_generator<data_t>([](auto data, size_t size){
@@ -209,7 +223,7 @@ int main(int argc, char *argv[]) {
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(i);
             }
-        }, "sorted", iterations);
+        }, "sorted", iterations, stat_stream);
 
 
     benchmark_generator<data_t>([](auto data, size_t size){
@@ -217,6 +231,18 @@ int main(int argc, char *argv[]) {
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(size - i);
             }
-        }, "reverse", iterations);
+        }, "reverse", iterations, stat_stream);
 
+
+    benchmark_generator<data_t>([](auto data, size_t size){
+            for (size_t i = 0; i < size; ++i) {
+                data[i] = 1;
+            }
+        }, "ones", iterations, stat_stream);
+
+
+    if (stat_stream != nullptr) {
+        stat_stream->close();
+        delete stat_stream;
+    }
 }
