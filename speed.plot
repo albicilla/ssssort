@@ -122,3 +122,14 @@ set title 'Super Scalar Sample Sort Test: Reverse Sorted'
 plot \
     'speed-data.txt' index 16 title "algo=ssssort" with linespoints, \
     'speed-data.txt' index 17 title "algo=stdsort" with linespoints
+
+
+set title 'Super Scalar Sample Sort Test: All Ones'
+## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
+## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
+## MULTIPLOT
+## FROM stats WHERE name = "ones"
+## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
+plot \
+    'speed-data.txt' index 18 title "algo=ssssort" with linespoints, \
+    'speed-data.txt' index 19 title "algo=stdsort" with linespoints
