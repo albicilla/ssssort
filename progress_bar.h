@@ -39,7 +39,7 @@ public:
     /// \param max the value that constitutes 100%
     /// \param out the output stream to draw the progress bar on
     /// \param barwidth the width of the bar in characters
-    progress_bar(const unsigned long long max, std::string extra = "",
+    progress_bar(const unsigned long long max, const std::string &extra,
                  std::ostream &out = std::cout, int barwidth = 70)
         : max(max)
         , pos(0)
