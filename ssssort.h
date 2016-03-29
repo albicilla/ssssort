@@ -275,7 +275,8 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
     std::sort(samples, samples + sample_size);
 
     if (samples[0] == samples[sample_size - 1]) {
-        // All samples are equal. Fall back to std::sort
+        // All samples are equal. Clean up and fall back to std::sort
+        delete[] samples;
         std::sort(begin, end);
         if (begin_is_home) {
             memcpy(begin, out_begin, n * sizeof(value_type));
