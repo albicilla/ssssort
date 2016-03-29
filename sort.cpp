@@ -138,7 +138,7 @@ void benchmark(size_t size, size_t iterations, Generator generator,
     auto result_str = output.str();
     std::cout << result_str;
     if (stat_stream != nullptr)
-        *stat_stream << result_str;
+        *stat_stream << result_str << std::flush;
 }
 
 template <typename T, typename Generator>
