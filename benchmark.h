@@ -69,15 +69,15 @@ double run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
 }
 
 template <typename T, typename Generator>
-void benchmark(size_t size, size_t iterations, Generator generator,
-               const std::string &name, std::ofstream *stat_stream) {
+size_t benchmark(size_t size, size_t iterations, Generator generator,
+                 const std::string &name, std::ofstream *stat_stream) {
     T *data = new T[size],
         *out = new T[size],
         *copy = new T[size];
 
     Timer timer;
     // Generate random numbers as input
-    generator(data, size);
+    size = generator(data, size);
 
     // create a copy to be able to sort it multiple times
     memcpy(copy, data, size * sizeof(T));
@@ -138,13 +138,30 @@ void benchmark(size_t size, size_t iterations, Generator generator,
     std::cout << result_str;
     if (stat_stream != nullptr)
         *stat_stream << result_str << std::flush;
+
+    return size;
 }
 
 template <typename T, typename Generator>
 void benchmark_generator(Generator generator, const std::string &name,
                          size_t iterations, std::ofstream *stat_stream) {
+    auto wrapped_generator = [generator](auto data, size_t size) {
+        generator(data, size);
+        return size;
+    };
     for (size_t log_size = 10; log_size < 27; ++log_size) {
         size_t size = 1 << log_size;
-        benchmark<T>(size, iterations, generator, name, stat_stream);
+        benchmark<T>(size, iterations, wrapped_generator, name, stat_stream);
+    }
+}
+
+
+template <typename T, typename Generator>
+void sized_benchmark_generator(Generator generator, const std::string &name,
+                               size_t iterations, std::ofstream *stat_stream) {
+    for (size_t log_size = 10; log_size < 27; ++log_size) {
+        size_t size = 1 << log_size;
+        auto last_size = benchmark<T>(size, iterations, generator, name, stat_stream);
+        if (last_size < size) break;
     }
 }
