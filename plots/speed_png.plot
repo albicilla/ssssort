@@ -1,6 +1,8 @@
 # IMPORT-DATA stats stats.txt
 
-set terminal pdf size 13.33cm,10cm linewidth 2.0
+#set terminal pdf size 13.33cm,10cm linewidth 2.0
+set terminal pngcairo enhanced font 'Lato,10'
+set output "speed.png"
 
 set style line 11 lc rgb "#333333" lt 1
 set border 3 back ls 11
@@ -20,6 +22,7 @@ set ylabel 'Run Time / n log_2n [Nanoseconds]'
 
 #SQL DELETE FROM stats WHERE LOG(2, size) < 12
 
+set output "plots/random.png"
 set title 'Super Scalar Sample Sort Test: Random'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
@@ -31,6 +34,7 @@ plot \
     'speed-data.txt' index 1 title "algo=stdsort" with linespoints
 
 
+set output "plots/80pcsorted.png"
 set title 'Super Scalar Sample Sort Test: 80% Sorted'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
@@ -42,6 +46,7 @@ plot \
     'speed-data.txt' index 3 title "algo=stdsort" with linespoints
 
 
+set output "plots/90pcsorted.png"
 set title 'Super Scalar Sample Sort Test: 90% Sorted'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
@@ -53,6 +58,7 @@ plot \
     'speed-data.txt' index 5 title "algo=stdsort" with linespoints
 
 
+set output "plots/99pcsorted.png"
 set title 'Super Scalar Sample Sort Test: 99% Sorted'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
@@ -64,6 +70,7 @@ plot \
     'speed-data.txt' index 7 title "algo=stdsort" with linespoints
 
 
+set output "plots/99.9pcsorted.png"
 set title 'Super Scalar Sample Sort Test: 99.9% Sorted'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
@@ -75,6 +82,7 @@ plot \
     'speed-data.txt' index 9 title "algo=stdsort" with linespoints
 
 
+set output "plots/90pctail.png"
 set title 'Super Scalar Sample Sort Test: 90% Sorted + 10% Random Tail'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
@@ -86,6 +94,7 @@ plot \
     'speed-data.txt' index 11 title "algo=stdsort" with linespoints
 
 
+set output "plots/99pctail.png"
 set title 'Super Scalar Sample Sort Test: 99% Sorted + 1% Random Tail'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
@@ -97,6 +106,7 @@ plot \
     'speed-data.txt' index 13 title "algo=stdsort" with linespoints
 
 
+set output "plots/sorted.png"
 set title 'Super Scalar Sample Sort Test: Sorted'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
@@ -109,6 +119,7 @@ plot \
 
 
 
+set output "plots/reverse.png"
 set title 'Super Scalar Sample Sort Test: Reverse Sorted'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
@@ -120,6 +131,7 @@ plot \
     'speed-data.txt' index 17 title "algo=stdsort" with linespoints
 
 
+set output "plots/ones.png"
 set title 'Super Scalar Sample Sort Test: All Ones'
 ## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
 ## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
