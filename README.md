@@ -2,9 +2,9 @@
 
 This is an implementation of
 [Super Scalar Sample Sort](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.72.366&rep=rep1&type=pdf)
-in modern C++.  It is faster than `std::sort` in many cases, but uses more
-memory (approximately n\*sizeof(T) + n\*sizeof(unsigned) + 4√n \*
-sizeof(size_t), vs logarithmic additional memory for in-place quicksort).
+in modern C++.  It is faster than `std::sort` in many cases, but uses quite a
+bit of additional memory (up to 2-3x input size).  This means that it's not
+applicable in all situations, but when it is, it's pretty damn quick!
 
 ## Benchmarks
 
@@ -40,3 +40,12 @@ C++14 compiler, even though `g++` is happy to compile it with `-std=c++11`.  The
 requirement stems from the use of a variable declaration in the `find_bucket`
 function, which is marked `constexpr`.  You can simply replace `constexpr` with
 `inline` to make it valid C++11.
+
+## Todo list
+
+It doesn't quite work that well with complex objects yet - it does sort them
+using `operator<`, but leaks objects all over the place.  I'll have to figure
+out where those are lost at some point.
+
+Also, the paper authors' original implementation is still a bit faster than this
+one, but it's not open source, nor is it in publishable condition...
