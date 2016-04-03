@@ -235,12 +235,12 @@ struct Classifier {
         size_t i;
         for (i = 0; i + U < n; i += U) {
             for (int u = 0; u < U; ++u) {
-                *(out_begin + bktsize[bktout[i+u]]++) = *(in_begin + i + u);
+                *(out_begin + bktsize[bktout[i+u]]++) = std::move(*(in_begin + i + u));
             }
         }
         // process the rest
         for (; i < n; ++i) {
-            *(out_begin + bktsize[bktout[i]]++) = *(in_begin + i);
+            *(out_begin + bktsize[bktout[i]]++) = std::move(*(in_begin + i));
         }
     }
 
@@ -279,7 +279,7 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
         delete[] samples;
         std::sort(begin, end);
         if (begin_is_home) {
-            memcpy(begin, out_begin, n * sizeof(value_type));
+            std::move(out_begin, out_begin + n, begin);
         }
         return;
     }
@@ -301,7 +301,9 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
             std::sort(out_begin + offset, out_begin + classifier.bktsize[i]);
             if (begin_is_home) {
                 // uneven recursion level, we have to move the result
-                memcpy(begin + offset, out_begin + offset, size*sizeof(value_type));
+                std::move(out_begin + offset,
+                          out_begin + classifier.bktsize[i],
+                          begin + offset);
             }
         } else {
             // large bucket, apply sample sort recursively

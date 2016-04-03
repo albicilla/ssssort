@@ -54,7 +54,7 @@ double run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
     Timer timer;
     for (size_t it = 0; it < iterations; ++it) {
         // reset data and timer
-        memcpy(data, copy, size * sizeof(T));
+        std::copy(copy, copy+size, data);
         if (reset_out)
             memset(out, 0, size * sizeof(T));
         timer.reset();
@@ -80,7 +80,7 @@ size_t benchmark(size_t size, size_t iterations, Generator generator,
     size = generator(data, size);
 
     // create a copy to be able to sort it multiple times
-    memcpy(copy, data, size * sizeof(T));
+    std::copy(data, data+size, copy);
     double t_generate = timer.get_and_reset();
 
     // 1. Super Scalar Sample Sort
