@@ -328,6 +328,7 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
     if (n < 1024) {
         // base case
         std::sort(begin, end);
+        std::move(begin, end, out_begin);
         return;
     }
 
