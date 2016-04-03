@@ -1,6 +1,6 @@
 FLAGS=-std=c++14 -Wall -Wextra -Werror
 
-all: debug string_debug
+all: release
 
 debug:
 	$(CXX) $(FLAGS) -O0 -ggdb -o sort sort.cpp

@@ -37,6 +37,9 @@
 #include <iterator>
 #include <random>
 
+
+namespace ssssort {
+
 /**
  * logBuckets determines how many splitters are used.  Sample Sort partitions
  * the data into buckets, whose number is typically a power of two.  Thus, we
@@ -359,4 +362,6 @@ void ssssort(Iterator begin, Iterator end) {
     ssssort_int<Iterator, value_type>(begin, end, out, bktout, true);
     delete[] bktout;
     delete[] out;
+}
+
 }

@@ -86,7 +86,7 @@ size_t benchmark(size_t size, size_t iterations, Generator generator,
     // 1. Super Scalar Sample Sort
     double t_ssssort = run(data, copy, out, size,
                            [](T* data, T* out, size_t size)
-                           { ssssort(data, data + size, out); },
+                           { ssssort::ssssort(data, data + size, out); },
                            iterations, "ssssort: ");
 
     // 2. std::sort

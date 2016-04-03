@@ -37,7 +37,24 @@
 
 #include "benchmark.h"
 
+// Change this to some other integral type to test other data types
+using data_t = int;
+
 int main(int argc, char *argv[]) {
+    if (argc > 1 && std::string{argv[1]} == "-h") {
+        std::cout << "Usage: " << argv[0]
+                  << " [iteratons] [statistics output file]" << std::endl
+                  << "Defaults are 10 iterations and output to stats.txt"
+                  << std::endl;
+        return 0;
+    }
+
+    std::cout << "This benchmark suite writes output for SqlPlotTools to allow "
+              << "for easy plotting." << std::endl << "Grab a copy at "
+              << "https://github.com/bingmann/sqlplot-tools, point it to "
+              << "speed.plot and run gnuplot on it!" << std::endl;
+
+    // Parse flags
     size_t iterations = 10;
     if (argc > 1) iterations = atoi(argv[1]);
 
@@ -49,8 +66,8 @@ int main(int argc, char *argv[]) {
         stat_stream->open(stat_file);
     }
 
-    using data_t = int;
 
+    // Run Benchmarks
     benchmark_generator<data_t>([](auto data, size_t size){
             using T = std::remove_reference_t<decltype(*data)>;
             std::mt19937 rng{ std::random_device{}() };
