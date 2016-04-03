@@ -19,13 +19,13 @@ required comparison.
 ![sorting random integers](plots/random.png)
 
 `std::sort` is awfully fast on data that is already sorted (both
-[in the right](plots/sorted.png) and [reverse order](plots/reverse.png). We
+[in the right](plots/sorted.png) and [reverse order](plots/reverse.png)). We
 can't match that.  However, as soon as even 0.1% of elements aren't in the right
 place, its advantage [breaks down immediately](plots/99.9pcsorted)!  This is
 also true when the first 99% of the array are sorted, and only the
 [last 1% contains random data](plots/99pctail.png).
 
-You can find plots for some more workloads in the [benchmarks](benchmarks/)
+You can find plots for some more workloads in the [plots](plots/)
 folder, or suggest new benchmarks by filing an issue.
 
 We performed our experiments on a beefy machine with dual Intel Xeon E5-2670 v3
