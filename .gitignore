@@ -1,6 +1,8 @@
 qsort/
 sort
 sort_*
+strings
+strings_*
 G*
 perf.*
 *.txt
