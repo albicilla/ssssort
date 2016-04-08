@@ -122,7 +122,8 @@ struct Sampler {
  * Classify elements into buckets. Template parameter treebits specifies the
  * log2 of the number of buckets (= 1 << treebits).
  */
-template <typename Iterator, typename value_type, size_t treebits = logBuckets>
+template <typename InputIterator,  typename OutputIterator, typename value_type,
+          size_t treebits = logBuckets>
 struct Classifier {
     const size_t num_splitters = (1 << treebits) - 1;
     const size_t splitters_size = 1 << treebits;
@@ -178,7 +179,7 @@ struct Classifier {
      * is a good choice usually.
      */
     template <int U>
-    inline void find_bucket_unroll(Iterator key, bucket_t* __restrict__ obkt)
+    inline void find_bucket_unroll(InputIterator key, bucket_t* __restrict__ obkt)
     {
         bucket_t i[U];
         for (int u = 0; u < U; ++u) i[u] = 1;
@@ -196,10 +197,10 @@ struct Classifier {
     }
 
     /// classify all elements by pushing them down the tree and saving bucket id
-    inline void classify(Iterator begin, Iterator end,
+    inline void classify(InputIterator begin, InputIterator end,
                          bucket_t* __restrict__ bktout = nullptr)  {
         if (bktout == nullptr) bktout = this->bktout;
-        for (Iterator it = begin; it != end;) {
+        for (InputIterator it = begin; it != end;) {
             bucket_t bucket = find_bucket(*it++);
             *bktout++ = bucket;
             bktsize[bucket]++;
@@ -209,9 +210,9 @@ struct Classifier {
     /// Classify all elements with unrolled bucket finding implementation
     template <int U>
     inline void
-    classify_unroll(Iterator begin, Iterator end) {
+    classify_unroll(InputIterator begin, InputIterator end) {
         bucket_t* bktout = this->bktout;
-        Iterator it = begin;
+        InputIterator it = begin;
         for (; it + U < end; it += U, bktout += U) {
             find_bucket_unroll<U>(it, bktout);
         }
@@ -226,7 +227,8 @@ struct Classifier {
      */
     template <int U>
     inline void
-    distribute(Iterator in_begin, Iterator in_end, Iterator out_begin)
+    distribute(InputIterator in_begin, InputIterator in_end,
+               OutputIterator out_begin)
     {
         // exclusive prefix sum
         for (size_t i = 0, sum = 0; i < numBuckets; ++i) {
@@ -266,15 +268,16 @@ inline size_t oversampling_factor(size_t n) {
  *
  * It is assumed that the range out_begin to out_begin + (end - begin) is valid.
  */
-template <typename Iterator, typename value_type>
-void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
+template <typename InputIterator, typename OutputIterator, typename value_type>
+void ssssort_int(InputIterator begin, InputIterator end,
+                 OutputIterator out_begin,
                  bucket_t* __restrict__ bktout, bool begin_is_home) {
     const size_t n = end - begin;
 
     // draw and sort sample
     const size_t sample_size = oversampling_factor(n) * numBuckets;
     value_type *samples = new value_type[sample_size];
-    Sampler<Iterator, value_type>::draw_sample(begin, end, samples, sample_size);
+    Sampler<InputIterator, value_type>::draw_sample(begin, end, samples, sample_size);
     std::sort(samples, samples + sample_size);
 
     if (samples[0] == samples[sample_size - 1]) {
@@ -288,7 +291,8 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
     }
 
     // classify elements
-    Classifier<Iterator, value_type, logBuckets> classifier(samples, sample_size, bktout);
+    Classifier<InputIterator, OutputIterator, value_type, logBuckets>
+        classifier(samples, sample_size, bktout);
     delete[] samples;
     classifier.template classify_unroll<4>(begin, end);
     classifier.template distribute<4>(begin, end, out_begin);
@@ -310,7 +314,7 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
             }
         } else {
             // large bucket, apply sample sort recursively
-            ssssort_int<Iterator, value_type>(
+            ssssort_int<InputIterator, OutputIterator, value_type>(
                 out_begin + offset,
                 out_begin + classifier.bktsize[i], // = out_begin + offset + size
                 begin + offset,
@@ -327,8 +331,9 @@ void ssssort_int(Iterator begin, Iterator end, Iterator out_begin,
  * The elements in [begin, end) will be permuted after calling this.
  * Uses <= 2*(end-begin)*sizeof(value_type) bytes of additional memory.
  */
-template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
-void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
+template <typename InputIterator, typename OutputIterator,
+          typename value_type = typename std::iterator_traits<InputIterator>::value_type>
+void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
     size_t n = end - begin;
     if (n < 1024) {
         // base case
@@ -338,7 +343,7 @@ void ssssort(Iterator begin, Iterator end, Iterator out_begin) {
     }
 
     bucket_t *bktout = new bucket_t[n];
-    ssssort_int<Iterator, value_type>(begin, end, out_begin, bktout, false);
+    ssssort_int<InputIterator, OutputIterator, value_type>(begin, end, out_begin, bktout, false);
     delete[] bktout;
 }
 
@@ -359,7 +364,7 @@ void ssssort(Iterator begin, Iterator end) {
 
     value_type* out = new value_type[n];
     bucket_t *bktout = new bucket_t[n];
-    ssssort_int<Iterator, value_type>(begin, end, out, bktout, true);
+    ssssort_int<Iterator, value_type*, value_type>(begin, end, out, bktout, true);
     delete[] bktout;
     delete[] out;
 }
