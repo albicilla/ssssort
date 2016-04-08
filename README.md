@@ -32,6 +32,13 @@ We performed our experiments on a beefy machine with dual Intel Xeon E5-2670 v3
 Haswell 12-core CPUs and 128 GiB of DDR4-2133, but only used one core to keep
 things reproducible. All numbers are averages over 100 runs.
 
+## Usage
+
+Just include `ssssort.h` and use `ssssort::ssssort(Iterator begin, Iterator end)`.
+Or, if you want the output to be written somewhere else, use the version with
+three iterators: `ssssort::ssssort(InputIt begin, InputIt end, OutputIt out_begin)`.
+Note that the input range will be in an arbitrary order after calling this.
+
 ## Implementation
 
 The implementation is fairly close to the paper, but uses `std::sort` as base
