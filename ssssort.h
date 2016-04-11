@@ -188,11 +188,10 @@ struct Classifier {
             // step on all U keys
             for (int u = 0; u < U; ++u) i[u] = step(i[u], *(key + u));
         }
-        bucket_t bucket[U];
         for (int u = 0; u < U; ++u) {
-            bucket[u] = i[u] - splitters_size;
-            obkt[u] = bucket[u];
-            bktsize[bucket[u]]++;
+            i[u] -= splitters_size;
+            obkt[u] = i[u];
+            bktsize[i[u]]++;
         }
     }
 
