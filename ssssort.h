@@ -302,8 +302,14 @@ void ssssort_int(InputIterator begin, InputIterator end,
     for (size_t i = 0; i < numBuckets; ++i) {
         auto size = classifier.bktsize[i] - offset;
         if (size == 0) continue; // empty bucket
-        if (size <= 1024) {
-            // small bucket, use std::sort base case
+        if (size <= 1024 || (n / size) < 2) {
+            // Either it's a small bucket, or very large (more than half of all
+            // elements). In either case, we fall back to std::sort.  The reason
+            // we're falling back to std::sort in the second case is that the
+            // partitioning into buckets is obviously not working (likely
+            // because a single value made up the majority of the items in the
+            // previous recursion level, but it's also surrounded by lots of
+            // other infrequent elements, passing the "all-samples-equal" test.
             std::sort(out_begin + offset, out_begin + classifier.bktsize[i]);
             if (begin_is_home) {
                 // uneven recursion level, we have to move the result
