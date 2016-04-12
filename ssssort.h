@@ -283,8 +283,8 @@ void ssssort_int(InputIterator begin, InputIterator end,
         // All samples are equal. Clean up and fall back to std::sort
         delete[] samples;
         std::sort(begin, end);
-        if (begin_is_home) {
-            std::move(out_begin, out_begin + n, begin);
+        if (!begin_is_home) {
+            std::move(begin, end, out_begin);
         }
         return;
     }
