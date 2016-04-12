@@ -138,6 +138,19 @@ int main(int argc, char *argv[]) {
         }, "reverse", iterations, stat_stream);
 
 
+    // Benchmark due to Armin Weiß at Universität Stuttgart
+    benchmark_generator<data_t>([](auto data, size_t size) {
+            using T = std::remove_reference_t<decltype(*data)>;
+            size_t flogn = 0, s = size;
+            while (s >>= 1) ++flogn; // floor(log2(n))
+
+            for (size_t i = 0; i < size; ++i) {
+                size_t j = i;
+                j *= j; j *= j; j *= j; j *= j;
+                data[i] = static_cast<T>(j % flogn);
+            }
+        }, "many-dupes", iterations, stat_stream);
+
     benchmark_generator<data_t>([](auto data, size_t size){
             for (size_t i = 0; i < size; ++i) {
                 data[i] = 1;

@@ -1,6 +1,7 @@
 # IMPORT-DATA stats stats.txt
 
 set terminal pdf size 13.33cm,10cm linewidth 2.0
+set output "speed.pdf"
 
 set style line 11 lc rgb "#333333" lt 1
 set border 3 back ls 11
@@ -118,6 +119,14 @@ set title 'Super Scalar Sample Sort Test: Reverse Sorted'
 plot \
     'speed-data.txt' index 16 title "algo=ssssort" with linespoints, \
     'speed-data.txt' index 17 title "algo=stdsort" with linespoints
+
+
+set title 'Super Scalar Sample Sort Test: Many duplicates (A[i]=i^{16} mod floor(log_2 n)'
+## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
+## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
+## MULTIPLOT
+## FROM stats WHERE name = "ones"
+## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
 
 
 set title 'Super Scalar Sample Sort Test: All Ones'
