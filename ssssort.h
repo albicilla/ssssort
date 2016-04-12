@@ -319,7 +319,7 @@ void ssssort_int(InputIterator begin, InputIterator end,
             }
         } else {
             // large bucket, apply sample sort recursively
-            ssssort_int<InputIterator, OutputIterator, value_type>(
+            ssssort_int<OutputIterator, InputIterator, value_type>(
                 out_begin + offset,
                 out_begin + classifier.bktsize[i], // = out_begin + offset + size
                 begin + offset,
