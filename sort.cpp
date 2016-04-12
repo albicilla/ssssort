@@ -151,6 +151,29 @@ int main(int argc, char *argv[]) {
             }
         }, "many-dupes", iterations, stat_stream);
 
+
+    /* Benchmark due to Armin Weiß at Universität Stuttgart
+     *
+     * This is an interesting case because the distribution has few very large
+     * spikes and lots of elements around them. Thus the buckets aren't
+     * all-equal, and without a break on big buckets, it would recurse a lot.
+     */
+    benchmark_generator<data_t>([](auto data, size_t size){
+            using T = std::remove_reference_t<decltype(*data)>;
+
+            uint64_t prev_pow_2 = 1;
+            while (2 * prev_pow_2 <= size) { prev_pow_2 *= 2; }
+            const size_t offset_zw = prev_pow_2 / 2;
+
+            for (size_t i = 0; i < size; i++) {
+                uint64_t temp = ((int64_t)i*(int64_t)i) % prev_pow_2;
+                temp = (temp*temp) % prev_pow_2;
+                data[i] = static_cast<T>(
+                    (offset_zw + (int64_t)temp*(int64_t)temp) % prev_pow_2);
+            }
+        }, "few-spikes-with-noise", iterations, stat_stream);
+
+
     benchmark_generator<data_t>([](auto data, size_t size){
             for (size_t i = 0; i < size; ++i) {
                 data[i] = 1;
