@@ -123,7 +123,7 @@ struct Sampler {
  * log2 of the number of buckets (= 1 << treebits).
  */
 template <typename InputIterator,  typename OutputIterator, typename value_type,
-          size_t treebits = logBuckets>
+          size_t treebits = logBuckets, typename bktsize_t = size_t>
 struct Classifier {
     const size_t num_splitters = (1 << treebits) - 1;
     const size_t splitters_size = 1 << treebits;
@@ -132,7 +132,7 @@ struct Classifier {
     /// maps items to buckets
     bucket_t* const bktout;
     /// counts bucket sizes
-    size_t* const bktsize;
+    bktsize_t* const bktsize;
 
     /**
      * Constructs the splitter tree from the given samples
@@ -140,7 +140,7 @@ struct Classifier {
     Classifier(const value_type *samples, const size_t sample_size,
                bucket_t* const bktout)
         : bktout(bktout)
-        , bktsize(new size_t[1 << treebits])
+        , bktsize(new bktsize_t[1 << treebits])
     {
         std::fill(bktsize, bktsize + (1 << treebits), 0);
         build_recursive(samples, samples + sample_size, 1);
@@ -231,7 +231,7 @@ struct Classifier {
     {
         // exclusive prefix sum
         for (size_t i = 0, sum = 0; i < numBuckets; ++i) {
-            size_t curr_size = bktsize[i];
+            bktsize_t curr_size = bktsize[i];
             bktsize[i] = sum;
             sum += curr_size;
         }
