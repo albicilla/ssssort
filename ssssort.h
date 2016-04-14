@@ -293,7 +293,7 @@ void ssssort_int(InputIterator begin, InputIterator end,
     Classifier<InputIterator, OutputIterator, value_type, logBuckets>
         classifier(samples, sample_size, bktout);
     delete[] samples;
-    classifier.template classify_unroll<4>(begin, end);
+    classifier.template classify_unroll<6>(begin, end);
     classifier.template distribute<4>(begin, end, out_begin);
 
     // Recursive calls. offset is the offset into the arrays (/iterators) for
