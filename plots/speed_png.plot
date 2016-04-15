@@ -1,6 +1,5 @@
 # IMPORT-DATA stats ../stats.txt
 
-#set terminal pdf size 13.33cm,10cm linewidth 2.0
 set terminal pngcairo enhanced font 'Lato,10'
 
 set style line 11 lc rgb "#333333" lt 1
@@ -129,6 +128,29 @@ plot \
     'speed_png-data.txt' index 16 title "algo=ssssort" with linespoints, \
     'speed_png-data.txt' index 17 title "algo=stdsort" with linespoints
 
+set output "many-dupes.png"
+set title 'Super Scalar Sample Sort Test: Many duplicates (A[i]=i^{16} mod floor(log_2 n)'
+## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
+## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
+## MULTIPLOT
+## FROM stats WHERE name = "many-dupes"
+## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
+plot \
+    'speed_png-data.txt' index 18 title "algo=ssssort" with linespoints, \
+    'speed_png-data.txt' index 19 title "algo=stdsort" with linespoints
+
+
+set output "few-spikes-with-noise.png"
+set title 'Super Scalar Sample Sort Test: Few spikes, lots of noise'
+## MULTIPLOT(algo) SELECT LOG(2, size) AS x,
+## MEDIAN(time / (size * log(2, size)) * 1e6) AS y,
+## MULTIPLOT
+## FROM stats WHERE name = "few-spikes-with-noise"
+## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
+plot \
+    'speed_png-data.txt' index 20 title "algo=ssssort" with linespoints, \
+    'speed_png-data.txt' index 21 title "algo=stdsort" with linespoints
+
 
 set output "ones.png"
 set title 'Super Scalar Sample Sort Test: All Ones'
@@ -137,3 +159,6 @@ set title 'Super Scalar Sample Sort Test: All Ones'
 ## MULTIPLOT
 ## FROM stats WHERE name = "ones"
 ## GROUP BY MULTIPLOT, x ORDER BY MULTIPLOT, x
+plot \
+    'speed_png-data.txt' index 22 title "algo=ssssort" with linespoints, \
+    'speed_png-data.txt' index 23 title "algo=stdsort" with linespoints
