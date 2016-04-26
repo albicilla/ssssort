@@ -114,6 +114,15 @@ size_t benchmark(size_t size, size_t iterations, Generator generator,
     std::copy(data, data+size, copy);
     double t_generate = timer.get_and_reset();
 
+    // Number of iterations
+    if (iterations == static_cast<size_t>(-1)) {
+        if (size < (1<<16)) iterations = 1000;
+        else if (size < (1<<18)) iterations = 500;
+        else if (size < (1<<20)) iterations = 250;
+        else if (size < (1<<24)) iterations = 100;
+        else iterations = 50;
+    }
+
     // 1. Super Scalar Sample Sort
     auto t_ssssort = run(data, copy, out, size,
                          [](T* data, T* out, size_t size)
