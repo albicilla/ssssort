@@ -41,6 +41,12 @@
 namespace ssssort {
 
 /**
+ * Bucket or input size below which to fall back to the base case sorter
+ * (std::sort)
+ */
+constexpr size_t basecase_size = 1024;
+
+/**
  * logBuckets determines how many splitters are used.  Sample Sort partitions
  * the data into buckets, whose number is typically a power of two.  Thus, we
  * specify its base-2 logarithms.  For the partitioning into k buckets, we then
@@ -302,7 +308,7 @@ void ssssort_int(InputIterator begin, InputIterator end,
     for (size_t i = 0; i < numBuckets; ++i) {
         auto size = classifier.bktsize[i] - offset;
         if (size == 0) continue; // empty bucket
-        if (size <= 1024 || (n / size) < 2) {
+        if (size <= basecase_size || (n / size) < 2) {
             // Either it's a small bucket, or very large (more than half of all
             // elements). In either case, we fall back to std::sort.  The reason
             // we're falling back to std::sort in the second case is that the
@@ -340,7 +346,7 @@ template <typename InputIterator, typename OutputIterator,
           typename value_type = typename std::iterator_traits<InputIterator>::value_type>
 void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
     size_t n = end - begin;
-    if (n < 1024) {
+    if (n < basecase_size) {
         // base case
         std::sort(begin, end);
         std::move(begin, end, out_begin);
@@ -361,7 +367,7 @@ template <typename Iterator, typename value_type = typename std::iterator_traits
 void ssssort(Iterator begin, Iterator end) {
     const size_t n = end - begin;
 
-    if (n < 1024) {
+    if (n < basecase_size) {
         // base case
         std::sort(begin, end);
         return;
