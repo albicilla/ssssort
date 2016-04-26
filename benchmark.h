@@ -144,12 +144,17 @@ size_t benchmark(size_t size, size_t iterations, Generator generator,
 
 template <typename T, typename Generator>
 void benchmark_generator(Generator generator, const std::string &name,
-                         size_t iterations, std::ofstream *stat_stream) {
+                         size_t iterations, std::ofstream *stat_stream,
+                         size_t max_log_size = 27) {
     auto wrapped_generator = [generator](auto data, size_t size) {
         generator(data, size);
         return size;
     };
-    for (size_t log_size = 10; log_size < 27; ++log_size) {
+
+    // warmup
+    benchmark<T>(1<<10, 10, wrapped_generator, "warmup", nullptr);
+
+    for (size_t log_size = 10; log_size < max_log_size; ++log_size) {
         size_t size = 1 << log_size;
         benchmark<T>(size, iterations, wrapped_generator, name, stat_stream);
     }
@@ -158,8 +163,12 @@ void benchmark_generator(Generator generator, const std::string &name,
 
 template <typename T, typename Generator>
 void sized_benchmark_generator(Generator generator, const std::string &name,
-                               size_t iterations, std::ofstream *stat_stream) {
-    for (size_t log_size = 10; log_size < 27; ++log_size) {
+                               size_t iterations, std::ofstream *stat_stream,
+                               size_t max_log_size = 27) {
+    // warmup
+    benchmark<T>(1<<10, 10, generator, "warmup", nullptr);
+
+    for (size_t log_size = 10; log_size < max_log_size; ++log_size) {
         size_t size = 1 << log_size;
         auto last_size = benchmark<T>(size, iterations, generator, name, stat_stream);
         if (last_size < size) break;

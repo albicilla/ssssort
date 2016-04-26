@@ -66,15 +66,20 @@ int main(int argc, char *argv[]) {
         stat_stream->open(stat_file);
     }
 
+    auto random_gen = [](auto data, size_t size){
+        using T = std::remove_reference_t<decltype(*data)>;
+        std::mt19937 rng{ std::random_device{}() };
+        for (size_t i = 0; i < size; ++i) {
+            data[i] = static_cast<T>(rng());
+        }
+    };
+
+    // Warmup
+    benchmark_generator<data_t>(random_gen, "warmup", 3, stat_stream, 20);
+
 
     // Run Benchmarks
-    benchmark_generator<data_t>([](auto data, size_t size){
-            using T = std::remove_reference_t<decltype(*data)>;
-            std::mt19937 rng{ std::random_device{}() };
-            for (size_t i = 0; i < size; ++i) {
-                data[i] = static_cast<T>(rng());
-            }
-        }, "random", iterations, stat_stream);
+    benchmark_generator<data_t>(random_gen, "random", iterations, stat_stream);
 
 
     // nearly sorted data generator factory
