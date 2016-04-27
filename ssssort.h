@@ -79,7 +79,8 @@ struct Sampler {
                                         value_type* samples, size_t sample_size)
     {
         // Random generator
-        size_t max = end - begin;
+        assert(begin <= end);
+        size_t max = static_cast<size_t>(end - begin);
         assert(gen.max() >= max);
 
         for (size_t i = 0; i < sample_size; ++i) {
@@ -97,7 +98,8 @@ struct Sampler {
                                        value_type* samples, size_t sample_size)
     {
         // Random generator
-        size_t size = end - begin;
+        assert(begin <= end);
+        const size_t size = static_cast<size_t>(end - begin);
         assert(gen.max() >= size);
 
         for (size_t i = 0; i < sample_size; ++i) {
@@ -158,7 +160,7 @@ struct Classifier {
 
     /// recursively builds splitter tree. Used by constructor.
     void build_recursive(const value_type* lo, const value_type* hi, size_t pos) {
-        const value_type *mid = lo + (ssize_t)(hi - lo)/2;
+        const value_type *mid = lo + (hi - lo)/2;
         splitters[pos] = *mid;
 
         if (2 * pos < num_splitters) {
@@ -176,7 +178,7 @@ struct Classifier {
     constexpr bucket_t find_bucket(const value_type &key) const {
         bucket_t i = 1;
         while (i <= num_splitters) i = step(i, key);
-        return (i - splitters_size);
+        return (i - static_cast<bucket_t>(splitters_size));
     }
 
     /**
@@ -230,21 +232,22 @@ struct Classifier {
      * storage for which begins at out_begin.  Need to class classify or
      * classify_unroll before to fill the bktout and bktsize arrays.
      */
-    template <int U>
+    template <size_t U>
     inline void
     distribute(InputIterator in_begin, InputIterator in_end,
                OutputIterator out_begin)
     {
+        assert(in_begin <= in_end);
         // exclusive prefix sum
         for (size_t i = 0, sum = 0; i < numBuckets; ++i) {
             bktsize_t curr_size = bktsize[i];
             bktsize[i] = sum;
             sum += curr_size;
         }
-        const size_t n = in_end - in_begin;
+        const size_t n = static_cast<size_t>(in_end - in_begin);
         size_t i;
         for (i = 0; i + U < n; i += U) {
-            for (int u = 0; u < U; ++u) {
+            for (size_t u = 0; u < U; ++u) {
                 *(out_begin + bktsize[bktout[i+u]]++) = std::move(*(in_begin + i + u));
             }
         }
@@ -277,7 +280,8 @@ template <typename InputIterator, typename OutputIterator, typename value_type>
 void ssssort_int(InputIterator begin, InputIterator end,
                  OutputIterator out_begin,
                  bucket_t* __restrict__ bktout, bool begin_is_home) {
-    const size_t n = end - begin;
+    assert(begin <= end);
+    const size_t n = static_cast<size_t>(end - begin);
 
     // draw and sort sample
     const size_t sample_size = oversampling_factor(n) * numBuckets;
@@ -345,7 +349,8 @@ void ssssort_int(InputIterator begin, InputIterator end,
 template <typename InputIterator, typename OutputIterator,
           typename value_type = typename std::iterator_traits<InputIterator>::value_type>
 void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
-    size_t n = end - begin;
+    assert(begin <= end);
+    const size_t n = static_cast<size_t>(end - begin);
     if (n < basecase_size) {
         // base case
         std::sort(begin, end);
@@ -365,7 +370,8 @@ void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
  */
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
 void ssssort(Iterator begin, Iterator end) {
-    const size_t n = end - begin;
+    assert(begin <= end);
+    const size_t n = static_cast<size_t>(end - begin);
 
     if (n < basecase_size) {
         // base case

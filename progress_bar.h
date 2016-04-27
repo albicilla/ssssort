@@ -41,11 +41,11 @@ public:
     /// \param barwidth the width of the bar in characters
     progress_bar(const unsigned long long max, const std::string &extra,
                  std::ostream &out = std::cout, int barwidth = 70)
-        : max(max)
+        : out(out)
+        , extra(extra)
+        , max(max)
         , pos(0)
         , lastprogress(-1)
-        , extra(extra)
-        , out(out)
         , barwidth(barwidth)
         , do_draw((out.rdbuf() == std::cout.rdbuf() || out.rdbuf() == std::cerr.rdbuf())) {}
 
@@ -57,7 +57,7 @@ public:
 
     /// set progress to a position
     /// \param newpos position to set the progress to (steps, not percent!)
-    void stepto(long long newpos) {
+    void stepto(unsigned long long newpos) {
         pos = newpos;
         draw();
     }
@@ -70,8 +70,8 @@ public:
     void undraw() {
         out << "\r";
         // "[" + "] " + percent (3) + " %" = up to 8 chars
-        uint width = barwidth + 8 + extra.length();
-        for (uint i = 0; i < width; ++i) {
+        int width = barwidth + 8 + static_cast<int>(extra.length());
+        for (int i = 0; i < width; ++i) {
             out << " ";
         }
         out << "\r";
@@ -83,7 +83,7 @@ protected:
     /// Draw the progress bar to the output stream
     void draw() {
         if (!do_draw) return;
-        int progress = (int)((pos * 100) / max);
+        int progress = static_cast<int>((pos * 100) / max);
         if (progress == lastprogress) return;
 
         out << extra << "[";
@@ -103,11 +103,11 @@ protected:
     }
 
 private:
+    std::ostream &out;
+    const std::string &extra;
     unsigned long long max;
     unsigned long long pos;
     int lastprogress;
-    const std::string &extra;
-    std::ostream &out;
     const int barwidth;
     const bool do_draw;
 };

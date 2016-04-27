@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 
     // Parse flags
     size_t iterations = 10;
-    if (argc > 1) iterations = atoi(argv[1]);
+    if (argc > 1) iterations = static_cast<size_t>(atol(argv[1]));
 
     std::string stat_file = "stats.txt";
     if (argc > 2) stat_file = std::string{argv[2]};
@@ -88,9 +88,9 @@ int main(int argc, char *argv[]) {
             using T = std::remove_reference_t<decltype(*data)>;
             std::mt19937 rng{ std::random_device{}() };
             // fill with sorted data, using entire range of RNG
-            T factor = static_cast<T>(static_cast<double>(rng.max()) / size);
+            size_t factor = static_cast<size_t>(static_cast<double>(rng.max()) / size);
             for (size_t i = 0; i < size; ++i) {
-                data[i] = i * factor;
+                data[i] = static_cast<T>(i * factor);
             }
             // set 1/rfrac of the items to random values
             for (size_t i = 0; i < size/rfrac; ++i) {
@@ -112,9 +112,9 @@ int main(int argc, char *argv[]) {
             std::mt19937 rng{ std::random_device{}() };
             // fill with sorted data, using entire range of RNG
             size_t ordered_max = size - (size / rfrac);
-            T factor = static_cast<T>(static_cast<double>(rng.max()) / ordered_max);
+            size_t factor = static_cast<size_t>(static_cast<double>(rng.max()) / ordered_max);
             for (size_t i = 0; i < ordered_max; ++i) {
-                data[i] = i * factor;
+                data[i] = static_cast<T>(i * factor);
             }
             // set 1/rfrac of the items to random values
             for (size_t i = ordered_max; i < size; ++i) {
@@ -171,10 +171,10 @@ int main(int argc, char *argv[]) {
             const size_t offset_zw = prev_pow_2 / 2;
 
             for (size_t i = 0; i < size; i++) {
-                uint64_t temp = ((int64_t)i*(int64_t)i) % prev_pow_2;
+                uint64_t temp = (i*i) % prev_pow_2;
                 temp = (temp*temp) % prev_pow_2;
                 data[i] = static_cast<T>(
-                    (offset_zw + (int64_t)temp*(int64_t)temp) % prev_pow_2);
+                    (offset_zw + temp*temp) % prev_pow_2);
             }
         }, "few-spikes-with-noise", iterations, stat_stream);
 
