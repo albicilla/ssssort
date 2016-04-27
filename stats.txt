@@ -1,408 +1,380 @@
-RESULT algo=ssssort name=random size=1024 iterations=100 time=0.07032 t_generate=0.022 t_verify=0.001 correct=1
-RESULT algo=stdsort name=random size=1024 iterations=100 time=0.03228 t_generate=0.022 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=2048 iterations=100 time=0.06959 t_generate=0.017 t_verify=0.002 correct=1
-RESULT algo=stdsort name=random size=2048 iterations=100 time=0.07082 t_generate=0.017 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=4096 iterations=100 time=0.10978 t_generate=0.023 t_verify=0.004 correct=1
-RESULT algo=stdsort name=random size=4096 iterations=100 time=0.17332 t_generate=0.023 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=8192 iterations=100 time=0.22829 t_generate=0.045 t_verify=0.008 correct=1
-RESULT algo=stdsort name=random size=8192 iterations=100 time=0.38087 t_generate=0.045 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=16384 iterations=100 time=0.51107 t_generate=0.083 t_verify=0.016 correct=1
-RESULT algo=stdsort name=random size=16384 iterations=100 time=0.81656 t_generate=0.083 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=32768 iterations=100 time=1.13047 t_generate=0.162 t_verify=0.034 correct=1
-RESULT algo=stdsort name=random size=32768 iterations=100 time=1.73945 t_generate=0.162 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=65536 iterations=100 time=2.4704 t_generate=0.392 t_verify=0.068 correct=1
-RESULT algo=stdsort name=random size=65536 iterations=100 time=3.70178 t_generate=0.392 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=131072 iterations=100 time=5.25922 t_generate=0.759 t_verify=0.196 correct=1
-RESULT algo=stdsort name=random size=131072 iterations=100 time=7.86827 t_generate=0.759 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=262144 iterations=100 time=9.83731 t_generate=1.542 t_verify=0.388 correct=1
-RESULT algo=stdsort name=random size=262144 iterations=100 time=16.7939 t_generate=1.542 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=524288 iterations=100 time=17.5581 t_generate=3.119 t_verify=0.837 correct=1
-RESULT algo=stdsort name=random size=524288 iterations=100 time=35.0794 t_generate=3.119 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=1048576 iterations=100 time=35.5402 t_generate=6.006 t_verify=1.498 correct=1
-RESULT algo=stdsort name=random size=1048576 iterations=100 time=74.059 t_generate=6.006 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=2097152 iterations=100 time=76.4829 t_generate=11.254 t_verify=2.801 correct=1
-RESULT algo=stdsort name=random size=2097152 iterations=100 time=154.235 t_generate=11.254 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=4194304 iterations=100 time=190.907 t_generate=21.985 t_verify=5.506 correct=1
-RESULT algo=stdsort name=random size=4194304 iterations=100 time=321.717 t_generate=21.985 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=8388608 iterations=100 time=421.981 t_generate=49.51 t_verify=10.441 correct=1
-RESULT algo=stdsort name=random size=8388608 iterations=100 time=669.279 t_generate=49.51 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=16777216 iterations=100 time=927.6 t_generate=98.812 t_verify=20.839 correct=1
-RESULT algo=stdsort name=random size=16777216 iterations=100 time=1404.78 t_generate=98.812 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=33554432 iterations=100 time=1926.54 t_generate=197.045 t_verify=41.497 correct=1
-RESULT algo=stdsort name=random size=33554432 iterations=100 time=2934.23 t_generate=197.045 t_verify=0 correct=1
-RESULT algo=ssssort name=random size=67108864 iterations=100 time=3627.8 t_generate=393.427 t_verify=83.027 correct=1
-RESULT algo=stdsort name=random size=67108864 iterations=100 time=6046.96 t_generate=393.427 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=1024 iterations=100 time=0.02586 t_generate=0.013 t_verify=0.001 correct=1
-RESULT algo=stdsort name=80pcsorted size=1024 iterations=100 time=0.01091 t_generate=0.013 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=2048 iterations=100 time=0.04176 t_generate=0.013 t_verify=0.002 correct=1
-RESULT algo=stdsort name=80pcsorted size=2048 iterations=100 time=0.03804 t_generate=0.013 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=4096 iterations=100 time=0.08351 t_generate=0.025 t_verify=0.004 correct=1
-RESULT algo=stdsort name=80pcsorted size=4096 iterations=100 time=0.09779 t_generate=0.025 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=8192 iterations=100 time=0.17557 t_generate=0.049 t_verify=0.01 correct=1
-RESULT algo=stdsort name=80pcsorted size=8192 iterations=100 time=0.23627 t_generate=0.049 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=16384 iterations=100 time=0.38076 t_generate=0.097 t_verify=0.016 correct=1
-RESULT algo=stdsort name=80pcsorted size=16384 iterations=100 time=0.47997 t_generate=0.097 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=32768 iterations=100 time=0.82617 t_generate=0.177 t_verify=0.034 correct=1
-RESULT algo=stdsort name=80pcsorted size=32768 iterations=100 time=1.02727 t_generate=0.177 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=65536 iterations=100 time=1.79854 t_generate=0.357 t_verify=0.086 correct=1
-RESULT algo=stdsort name=80pcsorted size=65536 iterations=100 time=2.19245 t_generate=0.357 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=131072 iterations=100 time=3.81607 t_generate=0.746 t_verify=0.137 correct=1
-RESULT algo=stdsort name=80pcsorted size=131072 iterations=100 time=4.87132 t_generate=0.746 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=262144 iterations=100 time=8.1036 t_generate=1.469 t_verify=0.281 correct=1
-RESULT algo=stdsort name=80pcsorted size=262144 iterations=100 time=10.0333 t_generate=1.469 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=524288 iterations=100 time=15.4319 t_generate=2.939 t_verify=0.549 correct=1
-RESULT algo=stdsort name=80pcsorted size=524288 iterations=100 time=21.3369 t_generate=2.939 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=1048576 iterations=100 time=29.6128 t_generate=5.888 t_verify=1.151 correct=1
-RESULT algo=stdsort name=80pcsorted size=1048576 iterations=100 time=45.2684 t_generate=5.888 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=2097152 iterations=100 time=61.4421 t_generate=13.317 t_verify=2.614 correct=1
-RESULT algo=stdsort name=80pcsorted size=2097152 iterations=100 time=100.865 t_generate=13.317 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=4194304 iterations=100 time=139.324 t_generate=28.439 t_verify=5.703 correct=1
-RESULT algo=stdsort name=80pcsorted size=4194304 iterations=100 time=187.532 t_generate=28.439 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=8388608 iterations=100 time=296.086 t_generate=65.581 t_verify=10.356 correct=1
-RESULT algo=stdsort name=80pcsorted size=8388608 iterations=100 time=434.934 t_generate=65.581 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=16777216 iterations=100 time=619.925 t_generate=239.524 t_verify=20.879 correct=1
-RESULT algo=stdsort name=80pcsorted size=16777216 iterations=100 time=869.266 t_generate=239.524 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=33554432 iterations=100 time=1288.74 t_generate=594.669 t_verify=41.595 correct=1
-RESULT algo=stdsort name=80pcsorted size=33554432 iterations=100 time=1899.13 t_generate=594.669 t_verify=0 correct=1
-RESULT algo=ssssort name=80pcsorted size=67108864 iterations=100 time=2634.1 t_generate=1305.55 t_verify=83.578 correct=1
-RESULT algo=stdsort name=80pcsorted size=67108864 iterations=100 time=4026.88 t_generate=1305.55 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=1024 iterations=100 time=0.02538 t_generate=0.008 t_verify=0.002 correct=1
-RESULT algo=stdsort name=90pcsorted size=1024 iterations=100 time=0.00936 t_generate=0.008 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=2048 iterations=100 time=0.03898 t_generate=0.008 t_verify=0.002 correct=1
-RESULT algo=stdsort name=90pcsorted size=2048 iterations=100 time=0.03129 t_generate=0.008 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=4096 iterations=100 time=0.07505 t_generate=0.016 t_verify=0.005 correct=1
-RESULT algo=stdsort name=90pcsorted size=4096 iterations=100 time=0.08707 t_generate=0.016 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=8192 iterations=100 time=0.1575 t_generate=0.032 t_verify=0.01 correct=1
-RESULT algo=stdsort name=90pcsorted size=8192 iterations=100 time=0.21753 t_generate=0.032 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=16384 iterations=100 time=0.3401 t_generate=0.068 t_verify=0.017 correct=1
-RESULT algo=stdsort name=90pcsorted size=16384 iterations=100 time=0.42201 t_generate=0.068 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=32768 iterations=100 time=0.74736 t_generate=0.134 t_verify=0.034 correct=1
-RESULT algo=stdsort name=90pcsorted size=32768 iterations=100 time=0.85218 t_generate=0.134 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=65536 iterations=100 time=1.58332 t_generate=0.264 t_verify=0.067 correct=1
-RESULT algo=stdsort name=90pcsorted size=65536 iterations=100 time=1.75427 t_generate=0.264 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=131072 iterations=100 time=3.42236 t_generate=0.559 t_verify=0.171 correct=1
-RESULT algo=stdsort name=90pcsorted size=131072 iterations=100 time=3.96762 t_generate=0.559 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=262144 iterations=100 time=7.59624 t_generate=1.001 t_verify=0.343 correct=1
-RESULT algo=stdsort name=90pcsorted size=262144 iterations=100 time=7.91977 t_generate=1.001 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=524288 iterations=100 time=14.6067 t_generate=2.22 t_verify=0.528 correct=1
-RESULT algo=stdsort name=90pcsorted size=524288 iterations=100 time=16.9866 t_generate=2.22 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=1048576 iterations=100 time=27.5438 t_generate=4.104 t_verify=1.391 correct=1
-RESULT algo=stdsort name=90pcsorted size=1048576 iterations=100 time=36.6468 t_generate=4.104 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=2097152 iterations=100 time=56.9804 t_generate=7.96 t_verify=2.865 correct=1
-RESULT algo=stdsort name=90pcsorted size=2097152 iterations=100 time=78.1746 t_generate=7.96 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=4194304 iterations=100 time=127.522 t_generate=18.959 t_verify=5.525 correct=1
-RESULT algo=stdsort name=90pcsorted size=4194304 iterations=100 time=149.64 t_generate=18.959 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=8388608 iterations=100 time=271.91 t_generate=42.758 t_verify=10.515 correct=1
-RESULT algo=stdsort name=90pcsorted size=8388608 iterations=100 time=358.851 t_generate=42.758 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=16777216 iterations=100 time=565.898 t_generate=139.06 t_verify=21.546 correct=1
-RESULT algo=stdsort name=90pcsorted size=16777216 iterations=100 time=685.783 t_generate=139.06 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=33554432 iterations=100 time=1181.92 t_generate=335.513 t_verify=42.059 correct=1
-RESULT algo=stdsort name=90pcsorted size=33554432 iterations=100 time=1462.72 t_generate=335.513 t_verify=0 correct=1
-RESULT algo=ssssort name=90pcsorted size=67108864 iterations=100 time=2491.99 t_generate=728.842 t_verify=83.087 correct=1
-RESULT algo=stdsort name=90pcsorted size=67108864 iterations=100 time=3104.06 t_generate=728.842 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=1024 iterations=100 time=0.02447 t_generate=0.006 t_verify=0.001 correct=1
-RESULT algo=stdsort name=99pcsorted size=1024 iterations=100 time=0.01112 t_generate=0.006 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=2048 iterations=100 time=0.03851 t_generate=0.005 t_verify=0.002 correct=1
-RESULT algo=stdsort name=99pcsorted size=2048 iterations=100 time=0.02293 t_generate=0.005 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=4096 iterations=100 time=0.06714 t_generate=0.008 t_verify=0.004 correct=1
-RESULT algo=stdsort name=99pcsorted size=4096 iterations=100 time=0.07568 t_generate=0.008 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=8192 iterations=100 time=0.1323 t_generate=0.015 t_verify=0.011 correct=1
-RESULT algo=stdsort name=99pcsorted size=8192 iterations=100 time=0.22652 t_generate=0.015 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=16384 iterations=100 time=0.28917 t_generate=0.036 t_verify=0.029 correct=1
-RESULT algo=stdsort name=99pcsorted size=16384 iterations=100 time=0.45326 t_generate=0.036 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=32768 iterations=100 time=0.74101 t_generate=0.069 t_verify=0.048 correct=1
-RESULT algo=stdsort name=99pcsorted size=32768 iterations=100 time=1.03407 t_generate=0.069 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=65536 iterations=100 time=1.71028 t_generate=0.137 t_verify=0.084 correct=1
-RESULT algo=stdsort name=99pcsorted size=65536 iterations=100 time=1.95444 t_generate=0.137 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=131072 iterations=100 time=3.79498 t_generate=0.286 t_verify=0.157 correct=1
-RESULT algo=stdsort name=99pcsorted size=131072 iterations=100 time=4.48197 t_generate=0.286 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=262144 iterations=100 time=7.80372 t_generate=0.493 t_verify=0.265 correct=1
-RESULT algo=stdsort name=99pcsorted size=262144 iterations=100 time=8.89167 t_generate=0.493 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=524288 iterations=100 time=13.9494 t_generate=1.132 t_verify=0.531 correct=1
-RESULT algo=stdsort name=99pcsorted size=524288 iterations=100 time=16.9579 t_generate=1.132 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=1048576 iterations=100 time=25.0691 t_generate=1.953 t_verify=1.075 correct=1
-RESULT algo=stdsort name=99pcsorted size=1048576 iterations=100 time=35.6787 t_generate=1.953 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=2097152 iterations=100 time=49.4818 t_generate=3.65 t_verify=2.888 correct=1
-RESULT algo=stdsort name=99pcsorted size=2097152 iterations=100 time=77.2036 t_generate=3.65 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=4194304 iterations=100 time=110.579 t_generate=10.409 t_verify=5.423 correct=1
-RESULT algo=stdsort name=99pcsorted size=4194304 iterations=100 time=163.402 t_generate=10.409 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=8388608 iterations=100 time=260.138 t_generate=21.812 t_verify=10.482 correct=1
-RESULT algo=stdsort name=99pcsorted size=8388608 iterations=100 time=322.357 t_generate=21.812 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=16777216 iterations=100 time=585.019 t_generate=48.559 t_verify=21.167 correct=1
-RESULT algo=stdsort name=99pcsorted size=16777216 iterations=100 time=679.279 t_generate=48.559 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=33554432 iterations=100 time=1271.1 t_generate=102.47 t_verify=41.941 correct=1
-RESULT algo=stdsort name=99pcsorted size=33554432 iterations=100 time=1417.11 t_generate=102.47 t_verify=0 correct=1
-RESULT algo=ssssort name=99pcsorted size=67108864 iterations=100 time=2539.84 t_generate=210.16 t_verify=82.975 correct=1
-RESULT algo=stdsort name=99pcsorted size=67108864 iterations=100 time=3232.87 t_generate=210.16 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=1024 iterations=100 time=0.02438 t_generate=0.006 t_verify=0.002 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=1024 iterations=100 time=0.00643 t_generate=0.006 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=2048 iterations=100 time=0.03817 t_generate=0.005 t_verify=0.002 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=2048 iterations=100 time=0.02038 t_generate=0.005 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=4096 iterations=100 time=0.06526 t_generate=0.007 t_verify=0.005 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=4096 iterations=100 time=0.07356 t_generate=0.007 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=8192 iterations=100 time=0.12398 t_generate=0.013 t_verify=0.008 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=8192 iterations=100 time=0.12439 t_generate=0.013 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=16384 iterations=100 time=0.25069 t_generate=0.033 t_verify=0.029 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=16384 iterations=100 time=0.47007 t_generate=0.033 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=32768 iterations=100 time=0.69905 t_generate=0.062 t_verify=0.048 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=32768 iterations=100 time=0.57923 t_generate=0.062 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=65536 iterations=100 time=1.72668 t_generate=0.125 t_verify=0.085 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=65536 iterations=100 time=2.26559 t_generate=0.125 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=131072 iterations=100 time=3.93088 t_generate=0.262 t_verify=0.156 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=131072 iterations=100 time=5.51831 t_generate=0.262 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=262144 iterations=100 time=8.00336 t_generate=0.453 t_verify=0.343 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=262144 iterations=100 time=8.98319 t_generate=0.453 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=524288 iterations=100 time=13.83 t_generate=1.025 t_verify=0.528 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=524288 iterations=100 time=21.2508 t_generate=1.025 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=1048576 iterations=100 time=24.5932 t_generate=1.731 t_verify=1.076 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=1048576 iterations=100 time=46.4855 t_generate=1.731 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=2097152 iterations=100 time=47.583 t_generate=3.217 t_verify=2.474 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=2097152 iterations=100 time=94.3963 t_generate=3.217 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=4194304 iterations=100 time=102.703 t_generate=9.472 t_verify=5.745 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=4194304 iterations=100 time=170.728 t_generate=9.472 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=8388608 iterations=100 time=247.372 t_generate=19.669 t_verify=10.45 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=8388608 iterations=100 time=474.964 t_generate=19.669 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=16777216 iterations=100 time=574.466 t_generate=39.418 t_verify=21.191 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=16777216 iterations=100 time=762.598 t_generate=39.418 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=33554432 iterations=100 time=1269.47 t_generate=79.015 t_verify=48.517 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=33554432 iterations=100 time=1971.8 t_generate=79.015 t_verify=0 correct=1
-RESULT algo=ssssort name=99.9pcsorted size=67108864 iterations=100 time=2559.61 t_generate=162.467 t_verify=84.673 correct=1
-RESULT algo=stdsort name=99.9pcsorted size=67108864 iterations=100 time=4568.99 t_generate=162.467 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=1024 iterations=100 time=0.02454 t_generate=0.014 t_verify=0.001 correct=1
-RESULT algo=stdsort name=tail90 size=1024 iterations=100 time=0.01042 t_generate=0.014 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=2048 iterations=100 time=0.03816 t_generate=0.005 t_verify=0.002 correct=1
-RESULT algo=stdsort name=tail90 size=2048 iterations=100 time=0.03213 t_generate=0.005 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=4096 iterations=100 time=0.07229 t_generate=0.008 t_verify=0.004 correct=1
-RESULT algo=stdsort name=tail90 size=4096 iterations=100 time=0.08516 t_generate=0.008 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=8192 iterations=100 time=0.15572 t_generate=0.015 t_verify=0.008 correct=1
-RESULT algo=stdsort name=tail90 size=8192 iterations=100 time=0.19512 t_generate=0.015 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=16384 iterations=100 time=0.34249 t_generate=0.039 t_verify=0.021 correct=1
-RESULT algo=stdsort name=tail90 size=16384 iterations=100 time=0.44359 t_generate=0.039 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=32768 iterations=100 time=0.75915 t_generate=0.072 t_verify=0.034 correct=1
-RESULT algo=stdsort name=tail90 size=32768 iterations=100 time=0.94567 t_generate=0.072 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=65536 iterations=100 time=1.64664 t_generate=0.142 t_verify=0.068 correct=1
-RESULT algo=stdsort name=tail90 size=65536 iterations=100 time=1.96072 t_generate=0.142 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=131072 iterations=100 time=3.57403 t_generate=0.29 t_verify=0.134 correct=1
-RESULT algo=stdsort name=tail90 size=131072 iterations=100 time=4.17419 t_generate=0.29 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=262144 iterations=100 time=7.75581 t_generate=0.497 t_verify=0.342 correct=1
-RESULT algo=stdsort name=tail90 size=262144 iterations=100 time=8.91553 t_generate=0.497 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=524288 iterations=100 time=14.528 t_generate=1.198 t_verify=0.529 correct=1
-RESULT algo=stdsort name=tail90 size=524288 iterations=100 time=19.0664 t_generate=1.198 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=1048576 iterations=100 time=27.6345 t_generate=2.115 t_verify=1.079 correct=1
-RESULT algo=stdsort name=tail90 size=1048576 iterations=100 time=39.1534 t_generate=2.115 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=2097152 iterations=100 time=58.0094 t_generate=3.968 t_verify=2.565 correct=1
-RESULT algo=stdsort name=tail90 size=2097152 iterations=100 time=86.6351 t_generate=3.968 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=4194304 iterations=100 time=129.415 t_generate=10.87 t_verify=5.81 correct=1
-RESULT algo=stdsort name=tail90 size=4194304 iterations=100 time=173.85 t_generate=10.87 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=8388608 iterations=100 time=279.098 t_generate=22.931 t_verify=10.415 correct=1
-RESULT algo=stdsort name=tail90 size=8388608 iterations=100 time=358.067 t_generate=22.931 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=16777216 iterations=100 time=583.562 t_generate=45.498 t_verify=21.121 correct=1
-RESULT algo=stdsort name=tail90 size=16777216 iterations=100 time=742.148 t_generate=45.498 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=33554432 iterations=100 time=1223.89 t_generate=90.611 t_verify=42.179 correct=1
-RESULT algo=stdsort name=tail90 size=33554432 iterations=100 time=1559.2 t_generate=90.611 t_verify=0 correct=1
-RESULT algo=ssssort name=tail90 size=67108864 iterations=100 time=2529.3 t_generate=181.725 t_verify=84.135 correct=1
-RESULT algo=stdsort name=tail90 size=67108864 iterations=100 time=3257.08 t_generate=181.725 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=1024 iterations=100 time=0.02416 t_generate=0.006 t_verify=0.001 correct=1
-RESULT algo=stdsort name=tail99 size=1024 iterations=100 time=0.01283 t_generate=0.006 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=2048 iterations=100 time=0.03669 t_generate=0.004 t_verify=0.002 correct=1
-RESULT algo=stdsort name=tail99 size=2048 iterations=100 time=0.02183 t_generate=0.004 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=4096 iterations=100 time=0.06488 t_generate=0.007 t_verify=0.004 correct=1
-RESULT algo=stdsort name=tail99 size=4096 iterations=100 time=0.07928 t_generate=0.007 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=8192 iterations=100 time=0.12287 t_generate=0.013 t_verify=0.008 correct=1
-RESULT algo=stdsort name=tail99 size=8192 iterations=100 time=0.17484 t_generate=0.013 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=16384 iterations=100 time=0.26529 t_generate=0.031 t_verify=0.017 correct=1
-RESULT algo=stdsort name=tail99 size=16384 iterations=100 time=0.41277 t_generate=0.031 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=32768 iterations=100 time=0.69775 t_generate=0.061 t_verify=0.034 correct=1
-RESULT algo=stdsort name=tail99 size=32768 iterations=100 time=0.88523 t_generate=0.061 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=65536 iterations=100 time=1.65823 t_generate=0.118 t_verify=0.085 correct=1
-RESULT algo=stdsort name=tail99 size=65536 iterations=100 time=2.15399 t_generate=0.118 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=131072 iterations=100 time=3.73833 t_generate=0.247 t_verify=0.134 correct=1
-RESULT algo=stdsort name=tail99 size=131072 iterations=100 time=4.21031 t_generate=0.247 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=262144 iterations=100 time=7.74305 t_generate=0.407 t_verify=0.342 correct=1
-RESULT algo=stdsort name=tail99 size=262144 iterations=100 time=10.3651 t_generate=0.407 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=524288 iterations=100 time=13.9786 t_generate=1.032 t_verify=0.685 correct=1
-RESULT algo=stdsort name=tail99 size=524288 iterations=100 time=20.8528 t_generate=1.032 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=1048576 iterations=100 time=25.0938 t_generate=1.78 t_verify=1.387 correct=1
-RESULT algo=stdsort name=tail99 size=1048576 iterations=100 time=45.8545 t_generate=1.78 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=2097152 iterations=100 time=49.5019 t_generate=3.287 t_verify=2.844 correct=1
-RESULT algo=stdsort name=tail99 size=2097152 iterations=100 time=103.173 t_generate=3.287 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=4194304 iterations=100 time=109.013 t_generate=9.562 t_verify=5.527 correct=1
-RESULT algo=stdsort name=tail99 size=4194304 iterations=100 time=205.403 t_generate=9.562 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=8388608 iterations=100 time=259.704 t_generate=20.322 t_verify=10.613 correct=1
-RESULT algo=stdsort name=tail99 size=8388608 iterations=100 time=405.238 t_generate=20.322 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=16777216 iterations=100 time=580.945 t_generate=40.049 t_verify=21.119 correct=1
-RESULT algo=stdsort name=tail99 size=16777216 iterations=100 time=1004.03 t_generate=40.049 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=33554432 iterations=100 time=1243.71 t_generate=79.818 t_verify=42.092 correct=1
-RESULT algo=stdsort name=tail99 size=33554432 iterations=100 time=1922.31 t_generate=79.818 t_verify=0 correct=1
-RESULT algo=ssssort name=tail99 size=67108864 iterations=100 time=2510.03 t_generate=158.997 t_verify=85.129 correct=1
-RESULT algo=stdsort name=tail99 size=67108864 iterations=100 time=3662.08 t_generate=158.997 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=1024 iterations=100 time=0.0242 t_generate=0.004 t_verify=0.001 correct=1
-RESULT algo=stdsort name=sorted size=1024 iterations=100 time=0.007 t_generate=0.004 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=2048 iterations=100 time=0.03556 t_generate=0.001 t_verify=0.002 correct=1
-RESULT algo=stdsort name=sorted size=2048 iterations=100 time=0.01501 t_generate=0.001 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=4096 iterations=100 time=0.06073 t_generate=0.004 t_verify=0.004 correct=1
-RESULT algo=stdsort name=sorted size=4096 iterations=100 time=0.03324 t_generate=0.004 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=8192 iterations=100 time=0.11485 t_generate=0.009 t_verify=0.008 correct=1
-RESULT algo=stdsort name=sorted size=8192 iterations=100 time=0.07343 t_generate=0.009 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=16384 iterations=100 time=0.22976 t_generate=0.027 t_verify=0.016 correct=1
-RESULT algo=stdsort name=sorted size=16384 iterations=100 time=0.15714 t_generate=0.027 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=32768 iterations=100 time=0.661 t_generate=0.052 t_verify=0.034 correct=1
-RESULT algo=stdsort name=sorted size=32768 iterations=100 time=0.33752 t_generate=0.052 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=65536 iterations=100 time=1.72179 t_generate=0.109 t_verify=0.068 correct=1
-RESULT algo=stdsort name=sorted size=65536 iterations=100 time=0.72168 t_generate=0.109 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=131072 iterations=100 time=4.01689 t_generate=0.225 t_verify=0.134 correct=1
-RESULT algo=stdsort name=sorted size=131072 iterations=100 time=1.51397 t_generate=0.225 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=262144 iterations=100 time=8.15546 t_generate=0.375 t_verify=0.265 correct=1
-RESULT algo=stdsort name=sorted size=262144 iterations=100 time=3.20802 t_generate=0.375 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=524288 iterations=100 time=13.8394 t_generate=0.942 t_verify=0.528 correct=1
-RESULT algo=stdsort name=sorted size=524288 iterations=100 time=6.78484 t_generate=0.942 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=1048576 iterations=100 time=24.529 t_generate=1.595 t_verify=1.077 correct=1
-RESULT algo=stdsort name=sorted size=1048576 iterations=100 time=14.1551 t_generate=1.595 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=2097152 iterations=100 time=47.7503 t_generate=2.949 t_verify=2.314 correct=1
-RESULT algo=stdsort name=sorted size=2097152 iterations=100 time=29.7712 t_generate=2.949 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=4194304 iterations=100 time=104.528 t_generate=8.851 t_verify=5.45 correct=1
-RESULT algo=stdsort name=sorted size=4194304 iterations=100 time=62.3416 t_generate=8.851 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=8388608 iterations=100 time=246.924 t_generate=18.894 t_verify=10.565 correct=1
-RESULT algo=stdsort name=sorted size=8388608 iterations=100 time=130.487 t_generate=18.894 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=16777216 iterations=100 time=583.765 t_generate=37.411 t_verify=20.9 correct=1
-RESULT algo=stdsort name=sorted size=16777216 iterations=100 time=274.998 t_generate=37.411 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=33554432 iterations=100 time=1297.72 t_generate=73.632 t_verify=42.09 correct=1
-RESULT algo=stdsort name=sorted size=33554432 iterations=100 time=575.675 t_generate=73.632 t_verify=0 correct=1
-RESULT algo=ssssort name=sorted size=67108864 iterations=100 time=2594.35 t_generate=144.805 t_verify=83.91 correct=1
-RESULT algo=stdsort name=sorted size=67108864 iterations=100 time=1203.19 t_generate=144.805 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=1024 iterations=100 time=0.02556 t_generate=0.004 t_verify=0.001 correct=1
-RESULT algo=stdsort name=reverse size=1024 iterations=100 time=0.00501 t_generate=0.004 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=2048 iterations=100 time=0.04184 t_generate=0.002 t_verify=0.002 correct=1
-RESULT algo=stdsort name=reverse size=2048 iterations=100 time=0.01202 t_generate=0.002 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=4096 iterations=100 time=0.09308 t_generate=0.004 t_verify=0.004 correct=1
-RESULT algo=stdsort name=reverse size=4096 iterations=100 time=0.02507 t_generate=0.004 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=8192 iterations=100 time=0.25263 t_generate=0.009 t_verify=0.008 correct=1
-RESULT algo=stdsort name=reverse size=8192 iterations=100 time=0.05594 t_generate=0.009 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=16384 iterations=100 time=0.67648 t_generate=0.026 t_verify=0.016 correct=1
-RESULT algo=stdsort name=reverse size=16384 iterations=100 time=0.12368 t_generate=0.026 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=32768 iterations=100 time=0.78636 t_generate=0.055 t_verify=0.034 correct=1
-RESULT algo=stdsort name=reverse size=32768 iterations=100 time=0.26483 t_generate=0.055 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=65536 iterations=100 time=1.65481 t_generate=0.11 t_verify=0.067 correct=1
-RESULT algo=stdsort name=reverse size=65536 iterations=100 time=0.54821 t_generate=0.11 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=131072 iterations=100 time=3.62544 t_generate=0.228 t_verify=0.133 correct=1
-RESULT algo=stdsort name=reverse size=131072 iterations=100 time=1.15472 t_generate=0.228 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=262144 iterations=100 time=8.04985 t_generate=0.367 t_verify=0.265 correct=1
-RESULT algo=stdsort name=reverse size=262144 iterations=100 time=2.44988 t_generate=0.367 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=524288 iterations=100 time=15.6084 t_generate=0.933 t_verify=0.527 correct=1
-RESULT algo=stdsort name=reverse size=524288 iterations=100 time=5.13078 t_generate=0.933 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=1048576 iterations=100 time=32.7395 t_generate=1.63 t_verify=1.071 correct=1
-RESULT algo=stdsort name=reverse size=1048576 iterations=100 time=10.762 t_generate=1.63 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=2097152 iterations=100 time=79.4984 t_generate=3.005 t_verify=2.303 correct=1
-RESULT algo=stdsort name=reverse size=2097152 iterations=100 time=22.5252 t_generate=3.005 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=4194304 iterations=100 time=195.61 t_generate=8.908 t_verify=5.409 correct=1
-RESULT algo=stdsort name=reverse size=4194304 iterations=100 time=47.1342 t_generate=8.908 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=8388608 iterations=100 time=287.717 t_generate=18.852 t_verify=10.406 correct=1
-RESULT algo=stdsort name=reverse size=8388608 iterations=100 time=99.0362 t_generate=18.852 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=16777216 iterations=100 time=582.575 t_generate=37.626 t_verify=20.69 correct=1
-RESULT algo=stdsort name=reverse size=16777216 iterations=100 time=207.899 t_generate=37.626 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=33554432 iterations=100 time=1231.16 t_generate=74.516 t_verify=41.893 correct=1
-RESULT algo=stdsort name=reverse size=33554432 iterations=100 time=435.143 t_generate=74.516 t_verify=0 correct=1
-RESULT algo=ssssort name=reverse size=67108864 iterations=100 time=2593.77 t_generate=148.584 t_verify=83.739 correct=1
-RESULT algo=stdsort name=reverse size=67108864 iterations=100 time=905.915 t_generate=148.584 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=1024 iterations=100 time=0.01944 t_generate=0.013 t_verify=0.001 correct=1
-RESULT algo=stdsort name=many-dupes size=1024 iterations=100 time=0.00747 t_generate=0.013 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=2048 iterations=100 time=0.03073 t_generate=0.019 t_verify=0.002 correct=1
-RESULT algo=stdsort name=many-dupes size=2048 iterations=100 time=0.02896 t_generate=0.019 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=4096 iterations=100 time=0.05643 t_generate=0.04 t_verify=0.004 correct=1
-RESULT algo=stdsort name=many-dupes size=4096 iterations=100 time=0.06107 t_generate=0.04 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=8192 iterations=100 time=0.11174 t_generate=0.08 t_verify=0.008 correct=1
-RESULT algo=stdsort name=many-dupes size=8192 iterations=100 time=0.16652 t_generate=0.08 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=16384 iterations=100 time=0.2497 t_generate=0.171 t_verify=0.017 correct=1
-RESULT algo=stdsort name=many-dupes size=16384 iterations=100 time=0.36352 t_generate=0.171 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=32768 iterations=100 time=0.48221 t_generate=0.343 t_verify=0.034 correct=1
-RESULT algo=stdsort name=many-dupes size=32768 iterations=100 time=0.72518 t_generate=0.343 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=65536 iterations=100 time=0.97372 t_generate=0.691 t_verify=0.067 correct=1
-RESULT algo=stdsort name=many-dupes size=65536 iterations=100 time=0.61961 t_generate=0.691 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=131072 iterations=100 time=1.83451 t_generate=1.377 t_verify=0.133 correct=1
-RESULT algo=stdsort name=many-dupes size=131072 iterations=100 time=3.07868 t_generate=1.377 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=262144 iterations=100 time=3.71936 t_generate=2.671 t_verify=0.265 correct=1
-RESULT algo=stdsort name=many-dupes size=262144 iterations=100 time=6.42345 t_generate=2.671 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=524288 iterations=100 time=7.77437 t_generate=5.539 t_verify=0.528 correct=1
-RESULT algo=stdsort name=many-dupes size=524288 iterations=100 time=12.9733 t_generate=5.539 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=1048576 iterations=100 time=16.5392 t_generate=10.816 t_verify=1.076 correct=1
-RESULT algo=stdsort name=many-dupes size=1048576 iterations=100 time=23.9837 t_generate=10.816 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=2097152 iterations=100 time=32.966 t_generate=21.376 t_verify=2.337 correct=1
-RESULT algo=stdsort name=many-dupes size=2097152 iterations=100 time=56.9768 t_generate=21.376 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=4194304 iterations=100 time=70.1428 t_generate=45.688 t_verify=5.411 correct=1
-RESULT algo=stdsort name=many-dupes size=4194304 iterations=100 time=115.27 t_generate=45.688 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=8388608 iterations=100 time=151.995 t_generate=92.449 t_verify=10.321 correct=1
-RESULT algo=stdsort name=many-dupes size=8388608 iterations=100 time=235.739 t_generate=92.449 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=16777216 iterations=100 time=326.892 t_generate=184.445 t_verify=20.601 correct=1
-RESULT algo=stdsort name=many-dupes size=16777216 iterations=100 time=392.48 t_generate=184.445 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=33554432 iterations=100 time=646.529 t_generate=368.458 t_verify=66.031 correct=1
-RESULT algo=stdsort name=many-dupes size=33554432 iterations=100 time=992.741 t_generate=368.458 t_verify=0 correct=1
-RESULT algo=ssssort name=many-dupes size=67108864 iterations=100 time=1315 t_generate=736.123 t_verify=84.228 correct=1
-RESULT algo=stdsort name=many-dupes size=67108864 iterations=100 time=2045.13 t_generate=736.123 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=1024 iterations=100 time=0.02013 t_generate=0.022 t_verify=0.001 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=1024 iterations=100 time=0.00948 t_generate=0.022 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=2048 iterations=100 time=0.03244 t_generate=0.045 t_verify=0.002 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=2048 iterations=100 time=0.03408 t_generate=0.045 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=4096 iterations=100 time=0.07136 t_generate=0.091 t_verify=0.004 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=4096 iterations=100 time=0.08951 t_generate=0.091 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=8192 iterations=100 time=0.16265 t_generate=0.183 t_verify=0.009 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=8192 iterations=100 time=0.21415 t_generate=0.183 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=16384 iterations=100 time=0.35609 t_generate=0.391 t_verify=0.017 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=16384 iterations=100 time=0.49709 t_generate=0.391 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=32768 iterations=100 time=0.77478 t_generate=0.753 t_verify=0.034 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=32768 iterations=100 time=1.07132 t_generate=0.753 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=65536 iterations=100 time=1.67057 t_generate=1.508 t_verify=0.068 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=65536 iterations=100 time=2.29957 t_generate=1.508 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=131072 iterations=100 time=3.46277 t_generate=3.022 t_verify=0.134 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=131072 iterations=100 time=5.07913 t_generate=3.022 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=262144 iterations=100 time=6.90011 t_generate=5.977 t_verify=0.266 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=262144 iterations=100 time=11.0894 t_generate=5.977 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=524288 iterations=100 time=12.8112 t_generate=12.133 t_verify=0.529 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=524288 iterations=100 time=23.7283 t_generate=12.133 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=1048576 iterations=100 time=26.4102 t_generate=23.938 t_verify=1.563 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=1048576 iterations=100 time=49.819 t_generate=23.938 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=2097152 iterations=100 time=57.7124 t_generate=47.597 t_verify=2.912 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=2097152 iterations=100 time=105.822 t_generate=47.597 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=4194304 iterations=100 time=147.665 t_generate=98.012 t_verify=5.787 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=4194304 iterations=100 time=223.473 t_generate=98.012 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=8388608 iterations=100 time=311.499 t_generate=196.572 t_verify=10.395 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=8388608 iterations=100 time=474.297 t_generate=196.572 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=16777216 iterations=100 time=692.206 t_generate=391.211 t_verify=21.212 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=16777216 iterations=100 time=1007.78 t_generate=391.211 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=33554432 iterations=100 time=1406.08 t_generate=779.211 t_verify=42.281 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=33554432 iterations=100 time=2142.25 t_generate=779.211 t_verify=0 correct=1
-RESULT algo=ssssort name=few-spikes-with-noise size=67108864 iterations=100 time=2763.06 t_generate=1553.99 t_verify=84.173 correct=1
-RESULT algo=stdsort name=few-spikes-with-noise size=67108864 iterations=100 time=4434.61 t_generate=1553.99 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=1024 iterations=100 time=0.00941 t_generate=0.001 t_verify=0.001 correct=1
-RESULT algo=stdsort name=ones size=1024 iterations=100 time=0.00514 t_generate=0.001 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=2048 iterations=100 time=0.01628 t_generate=0.001 t_verify=0.002 correct=1
-RESULT algo=stdsort name=ones size=2048 iterations=100 time=0.01146 t_generate=0.001 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=4096 iterations=100 time=0.03044 t_generate=0.003 t_verify=0.004 correct=1
-RESULT algo=stdsort name=ones size=4096 iterations=100 time=0.02532 t_generate=0.003 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=8192 iterations=100 time=0.06272 t_generate=0.008 t_verify=0.008 correct=1
-RESULT algo=stdsort name=ones size=8192 iterations=100 time=0.05639 t_generate=0.008 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=16384 iterations=100 time=0.1292 t_generate=0.024 t_verify=0.017 correct=1
-RESULT algo=stdsort name=ones size=16384 iterations=100 time=0.1223 t_generate=0.024 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=32768 iterations=100 time=0.27914 t_generate=0.048 t_verify=0.034 correct=1
-RESULT algo=stdsort name=ones size=32768 iterations=100 time=0.26269 t_generate=0.048 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=65536 iterations=100 time=0.59475 t_generate=0.101 t_verify=0.068 correct=1
-RESULT algo=stdsort name=ones size=65536 iterations=100 time=0.56161 t_generate=0.101 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=131072 iterations=100 time=1.257 t_generate=0.218 t_verify=0.134 correct=1
-RESULT algo=stdsort name=ones size=131072 iterations=100 time=1.19996 t_generate=0.218 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=262144 iterations=100 time=2.66774 t_generate=0.428 t_verify=0.28 correct=1
-RESULT algo=stdsort name=ones size=262144 iterations=100 time=2.55205 t_generate=0.428 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=524288 iterations=100 time=5.63158 t_generate=0.875 t_verify=0.575 correct=1
-RESULT algo=stdsort name=ones size=524288 iterations=100 time=5.39847 t_generate=0.875 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=1048576 iterations=100 time=11.8233 t_generate=1.544 t_verify=1.184 correct=1
-RESULT algo=stdsort name=ones size=1048576 iterations=100 time=11.3707 t_generate=1.544 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=2097152 iterations=100 time=24.7898 t_generate=2.825 t_verify=2.458 correct=1
-RESULT algo=stdsort name=ones size=2097152 iterations=100 time=23.9308 t_generate=2.825 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=4194304 iterations=100 time=51.8999 t_generate=8.434 t_verify=5.451 correct=1
-RESULT algo=stdsort name=ones size=4194304 iterations=100 time=50.1122 t_generate=8.434 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=8388608 iterations=100 time=108.372 t_generate=17.354 t_verify=10.457 correct=1
-RESULT algo=stdsort name=ones size=8388608 iterations=100 time=104.891 t_generate=17.354 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=16777216 iterations=100 time=227.901 t_generate=35.871 t_verify=20.82 correct=1
-RESULT algo=stdsort name=ones size=16777216 iterations=100 time=219.629 t_generate=35.871 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=33554432 iterations=100 time=475.29 t_generate=71.166 t_verify=41.648 correct=1
-RESULT algo=stdsort name=ones size=33554432 iterations=100 time=459.127 t_generate=71.166 t_verify=0 correct=1
-RESULT algo=ssssort name=ones size=67108864 iterations=100 time=989.269 t_generate=141.754 t_verify=98.997 correct=1
-RESULT algo=stdsort name=ones size=67108864 iterations=100 time=976.554 t_generate=141.754 t_verify=0 correct=1
+RESULT algo=ssssort name=warmup size=1024 iters=3 time=0.026 stddev=0.001 t_gen=0.005 t_check=0.001 ok=1
+RESULT algo=stdsort name=warmup size=1024 iters=3 time=0.0316667 stddev=0.00305505 t_gen=0.005 t_check=0 ok=1
+RESULT algo=ssssort name=warmup size=2048 iters=3 time=0.046 stddev=0.00173205 t_gen=0.011 t_check=0.002 ok=1
+RESULT algo=stdsort name=warmup size=2048 iters=3 time=0.0736667 stddev=0.00251661 t_gen=0.011 t_check=0 ok=1
+RESULT algo=ssssort name=warmup size=4096 iters=3 time=0.099 stddev=0.00173205 t_gen=0.021 t_check=0.014 ok=1
+RESULT algo=stdsort name=warmup size=4096 iters=3 time=0.172333 stddev=0.00152753 t_gen=0.021 t_check=0 ok=1
+RESULT algo=ssssort name=warmup size=8192 iters=3 time=0.238333 stddev=0.0207926 t_gen=0.04 t_check=0.019 ok=1
+RESULT algo=stdsort name=warmup size=8192 iters=3 time=0.339333 stddev=0.00702377 t_gen=0.04 t_check=0 ok=1
+RESULT algo=ssssort name=warmup size=16384 iters=3 time=0.457 stddev=0.0242693 t_gen=0.087 t_check=0.029 ok=1
+RESULT algo=stdsort name=warmup size=16384 iters=3 time=0.737 stddev=0.0554617 t_gen=0.087 t_check=0 ok=1
+RESULT algo=ssssort name=warmup size=32768 iters=3 time=0.941667 stddev=0.0162891 t_gen=0.15 t_check=0.068 ok=1
+RESULT algo=stdsort name=warmup size=32768 iters=3 time=1.43933 stddev=0.0162891 t_gen=0.15 t_check=0 ok=1
+RESULT algo=ssssort name=warmup size=65536 iters=3 time=2.123 stddev=0.118444 t_gen=0.347 t_check=0.137 ok=1
+RESULT algo=stdsort name=warmup size=65536 iters=3 time=3.13033 stddev=0.0280416 t_gen=0.347 t_check=0 ok=1
+RESULT algo=ssssort name=warmup size=131072 iters=3 time=4.30067 stddev=0.0543722 t_gen=0.635 t_check=0.2 ok=1
+RESULT algo=stdsort name=warmup size=131072 iters=3 time=6.517 stddev=0.0986053 t_gen=0.635 t_check=0 ok=1
+RESULT algo=ssssort name=warmup size=262144 iters=3 time=8.11033 stddev=0.301818 t_gen=1.307 t_check=0.36 ok=1
+RESULT algo=stdsort name=warmup size=262144 iters=3 time=13.7347 stddev=0.114282 t_gen=1.307 t_check=0 ok=1
+RESULT algo=ssssort name=warmup size=524288 iters=3 time=14.8373 stddev=0.644823 t_gen=2.464 t_check=0.697 ok=1
+RESULT algo=stdsort name=warmup size=524288 iters=3 time=28.3807 stddev=0.0665307 t_gen=2.464 t_check=0 ok=1
+RESULT algo=ssssort name=random size=1024 iters=10 time=0.0257 stddev=0.000674949 t_gen=0.005 t_check=0.001 ok=1
+RESULT algo=stdsort name=random size=1024 iters=10 time=0.0262 stddev=0.0039101 t_gen=0.005 t_check=0 ok=1
+RESULT algo=ssssort name=random size=2048 iters=10 time=0.0463 stddev=0.000948683 t_gen=0.01 t_check=0.002 ok=1
+RESULT algo=stdsort name=random size=2048 iters=10 time=0.071 stddev=0.00274874 t_gen=0.01 t_check=0 ok=1
+RESULT algo=ssssort name=random size=4096 iters=10 time=0.0972 stddev=0.00122927 t_gen=0.018 t_check=0.016 ok=1
+RESULT algo=stdsort name=random size=4096 iters=10 time=0.1681 stddev=0.00997163 t_gen=0.018 t_check=0 ok=1
+RESULT algo=ssssort name=random size=8192 iters=10 time=0.2234 stddev=0.0102111 t_gen=0.044 t_check=0.011 ok=1
+RESULT algo=stdsort name=random size=8192 iters=10 time=0.3434 stddev=0.00117379 t_gen=0.044 t_check=0 ok=1
+RESULT algo=ssssort name=random size=16384 iters=10 time=0.4484 stddev=0.0177964 t_gen=0.09 t_check=0.034 ok=1
+RESULT algo=stdsort name=random size=16384 iters=10 time=0.7137 stddev=0.0207099 t_gen=0.09 t_check=0 ok=1
+RESULT algo=ssssort name=random size=32768 iters=10 time=0.9609 stddev=0.0371617 t_gen=0.149 t_check=0.068 ok=1
+RESULT algo=stdsort name=random size=32768 iters=10 time=1.4799 stddev=0.0182966 t_gen=0.149 t_check=0 ok=1
+RESULT algo=ssssort name=random size=65536 iters=10 time=2.0579 stddev=0.039798 t_gen=0.258 t_check=0.135 ok=1
+RESULT algo=stdsort name=random size=65536 iters=10 time=3.1389 stddev=0.0573168 t_gen=0.258 t_check=0 ok=1
+RESULT algo=ssssort name=random size=131072 iters=10 time=4.3246 stddev=0.083649 t_gen=0.507 t_check=0.212 ok=1
+RESULT algo=stdsort name=random size=131072 iters=10 time=6.4604 stddev=0.0786232 t_gen=0.507 t_check=0 ok=1
+RESULT algo=ssssort name=random size=262144 iters=10 time=8.044 stddev=0.141421 t_gen=1.131 t_check=0.273 ok=1
+RESULT algo=stdsort name=random size=262144 iters=10 time=13.4665 stddev=0.111161 t_gen=1.131 t_check=0 ok=1
+RESULT algo=ssssort name=random size=524288 iters=10 time=14.551 stddev=0.395283 t_gen=2.627 t_check=0.531 ok=1
+RESULT algo=stdsort name=random size=524288 iters=10 time=28.6657 stddev=0.0962636 t_gen=2.627 t_check=0 ok=1
+RESULT algo=ssssort name=random size=1048576 iters=10 time=30.0204 stddev=0.403634 t_gen=5.097 t_check=1.323 ok=1
+RESULT algo=stdsort name=random size=1048576 iters=10 time=62.5138 stddev=4.38971 t_gen=5.097 t_check=0 ok=1
+RESULT algo=ssssort name=random size=2097152 iters=10 time=69.1892 stddev=7.84858 t_gen=15.267 t_check=2.39 ok=1
+RESULT algo=stdsort name=random size=2097152 iters=10 time=125.793 stddev=0.500008 t_gen=15.267 t_check=0 ok=1
+RESULT algo=ssssort name=random size=4194304 iters=10 time=135.436 stddev=0.811168 t_gen=21.955 t_check=4.537 ok=1
+RESULT algo=stdsort name=random size=4194304 iters=10 time=259.873 stddev=0.732426 t_gen=21.955 t_check=0 ok=1
+RESULT algo=ssssort name=random size=8388608 iters=10 time=307.836 stddev=23.2431 t_gen=44.734 t_check=8.693 ok=1
+RESULT algo=stdsort name=random size=8388608 iters=10 time=542.083 stddev=1.03134 t_gen=44.734 t_check=0 ok=1
+RESULT algo=ssssort name=random size=16777216 iters=10 time=645.091 stddev=26.1489 t_gen=87.92 t_check=16.953 ok=1
+RESULT algo=stdsort name=random size=16777216 iters=10 time=1164.42 stddev=36.4077 t_gen=87.92 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=1024 iters=10 time=0.0237 stddev=0.00411096 t_gen=0.006 t_check=0 ok=1
+RESULT algo=stdsort name=80pcsorted size=1024 iters=10 time=0.0139 stddev=0.00310734 t_gen=0.006 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=2048 iters=10 time=0.0364 stddev=0.000699206 t_gen=0.022 t_check=0.001 ok=1
+RESULT algo=stdsort name=80pcsorted size=2048 iters=10 time=0.0402 stddev=0.00304777 t_gen=0.022 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=4096 iters=10 time=0.0775 stddev=0.00250555 t_gen=0.031 t_check=0.005 ok=1
+RESULT algo=stdsort name=80pcsorted size=4096 iters=10 time=0.0992 stddev=0.00229976 t_gen=0.031 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=8192 iters=10 time=0.1599 stddev=0.00655659 t_gen=0.044 t_check=0.018 ok=1
+RESULT algo=stdsort name=80pcsorted size=8192 iters=10 time=0.2289 stddev=0.036379 t_gen=0.044 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=16384 iters=10 time=0.3371 stddev=0.0150292 t_gen=0.084 t_check=0.023 ok=1
+RESULT algo=stdsort name=80pcsorted size=16384 iters=10 time=0.4262 stddev=0.0171775 t_gen=0.084 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=32768 iters=10 time=0.6819 stddev=0.0278386 t_gen=0.161 t_check=0.04 ok=1
+RESULT algo=stdsort name=80pcsorted size=32768 iters=10 time=0.8221 stddev=0.00923099 t_gen=0.161 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=65536 iters=10 time=1.4527 stddev=0.0552832 t_gen=0.285 t_check=0.12 ok=1
+RESULT algo=stdsort name=80pcsorted size=65536 iters=10 time=1.891 stddev=0.032311 t_gen=0.285 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=131072 iters=10 time=3.0652 stddev=0.0677771 t_gen=0.695 t_check=0.176 ok=1
+RESULT algo=stdsort name=80pcsorted size=131072 iters=10 time=3.7435 stddev=0.0809805 t_gen=0.695 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=262144 iters=10 time=6.527 stddev=0.138565 t_gen=1.157 t_check=0.279 ok=1
+RESULT algo=stdsort name=80pcsorted size=262144 iters=10 time=8.264 stddev=0.0627747 t_gen=1.157 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=524288 iters=10 time=12.4898 stddev=0.19221 t_gen=2.27 t_check=0.583 ok=1
+RESULT algo=stdsort name=80pcsorted size=524288 iters=10 time=18.1004 stddev=0.158842 t_gen=2.27 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=1048576 iters=10 time=24.8561 stddev=0.277373 t_gen=4.549 t_check=1.16 ok=1
+RESULT algo=stdsort name=80pcsorted size=1048576 iters=10 time=33.7285 stddev=0.180967 t_gen=4.549 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=2097152 iters=10 time=51.566 stddev=0.547624 t_gen=11.31 t_check=2.453 ok=1
+RESULT algo=stdsort name=80pcsorted size=2097152 iters=10 time=79.022 stddev=0.565335 t_gen=11.31 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=4194304 iters=10 time=106.53 stddev=0.361903 t_gen=25.56 t_check=5.886 ok=1
+RESULT algo=stdsort name=80pcsorted size=4194304 iters=10 time=156.462 stddev=13.8717 t_gen=25.56 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=8388608 iters=10 time=229.973 stddev=0.94426 t_gen=65.889 t_check=8.829 ok=1
+RESULT algo=stdsort name=80pcsorted size=8388608 iters=10 time=307.862 stddev=0.598883 t_gen=65.889 t_check=0 ok=1
+RESULT algo=ssssort name=80pcsorted size=16777216 iters=10 time=493.186 stddev=31.6704 t_gen=101.798 t_check=17.515 ok=1
+RESULT algo=stdsort name=80pcsorted size=16777216 iters=10 time=701.751 stddev=5.68043 t_gen=101.798 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=1024 iters=10 time=0.0252 stddev=0.0042374 t_gen=0.005 t_check=0.001 ok=1
+RESULT algo=stdsort name=90pcsorted size=1024 iters=10 time=0.0107 stddev=0.00231181 t_gen=0.005 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=2048 iters=10 time=0.0371 stddev=0.000737865 t_gen=0.007 t_check=0.002 ok=1
+RESULT algo=stdsort name=90pcsorted size=2048 iters=10 time=0.0329 stddev=0.00321282 t_gen=0.007 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=4096 iters=10 time=0.0751 stddev=0.00699921 t_gen=0.013 t_check=0.004 ok=1
+RESULT algo=stdsort name=90pcsorted size=4096 iters=10 time=0.0933 stddev=0.0144687 t_gen=0.013 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=8192 iters=10 time=0.1474 stddev=0.0102654 t_gen=0.025 t_check=0.018 ok=1
+RESULT algo=stdsort name=90pcsorted size=8192 iters=10 time=0.1755 stddev=0.0124566 t_gen=0.025 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=16384 iters=10 time=0.3025 stddev=0.0100139 t_gen=0.067 t_check=0.025 ok=1
+RESULT algo=stdsort name=90pcsorted size=16384 iters=10 time=0.3904 stddev=0.0396406 t_gen=0.067 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=32768 iters=10 time=0.6434 stddev=0.0190566 t_gen=0.132 t_check=0.059 ok=1
+RESULT algo=stdsort name=90pcsorted size=32768 iters=10 time=0.7985 stddev=0.0365491 t_gen=0.132 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=65536 iters=10 time=1.3095 stddev=0.03106 t_gen=0.224 t_check=0.105 ok=1
+RESULT algo=stdsort name=90pcsorted size=65536 iters=10 time=1.5271 stddev=0.0337785 t_gen=0.224 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=131072 iters=10 time=2.7557 stddev=0.0585872 t_gen=0.521 t_check=0.168 ok=1
+RESULT algo=stdsort name=90pcsorted size=131072 iters=10 time=3.1943 stddev=0.0732591 t_gen=0.521 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=262144 iters=10 time=6.1713 stddev=0.121614 t_gen=0.85 t_check=0.301 ok=1
+RESULT algo=stdsort name=90pcsorted size=262144 iters=10 time=6.9628 stddev=0.0970668 t_gen=0.85 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=524288 iters=10 time=12.0016 stddev=0.20111 t_gen=1.823 t_check=0.575 ok=1
+RESULT algo=stdsort name=90pcsorted size=524288 iters=10 time=14.1637 stddev=0.167979 t_gen=1.823 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=1048576 iters=10 time=23.1746 stddev=0.221731 t_gen=3.409 t_check=1.169 ok=1
+RESULT algo=stdsort name=90pcsorted size=1048576 iters=10 time=29.2723 stddev=0.106093 t_gen=3.409 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=2097152 iters=10 time=47.0791 stddev=0.189412 t_gen=6.969 t_check=2.392 ok=1
+RESULT algo=stdsort name=90pcsorted size=2097152 iters=10 time=65.4249 stddev=0.228462 t_gen=6.969 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=4194304 iters=10 time=98.3108 stddev=0.463789 t_gen=17.064 t_check=5.494 ok=1
+RESULT algo=stdsort name=90pcsorted size=4194304 iters=10 time=121.896 stddev=6.88882 t_gen=17.064 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=8388608 iters=10 time=219.088 stddev=16.5441 t_gen=45.969 t_check=8.686 ok=1
+RESULT algo=stdsort name=90pcsorted size=8388608 iters=10 time=280.658 stddev=22.6659 t_gen=45.969 t_check=0 ok=1
+RESULT algo=ssssort name=90pcsorted size=16777216 iters=10 time=441.823 stddev=0.972115 t_gen=70.474 t_check=17.442 ok=1
+RESULT algo=stdsort name=90pcsorted size=16777216 iters=10 time=572.924 stddev=41.5047 t_gen=70.474 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=1024 iters=10 time=0.0255 stddev=0.00750185 t_gen=0.002 t_check=0 ok=1
+RESULT algo=stdsort name=99pcsorted size=1024 iters=10 time=0.0083 stddev=0.00133749 t_gen=0.002 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=2048 iters=10 time=0.0323 stddev=0.0034657 t_gen=0.003 t_check=0.001 ok=1
+RESULT algo=stdsort name=99pcsorted size=2048 iters=10 time=0.0196 stddev=0.00177639 t_gen=0.003 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=4096 iters=10 time=0.0569 stddev=0.00412176 t_gen=0.015 t_check=0.003 ok=1
+RESULT algo=stdsort name=99pcsorted size=4096 iters=10 time=0.0771 stddev=0.0266894 t_gen=0.015 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=8192 iters=10 time=0.109 stddev=0.00402768 t_gen=0.024 t_check=0.021 ok=1
+RESULT algo=stdsort name=99pcsorted size=8192 iters=10 time=0.242 stddev=0.0117189 t_gen=0.024 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=16384 iters=10 time=0.2254 stddev=0.0105114 t_gen=0.044 t_check=0.022 ok=1
+RESULT algo=stdsort name=99pcsorted size=16384 iters=10 time=0.3052 stddev=0.00828385 t_gen=0.044 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=32768 iters=10 time=0.5888 stddev=0.0424599 t_gen=0.06 t_check=0.06 ok=1
+RESULT algo=stdsort name=99pcsorted size=32768 iters=10 time=0.5787 stddev=0.0200447 t_gen=0.06 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=65536 iters=10 time=1.3918 stddev=0.0420418 t_gen=0.126 t_check=0.07 ok=1
+RESULT algo=stdsort name=99pcsorted size=65536 iters=10 time=1.4777 stddev=0.0417773 t_gen=0.126 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=131072 iters=10 time=3.0486 stddev=0.130878 t_gen=0.21 t_check=0.222 ok=1
+RESULT algo=stdsort name=99pcsorted size=131072 iters=10 time=3.5568 stddev=0.0801399 t_gen=0.21 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=262144 iters=10 time=6.3756 stddev=0.173807 t_gen=0.438 t_check=0.277 ok=1
+RESULT algo=stdsort name=99pcsorted size=262144 iters=10 time=6.5595 stddev=0.086699 t_gen=0.438 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=524288 iters=10 time=11.5257 stddev=0.130231 t_gen=0.837 t_check=0.552 ok=1
+RESULT algo=stdsort name=99pcsorted size=524288 iters=10 time=15.3518 stddev=0.221378 t_gen=0.837 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=1048576 iters=10 time=21.3187 stddev=0.191844 t_gen=1.741 t_check=1.146 ok=1
+RESULT algo=stdsort name=99pcsorted size=1048576 iters=10 time=33.0738 stddev=0.262651 t_gen=1.741 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=2097152 iters=10 time=41.3113 stddev=0.267586 t_gen=4.005 t_check=2.539 ok=1
+RESULT algo=stdsort name=99pcsorted size=2097152 iters=10 time=55.5044 stddev=0.105771 t_gen=4.005 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=4194304 iters=10 time=90.6553 stddev=8.55355 t_gen=10.204 t_check=4.343 ok=1
+RESULT algo=stdsort name=99pcsorted size=4194304 iters=10 time=137.934 stddev=17.6251 t_gen=10.204 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=8388608 iters=10 time=207.707 stddev=0.719289 t_gen=20.861 t_check=9.301 ok=1
+RESULT algo=stdsort name=99pcsorted size=8388608 iters=10 time=248.384 stddev=1.9307 t_gen=20.861 t_check=0 ok=1
+RESULT algo=ssssort name=99pcsorted size=16777216 iters=10 time=463.854 stddev=1.22258 t_gen=44.897 t_check=17.117 ok=1
+RESULT algo=stdsort name=99pcsorted size=16777216 iters=10 time=574.363 stddev=46.227 t_gen=44.897 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=1024 iters=10 time=0.0248 stddev=0.00714609 t_gen=0.002 t_check=0 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=1024 iters=10 time=0.0051 stddev=0.000316228 t_gen=0.002 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=2048 iters=10 time=0.0426 stddev=0.00897156 t_gen=0.003 t_check=0.002 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=2048 iters=10 time=0.0159 stddev=0.00144914 t_gen=0.003 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=4096 iters=10 time=0.0578 stddev=0.00113529 t_gen=0.005 t_check=0.003 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=4096 iters=10 time=0.0267 stddev=0.000674949 t_gen=0.005 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=8192 iters=10 time=0.1109 stddev=0.00847808 t_gen=0.008 t_check=0.007 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=8192 iters=10 time=0.1208 stddev=0.0229046 t_gen=0.008 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=16384 iters=10 time=0.2186 stddev=0.0282929 t_gen=0.024 t_check=0.031 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=16384 iters=10 time=0.4803 stddev=0.017645 t_gen=0.024 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=32768 iters=10 time=0.5659 stddev=0.0393459 t_gen=0.068 t_check=0.047 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=32768 iters=10 time=0.7808 stddev=0.0486182 t_gen=0.068 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=65536 iters=10 time=1.4186 stddev=0.0724434 t_gen=0.099 t_check=0.104 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=65536 iters=10 time=1.7137 stddev=0.0647818 t_gen=0.099 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=131072 iters=10 time=3.2496 stddev=0.134796 t_gen=0.195 t_check=0.171 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=131072 iters=10 time=4.619 stddev=0.0481871 t_gen=0.195 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=262144 iters=10 time=6.5813 stddev=0.1688 t_gen=0.395 t_check=0.323 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=262144 iters=10 time=7.6031 stddev=0.0679779 t_gen=0.395 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=524288 iters=10 time=11.3585 stddev=0.174978 t_gen=0.811 t_check=0.567 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=524288 iters=10 time=17.2258 stddev=0.0757508 t_gen=0.811 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=1048576 iters=10 time=20.7216 stddev=0.208439 t_gen=1.63 t_check=1.282 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=1048576 iters=10 time=44.0484 stddev=0.18729 t_gen=1.63 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=2097152 iters=10 time=39.5658 stddev=0.188529 t_gen=3.244 t_check=2.396 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=2097152 iters=10 time=85.0034 stddev=0.496541 t_gen=3.244 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=4194304 iters=10 time=78.54 stddev=0.377005 t_gen=9.624 t_check=4.942 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=4194304 iters=10 time=236.367 stddev=1.11323 t_gen=9.624 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=8388608 iters=10 time=200.18 stddev=0.749734 t_gen=20.357 t_check=8.998 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=8388608 iters=10 time=361.546 stddev=1.56168 t_gen=20.357 t_check=0 ok=1
+RESULT algo=ssssort name=99.9pcsorted size=16777216 iters=10 time=463.038 stddev=2.00632 t_gen=39.404 t_check=17.357 ok=1
+RESULT algo=stdsort name=99.9pcsorted size=16777216 iters=10 time=846.317 stddev=1.22795 t_gen=39.404 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=1024 iters=10 time=0.0231 stddev=0.000567646 t_gen=0.003 t_check=0.001 ok=1
+RESULT algo=stdsort name=tail90 size=1024 iters=10 time=0.0131 stddev=0.0033483 t_gen=0.003 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=2048 iters=10 time=0.0356 stddev=0.000699206 t_gen=0.004 t_check=0.002 ok=1
+RESULT algo=stdsort name=tail90 size=2048 iters=10 time=0.0342 stddev=0.00355278 t_gen=0.004 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=4096 iters=10 time=0.0714 stddev=0.0121947 t_gen=0.005 t_check=0.004 ok=1
+RESULT algo=stdsort name=tail90 size=4096 iters=10 time=0.0797 stddev=0.0134334 t_gen=0.005 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=8192 iters=10 time=0.1357 stddev=0.00543752 t_gen=0.022 t_check=0.018 ok=1
+RESULT algo=stdsort name=tail90 size=8192 iters=10 time=0.1741 stddev=0.00506513 t_gen=0.022 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=16384 iters=10 time=0.2942 stddev=0.015943 t_gen=0.038 t_check=0.023 ok=1
+RESULT algo=stdsort name=tail90 size=16384 iters=10 time=0.366 stddev=0.0111555 t_gen=0.038 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=32768 iters=10 time=0.6132 stddev=0.00794145 t_gen=0.073 t_check=0.037 ok=1
+RESULT algo=stdsort name=tail90 size=32768 iters=10 time=0.8508 stddev=0.0550632 t_gen=0.073 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=65536 iters=10 time=1.3607 stddev=0.0753644 t_gen=0.115 t_check=0.081 ok=1
+RESULT algo=stdsort name=tail90 size=65536 iters=10 time=1.6269 stddev=0.0451871 t_gen=0.115 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=131072 iters=10 time=2.8693 stddev=0.0545712 t_gen=0.225 t_check=0.15 ok=1
+RESULT algo=stdsort name=tail90 size=131072 iters=10 time=3.8122 stddev=0.0932044 t_gen=0.225 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=262144 iters=10 time=6.3387 stddev=0.154424 t_gen=0.474 t_check=0.369 ok=1
+RESULT algo=stdsort name=tail90 size=262144 iters=10 time=7.1716 stddev=0.0838003 t_gen=0.474 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=524288 iters=10 time=11.9474 stddev=0.190307 t_gen=1.018 t_check=0.557 ok=1
+RESULT algo=stdsort name=tail90 size=524288 iters=10 time=16.0198 stddev=0.197802 t_gen=1.018 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=1048576 iters=10 time=23.3308 stddev=0.158952 t_gen=1.853 t_check=1.161 ok=1
+RESULT algo=stdsort name=tail90 size=1048576 iters=10 time=32.323 stddev=0.168073 t_gen=1.853 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=2097152 iters=10 time=47.9185 stddev=0.209876 t_gen=3.965 t_check=2.336 ok=1
+RESULT algo=stdsort name=tail90 size=2097152 iters=10 time=68.9928 stddev=0.382616 t_gen=3.965 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=4194304 iters=10 time=99.9415 stddev=0.600075 t_gen=11.013 t_check=4.812 ok=1
+RESULT algo=stdsort name=tail90 size=4194304 iters=10 time=138.102 stddev=0.391762 t_gen=11.013 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=8388608 iters=10 time=219.09 stddev=0.825109 t_gen=21.458 t_check=8.834 ok=1
+RESULT algo=stdsort name=tail90 size=8388608 iters=10 time=301.332 stddev=26.188 t_gen=21.458 t_check=0 ok=1
+RESULT algo=ssssort name=tail90 size=16777216 iters=10 time=476.983 stddev=40.3444 t_gen=45.006 t_check=17.6 ok=1
+RESULT algo=stdsort name=tail90 size=16777216 iters=10 time=634.788 stddev=45.6776 t_gen=45.006 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=1024 iters=10 time=0.0247 stddev=0.00577446 t_gen=0.003 t_check=0.001 ok=1
+RESULT algo=stdsort name=tail99 size=1024 iters=10 time=0.013 stddev=0.00210819 t_gen=0.003 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=2048 iters=10 time=0.0343 stddev=0.000674949 t_gen=0.003 t_check=0.002 ok=1
+RESULT algo=stdsort name=tail99 size=2048 iters=10 time=0.0317 stddev=0.00266875 t_gen=0.003 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=4096 iters=10 time=0.0609 stddev=0.00213177 t_gen=0.005 t_check=0.003 ok=1
+RESULT algo=stdsort name=tail99 size=4096 iters=10 time=0.0842 stddev=0.00713053 t_gen=0.005 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=8192 iters=10 time=0.1218 stddev=0.00825698 t_gen=0.023 t_check=0.018 ok=1
+RESULT algo=stdsort name=tail99 size=8192 iters=10 time=0.2087 stddev=0.0154636 t_gen=0.023 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=16384 iters=10 time=0.249 stddev=0.0238188 t_gen=0.053 t_check=0.033 ok=1
+RESULT algo=stdsort name=tail99 size=16384 iters=10 time=0.3761 stddev=0.0166897 t_gen=0.053 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=32768 iters=10 time=0.6 stddev=0.0262721 t_gen=0.083 t_check=0.059 ok=1
+RESULT algo=stdsort name=tail99 size=32768 iters=10 time=0.8516 stddev=0.0360191 t_gen=0.083 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=65536 iters=10 time=1.4145 stddev=0.0590729 t_gen=0.126 t_check=0.094 ok=1
+RESULT algo=stdsort name=tail99 size=65536 iters=10 time=1.8248 stddev=0.0494544 t_gen=0.126 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=131072 iters=10 time=3.0248 stddev=0.0981901 t_gen=0.198 t_check=0.181 ok=1
+RESULT algo=stdsort name=tail99 size=131072 iters=10 time=4.017 stddev=0.157925 t_gen=0.198 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=262144 iters=10 time=6.2824 stddev=0.106179 t_gen=0.402 t_check=0.304 ok=1
+RESULT algo=stdsort name=tail99 size=262144 iters=10 time=8.2054 stddev=0.130501 t_gen=0.402 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=524288 iters=10 time=11.504 stddev=0.164095 t_gen=0.768 t_check=0.588 ok=1
+RESULT algo=stdsort name=tail99 size=524288 iters=10 time=20.2962 stddev=0.191578 t_gen=0.768 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=1048576 iters=10 time=21.1754 stddev=0.103716 t_gen=1.718 t_check=1.248 ok=1
+RESULT algo=stdsort name=tail99 size=1048576 iters=10 time=40.3171 stddev=0.376676 t_gen=1.718 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=2097152 iters=10 time=40.921 stddev=0.146426 t_gen=3.386 t_check=2.453 ok=1
+RESULT algo=stdsort name=tail99 size=2097152 iters=10 time=85.8582 stddev=0.544476 t_gen=3.386 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=4194304 iters=10 time=84.5718 stddev=0.175838 t_gen=10.051 t_check=4.509 ok=1
+RESULT algo=stdsort name=tail99 size=4194304 iters=10 time=154.15 stddev=0.62376 t_gen=10.051 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=8388608 iters=10 time=207.266 stddev=0.725939 t_gen=19.321 t_check=8.682 ok=1
+RESULT algo=stdsort name=tail99 size=8388608 iters=10 time=374.543 stddev=40.6119 t_gen=19.321 t_check=0 ok=1
+RESULT algo=ssssort name=tail99 size=16777216 iters=10 time=460.815 stddev=0.870965 t_gen=39.574 t_check=17.336 ok=1
+RESULT algo=stdsort name=tail99 size=16777216 iters=10 time=871.555 stddev=64.8816 t_gen=39.574 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=1024 iters=10 time=0.0329 stddev=0.0219922 t_gen=0 t_check=0.001 ok=1
+RESULT algo=stdsort name=sorted size=1024 iters=10 time=0.0061 stddev=0.000316228 t_gen=0 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=2048 iters=10 time=0.0333 stddev=0.000674949 t_gen=0.001 t_check=0.001 ok=1
+RESULT algo=stdsort name=sorted size=2048 iters=10 time=0.0141 stddev=0.000316228 t_gen=0.001 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=4096 iters=10 time=0.0583 stddev=0.000674949 t_gen=0.002 t_check=0.003 ok=1
+RESULT algo=stdsort name=sorted size=4096 iters=10 time=0.0313 stddev=0.000674949 t_gen=0.002 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=8192 iters=10 time=0.1143 stddev=0.00596378 t_gen=0.004 t_check=0.007 ok=1
+RESULT algo=stdsort name=sorted size=8192 iters=10 time=0.0767 stddev=0.0129104 t_gen=0.004 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=16384 iters=10 time=0.1951 stddev=0.00924302 t_gen=0.021 t_check=0.023 ok=1
+RESULT algo=stdsort name=sorted size=16384 iters=10 time=0.1434 stddev=0.0102978 t_gen=0.021 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=32768 iters=10 time=0.5434 stddev=0.0253561 t_gen=0.048 t_check=0.061 ok=1
+RESULT algo=stdsort name=sorted size=32768 iters=10 time=0.3098 stddev=0.0213947 t_gen=0.048 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=65536 iters=10 time=1.4261 stddev=0.0674561 t_gen=0.108 t_check=0.149 ok=1
+RESULT algo=stdsort name=sorted size=65536 iters=10 time=0.6168 stddev=0.0186952 t_gen=0.108 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=131072 iters=10 time=3.3111 stddev=0.0811521 t_gen=0.207 t_check=0.16 ok=1
+RESULT algo=stdsort name=sorted size=131072 iters=10 time=1.2473 stddev=0.0298479 t_gen=0.207 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=262144 iters=10 time=6.7555 stddev=0.173748 t_gen=0.348 t_check=0.296 ok=1
+RESULT algo=stdsort name=sorted size=262144 iters=10 time=2.6209 stddev=0.0713839 t_gen=0.348 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=524288 iters=10 time=11.344 stddev=0.17258 t_gen=0.682 t_check=0.553 ok=1
+RESULT algo=stdsort name=sorted size=524288 iters=10 time=5.4897 stddev=0.0816211 t_gen=0.682 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=1048576 iters=10 time=20.922 stddev=0.159122 t_gen=1.438 t_check=1.142 ok=1
+RESULT algo=stdsort name=sorted size=1048576 iters=10 time=11.6501 stddev=0.127748 t_gen=1.438 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=2097152 iters=10 time=39.374 stddev=0.234791 t_gen=3.261 t_check=2.251 ok=1
+RESULT algo=stdsort name=sorted size=2097152 iters=10 time=24.5113 stddev=0.162643 t_gen=3.261 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=4194304 iters=10 time=78.1605 stddev=0.246018 t_gen=9.063 t_check=4.742 ok=1
+RESULT algo=stdsort name=sorted size=4194304 iters=10 time=51.7968 stddev=0.546432 t_gen=9.063 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=8388608 iters=10 time=200.034 stddev=0.927724 t_gen=18.599 t_check=9.163 ok=1
+RESULT algo=stdsort name=sorted size=8388608 iters=10 time=108.457 stddev=0.847339 t_gen=18.599 t_check=0 ok=1
+RESULT algo=ssssort name=sorted size=16777216 iters=10 time=497.681 stddev=45.8092 t_gen=37.314 t_check=17.174 ok=1
+RESULT algo=stdsort name=sorted size=16777216 iters=10 time=225.384 stddev=0.380116 t_gen=37.314 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=1024 iters=10 time=0.0264 stddev=0.00620394 t_gen=0 t_check=0.001 ok=1
+RESULT algo=stdsort name=reverse size=1024 iters=10 time=0.005 stddev=0 t_gen=0 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=2048 iters=10 time=0.0395 stddev=0.0012693 t_gen=0.001 t_check=0.001 ok=1
+RESULT algo=stdsort name=reverse size=2048 iters=10 time=0.011 stddev=0 t_gen=0.001 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=4096 iters=10 time=0.0882 stddev=0.00329309 t_gen=0.002 t_check=0.003 ok=1
+RESULT algo=stdsort name=reverse size=4096 iters=10 time=0.0331 stddev=0.0116947 t_gen=0.002 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=8192 iters=10 time=0.2511 stddev=0.0147154 t_gen=0.005 t_check=0.007 ok=1
+RESULT algo=stdsort name=reverse size=8192 iters=10 time=0.0729 stddev=0.0209149 t_gen=0.005 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=16384 iters=10 time=0.5975 stddev=0.0314899 t_gen=0.022 t_check=0.014 ok=1
+RESULT algo=stdsort name=reverse size=16384 iters=10 time=0.1291 stddev=0.00944516 t_gen=0.022 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=32768 iters=10 time=0.654 stddev=0.031496 t_gen=0.061 t_check=0.049 ok=1
+RESULT algo=stdsort name=reverse size=32768 iters=10 time=0.2454 stddev=0.0359141 t_gen=0.061 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=65536 iters=10 time=1.394 stddev=0.0447089 t_gen=0.101 t_check=0.126 ok=1
+RESULT algo=stdsort name=reverse size=65536 iters=10 time=0.4865 stddev=0.0345036 t_gen=0.101 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=131072 iters=10 time=2.9728 stddev=0.0634854 t_gen=0.224 t_check=0.152 ok=1
+RESULT algo=stdsort name=reverse size=131072 iters=10 time=0.9462 stddev=0.048242 t_gen=0.224 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=262144 iters=10 time=6.6124 stddev=0.13822 t_gen=0.346 t_check=0.298 ok=1
+RESULT algo=stdsort name=reverse size=262144 iters=10 time=1.9811 stddev=0.0588094 t_gen=0.346 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=524288 iters=10 time=12.9386 stddev=0.19382 t_gen=0.685 t_check=0.572 ok=1
+RESULT algo=stdsort name=reverse size=524288 iters=10 time=4.1744 stddev=0.0583861 t_gen=0.685 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=1048576 iters=10 time=27.3911 stddev=0.146459 t_gen=1.464 t_check=1.133 ok=1
+RESULT algo=stdsort name=reverse size=1048576 iters=10 time=8.8462 stddev=0.130593 t_gen=1.464 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=2097152 iters=10 time=64.8447 stddev=0.219972 t_gen=3.252 t_check=2.374 ok=1
+RESULT algo=stdsort name=reverse size=2097152 iters=10 time=18.73 stddev=0.202048 t_gen=3.252 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=4194304 iters=10 time=153.246 stddev=1.13956 t_gen=9.082 t_check=4.472 ok=1
+RESULT algo=stdsort name=reverse size=4194304 iters=10 time=39.1838 stddev=0.219046 t_gen=9.082 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=8388608 iters=10 time=250.108 stddev=31.0252 t_gen=19.114 t_check=8.715 ok=1
+RESULT algo=stdsort name=reverse size=8388608 iters=10 time=81.8244 stddev=0.707235 t_gen=19.114 t_check=0 ok=1
+RESULT algo=ssssort name=reverse size=16777216 iters=10 time=459.457 stddev=1.82464 t_gen=37.587 t_check=17.249 ok=1
+RESULT algo=stdsort name=reverse size=16777216 iters=10 time=169.773 stddev=0.171492 t_gen=37.587 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=1024 iters=10 time=0.0199 stddev=0.0048637 t_gen=0.008 t_check=0.001 ok=1
+RESULT algo=stdsort name=many-dupes size=1024 iters=10 time=0.0091 stddev=0.00260128 t_gen=0.008 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=2048 iters=10 time=0.0267 stddev=0.000674949 t_gen=0.027 t_check=0.001 ok=1
+RESULT algo=stdsort name=many-dupes size=2048 iters=10 time=0.0284 stddev=0.00302581 t_gen=0.027 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=4096 iters=10 time=0.0485 stddev=0.000527046 t_gen=0.054 t_check=0.003 ok=1
+RESULT algo=stdsort name=many-dupes size=4096 iters=10 time=0.0568 stddev=0.00444222 t_gen=0.054 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=8192 iters=10 time=0.1253 stddev=0.0107812 t_gen=0.087 t_check=0.018 ok=1
+RESULT algo=stdsort name=many-dupes size=8192 iters=10 time=0.1555 stddev=0.0104163 t_gen=0.087 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=16384 iters=10 time=0.212 stddev=0.000471405 t_gen=0.22 t_check=0.044 ok=1
+RESULT algo=stdsort name=many-dupes size=16384 iters=10 time=0.3224 stddev=0.0253298 t_gen=0.22 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=32768 iters=10 time=0.4141 stddev=0.0237555 t_gen=0.298 t_check=0.074 ok=1
+RESULT algo=stdsort name=many-dupes size=32768 iters=10 time=0.6143 stddev=0.0473804 t_gen=0.298 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=65536 iters=10 time=0.7994 stddev=0.0178836 t_gen=0.568 t_check=0.125 ok=1
+RESULT algo=stdsort name=many-dupes size=65536 iters=10 time=0.5411 stddev=0.0339295 t_gen=0.568 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=131072 iters=10 time=1.5155 stddev=0.0439728 t_gen=1.153 t_check=0.156 ok=1
+RESULT algo=stdsort name=many-dupes size=131072 iters=10 time=2.5316 stddev=0.0576121 t_gen=1.153 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=262144 iters=10 time=3.0513 stddev=0.0568078 t_gen=2.192 t_check=0.276 ok=1
+RESULT algo=stdsort name=many-dupes size=262144 iters=10 time=5.2334 stddev=0.0405441 t_gen=2.192 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=524288 iters=10 time=6.4575 stddev=0.11742 t_gen=4.478 t_check=0.605 ok=1
+RESULT algo=stdsort name=many-dupes size=524288 iters=10 time=10.575 stddev=0.0855557 t_gen=4.478 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=1048576 iters=10 time=14.0985 stddev=0.145725 t_gen=9.029 t_check=1.104 ok=1
+RESULT algo=stdsort name=many-dupes size=1048576 iters=10 time=19.6242 stddev=0.0911504 t_gen=9.029 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=2097152 iters=10 time=28.2768 stddev=0.192796 t_gen=18.023 t_check=2.354 ok=1
+RESULT algo=stdsort name=many-dupes size=2097152 iters=10 time=45.2033 stddev=0.175871 t_gen=18.023 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=4194304 iters=10 time=57.2468 stddev=0.233567 t_gen=39.861 t_check=4.683 ok=1
+RESULT algo=stdsort name=many-dupes size=4194304 iters=10 time=94.041 stddev=0.628615 t_gen=39.861 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=8388608 iters=10 time=126.113 stddev=0.891185 t_gen=78.365 t_check=8.885 ok=1
+RESULT algo=stdsort name=many-dupes size=8388608 iters=10 time=214.587 stddev=27.4218 t_gen=78.365 t_check=0 ok=1
+RESULT algo=ssssort name=many-dupes size=16777216 iters=10 time=270.841 stddev=1.17589 t_gen=155.849 t_check=21.542 ok=1
+RESULT algo=stdsort name=many-dupes size=16777216 iters=10 time=337.718 stddev=41.4008 t_gen=155.849 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=1024 iters=10 time=0.023 stddev=0.000816497 t_gen=0.023 t_check=0.001 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=1024 iters=10 time=0.0142 stddev=0.00304777 t_gen=0.023 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=2048 iters=10 time=0.0392 stddev=0.00147573 t_gen=0.061 t_check=0.003 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=2048 iters=10 time=0.0453 stddev=0.00326769 t_gen=0.061 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=4096 iters=10 time=0.0867 stddev=0.0106045 t_gen=0.117 t_check=0.006 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=4096 iters=10 time=0.1053 stddev=0.00170294 t_gen=0.117 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=8192 iters=10 time=0.1961 stddev=0.0137311 t_gen=0.211 t_check=0.02 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=8192 iters=10 time=0.2578 stddev=0.0215809 t_gen=0.211 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=16384 iters=10 time=0.4189 stddev=0.0268678 t_gen=0.405 t_check=0.018 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=16384 iters=10 time=0.5072 stddev=0.0224291 t_gen=0.405 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=32768 iters=10 time=0.8782 stddev=0.0418378 t_gen=0.754 t_check=0.085 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=32768 iters=10 time=1.1187 stddev=0.0427319 t_gen=0.754 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=65536 iters=10 time=1.8273 stddev=0.0615847 t_gen=1.495 t_check=0.119 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=65536 iters=10 time=2.3197 stddev=0.0714921 t_gen=1.495 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=131072 iters=10 time=3.6854 stddev=0.089397 t_gen=3.042 t_check=0.198 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=131072 iters=10 time=5.0351 stddev=0.0841592 t_gen=3.042 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=262144 iters=10 time=7.3636 stddev=0.48686 t_gen=6.13 t_check=0.291 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=262144 iters=10 time=8.9642 stddev=0.0760377 t_gen=6.13 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=524288 iters=10 time=10.6007 stddev=0.213014 t_gen=9.823 t_check=0.569 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=524288 iters=10 time=19.2395 stddev=0.0744897 t_gen=9.823 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=1048576 iters=10 time=22.552 stddev=0.37782 t_gen=20.129 t_check=1.203 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=1048576 iters=10 time=40.4344 stddev=0.158296 t_gen=20.129 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=2097152 iters=10 time=47.3992 stddev=0.577875 t_gen=40.168 t_check=2.352 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=2097152 iters=10 time=85.831 stddev=0.426016 t_gen=40.168 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=4194304 iters=10 time=125.91 stddev=15.1637 t_gen=83.066 t_check=4.362 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=4194304 iters=10 time=181.061 stddev=0.570924 t_gen=83.066 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=8388608 iters=10 time=243.172 stddev=33.0248 t_gen=165.197 t_check=8.536 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=8388608 iters=10 time=401.423 stddev=31.3359 t_gen=165.197 t_check=0 ok=1
+RESULT algo=ssssort name=few-spikes-with-noise size=16777216 iters=10 time=462.339 stddev=1.36817 t_gen=327.441 t_check=22.204 ok=1
+RESULT algo=stdsort name=few-spikes-with-noise size=16777216 iters=10 time=834.401 stddev=42.1394 t_gen=327.441 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=1024 iters=10 time=0.0123 stddev=0.00275076 t_gen=0 t_check=0.001 ok=1
+RESULT algo=stdsort name=ones size=1024 iters=10 time=0.0069 stddev=0.00284605 t_gen=0 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=2048 iters=10 time=0.0214 stddev=0.00435125 t_gen=0 t_check=0.002 ok=1
+RESULT algo=stdsort name=ones size=2048 iters=10 time=0.014 stddev=0 t_gen=0 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=4096 iters=10 time=0.0364 stddev=0.000516398 t_gen=0.001 t_check=0.004 ok=1
+RESULT algo=stdsort name=ones size=4096 iters=10 time=0.0339 stddev=0.00401248 t_gen=0.001 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=8192 iters=10 time=0.076 stddev=0.00156347 t_gen=0.002 t_check=0.009 ok=1
+RESULT algo=stdsort name=ones size=8192 iters=10 time=0.0691 stddev=0.000316228 t_gen=0.002 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=16384 iters=10 time=0.1701 stddev=0.0178354 t_gen=0.019 t_check=0.028 ok=1
+RESULT algo=stdsort name=ones size=16384 iters=10 time=0.1647 stddev=0.0126144 t_gen=0.019 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=32768 iters=10 time=0.3685 stddev=0.0249188 t_gen=0.059 t_check=0.055 ok=1
+RESULT algo=stdsort name=ones size=32768 iters=10 time=0.3322 stddev=0.00836394 t_gen=0.059 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=65536 iters=10 time=0.7372 stddev=0.036499 t_gen=0.079 t_check=0.123 ok=1
+RESULT algo=stdsort name=ones size=65536 iters=10 time=0.7225 stddev=0.011928 t_gen=0.079 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=131072 iters=10 time=1.5436 stddev=0.0282103 t_gen=0.2 t_check=0.197 ok=1
+RESULT algo=stdsort name=ones size=131072 iters=10 time=1.5178 stddev=0.0364381 t_gen=0.2 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=262144 iters=10 time=3.2612 stddev=0.0595013 t_gen=0.361 t_check=0.429 ok=1
+RESULT algo=stdsort name=ones size=262144 iters=10 time=3.174 stddev=0.0579176 t_gen=0.361 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=524288 iters=10 time=6.904 stddev=0.117017 t_gen=0.71 t_check=0.655 ok=1
+RESULT algo=stdsort name=ones size=524288 iters=10 time=6.6819 stddev=0.0669302 t_gen=0.71 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=1048576 iters=10 time=14.7118 stddev=0.163224 t_gen=1.562 t_check=1.302 ok=1
+RESULT algo=stdsort name=ones size=1048576 iters=10 time=14.2813 stddev=0.240741 t_gen=1.562 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=2097152 iters=10 time=26.2857 stddev=5.22323 t_gen=3.393 t_check=2.249 ok=1
+RESULT algo=stdsort name=ones size=2097152 iters=10 time=19.5742 stddev=0.080331 t_gen=3.393 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=4194304 iters=10 time=43.3938 stddev=0.406132 t_gen=8.399 t_check=4.581 ok=1
+RESULT algo=stdsort name=ones size=4194304 iters=10 time=41.1295 stddev=0.312018 t_gen=8.399 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=8388608 iters=10 time=90.5644 stddev=0.79206 t_gen=16.787 t_check=8.62 ok=1
+RESULT algo=stdsort name=ones size=8388608 iters=10 time=86.0328 stddev=0.659965 t_gen=16.787 t_check=0 ok=1
+RESULT algo=ssssort name=ones size=16777216 iters=10 time=187.928 stddev=1.15172 t_gen=35.515 t_check=17.566 ok=1
+RESULT algo=stdsort name=ones size=16777216 iters=10 time=179.725 stddev=1.08028 t_gen=35.515 t_check=0 ok=1
