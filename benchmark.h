@@ -32,6 +32,8 @@
 const bool debug = false;
 
 #include <algorithm>
+#include <cassert>
+#include <cmath>
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -41,16 +43,45 @@ const bool debug = false;
 #include "timer.h"
 #include "progress_bar.h"
 
+struct statistics {
+    // Single-pass standard deviation calculation as described in Donald Knuth:
+    // The Art of Computer Programming, Volume 2, Chapter 4.2.2, Equations 15&16
+    double mean;
+    double nvar; // approx n * variance; stddev = sqrt(nvar / (count-1))
+    size_t count;
+
+    statistics() : mean(0.0), nvar(0.0), count(0) {}
+
+    void push(double t) {
+        ++count;
+        if (count == 1) {
+            mean = t;
+        } else {
+            double oldmean = mean;
+            mean += (t - oldmean) / count;
+            nvar += (t - oldmean) * (t - mean);
+        }
+    }
+
+    double avg() {
+        return mean;
+    }
+    double stddev() {
+        assert(count > 1);
+        return sqrt(nvar / (count - 1));
+    }
+};
+
 template <typename T, typename Sorter>
-double run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
-           size_t iterations, const std::string &algoname,
-           bool reset_out = true) {
+statistics run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
+               size_t iterations, const std::string &algoname,
+               bool reset_out = true) {
     progress_bar bar(iterations + 1, algoname);
     // warmup
     sorter(data, out, size);
     ++bar;
 
-    double time = 0.0;
+    statistics stats;
     Timer timer;
     for (size_t it = 0; it < iterations; ++it) {
         // reset data and timer
@@ -61,11 +92,11 @@ double run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
 
         sorter(data, out, size);
 
-        time += timer.get();
+        stats.push(timer.get());
         ++bar;
     }
     bar.undraw();
-    return time;
+    return stats;
 }
 
 template <typename T, typename Generator>
@@ -84,16 +115,16 @@ size_t benchmark(size_t size, size_t iterations, Generator generator,
     double t_generate = timer.get_and_reset();
 
     // 1. Super Scalar Sample Sort
-    double t_ssssort = run(data, copy, out, size,
-                           [](T* data, T* out, size_t size)
-                           { ssssort::ssssort(data, data + size, out); },
-                           iterations, "ssssort: ");
+    auto t_ssssort = run(data, copy, out, size,
+                         [](T* data, T* out, size_t size)
+                         { ssssort::ssssort(data, data + size, out); },
+                         iterations, "ssssort: ");
 
     // 2. std::sort
-    double t_stdsort = run(data, copy, out, size,
-                           [](T* data, T* /*ignored*/, size_t size)
-                           { std::sort(data, data + size); },
-                           iterations, "std::sort: ", false);
+    auto t_stdsort = run(data, copy, out, size,
+                         [](T* data, T* /*ignored*/, size_t size)
+                         { std::sort(data, data + size); },
+                         iterations, "std::sort: ", false);
 
 
     // verify
@@ -119,20 +150,22 @@ size_t benchmark(size_t size, size_t iterations, Generator generator,
     output << "RESULT algo=ssssort"
            << " name=" << name
            << " size=" << size
-           << " iterations=" << iterations
-           << " time=" << t_ssssort/iterations
-           << " t_generate=" << t_generate
-           << " t_verify=" << t_verify
-           << " correct=" << !incorrect
+           << " iters=" << iterations
+           << " time=" << t_ssssort.avg()
+           << " stddev=" << t_ssssort.stddev()
+           << " t_gen=" << t_generate
+           << " t_check=" << t_verify
+           << " ok=" << !incorrect
            << std::endl
            << "RESULT algo=stdsort"
            << " name=" << name
            << " size=" << size
-           << " iterations=" << iterations
-           << " time=" << t_stdsort/iterations
-           << " t_generate=" << t_generate
-           << " t_verify=0"
-           << " correct=1"
+           << " iters=" << iterations
+           << " time=" << t_stdsort.avg()
+           << " stddev=" << t_stdsort.stddev()
+           << " t_gen=" << t_generate
+           << " t_check=0"
+           << " ok=1"
            << std::endl;
     auto result_str = output.str();
     std::cout << result_str;
