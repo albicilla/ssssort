@@ -43,9 +43,10 @@ using data_t = int;
 int main(int argc, char *argv[]) {
     if (argc > 1 && std::string{argv[1]} == "-h") {
         std::cout << "Usage: " << argv[0]
-                  << " [iteratons] [statistics output file]" << std::endl
-                  << "Defaults are 10 iterations and output to stats.txt"
-                  << std::endl;
+                  << " [outer iteratons] [inner iterations]"
+                  << " [statistics output file]" << std::endl
+                  << "Defaults are 5 outer iteration, 3 inner iterations,"
+                  << " and output to stats.txt" << std::endl;
         return 0;
     }
 
@@ -55,11 +56,12 @@ int main(int argc, char *argv[]) {
               << "speed.plot and run gnuplot on it!" << std::endl;
 
     // Parse flags
-    size_t iterations = 10;
-    if (argc > 1) iterations = static_cast<size_t>(atol(argv[1]));
+    size_t outer_its = 5, inner_its = 3;
+    if (argc > 1) outer_its = static_cast<size_t>(atol(argv[1]));
+    if (argc > 2) inner_its = static_cast<size_t>(atol(argv[2]));
 
     std::string stat_file = "stats.txt";
-    if (argc > 2) stat_file = std::string{argv[2]};
+    if (argc > 3) stat_file = std::string{argv[3]};
     std::ofstream *stat_stream = nullptr;
     if (stat_file != "-") {
         stat_stream = new std::ofstream;
@@ -75,11 +77,12 @@ int main(int argc, char *argv[]) {
     };
 
     // Warmup
-    benchmark_generator<data_t>(random_gen, "warmup", 3, stat_stream, 20);
+    benchmark_generator<data_t>(random_gen, "warmup", 1, 3, stat_stream, 20);
 
 
     // Run Benchmarks
-    benchmark_generator<data_t>(random_gen, "random", iterations, stat_stream);
+    benchmark_generator<data_t>(random_gen, "random", outer_its, inner_its,
+                                stat_stream);
 
 
     // nearly sorted data generator factory
@@ -99,10 +102,14 @@ int main(int argc, char *argv[]) {
         };
     };
 
-    benchmark_generator<data_t>(nearly_sorted_gen(5), "80pcsorted", iterations, stat_stream);
-    benchmark_generator<data_t>(nearly_sorted_gen(10), "90pcsorted", iterations, stat_stream);
-    benchmark_generator<data_t>(nearly_sorted_gen(100), "99pcsorted", iterations, stat_stream);
-    benchmark_generator<data_t>(nearly_sorted_gen(1000), "99.9pcsorted", iterations, stat_stream);
+    benchmark_generator<data_t>(nearly_sorted_gen(5), "80pcsorted",
+                                outer_its, inner_its, stat_stream);
+    benchmark_generator<data_t>(nearly_sorted_gen(10), "90pcsorted",
+                                outer_its, inner_its, stat_stream);
+    benchmark_generator<data_t>(nearly_sorted_gen(100), "99pcsorted",
+                                outer_its, inner_its, stat_stream);
+    benchmark_generator<data_t>(nearly_sorted_gen(1000), "99.9pcsorted",
+                                outer_its, inner_its, stat_stream);
 
 
     // nearly sorted data generator factory
@@ -123,8 +130,10 @@ int main(int argc, char *argv[]) {
         };
     };
 
-    benchmark_generator<data_t>(unsorted_tail_gen(10), "tail90", iterations, stat_stream);
-    benchmark_generator<data_t>(unsorted_tail_gen(100), "tail99", iterations, stat_stream);
+    benchmark_generator<data_t>(unsorted_tail_gen(10), "tail90",
+                                outer_its, inner_its, stat_stream);
+    benchmark_generator<data_t>(unsorted_tail_gen(100), "tail99",
+                                outer_its, inner_its, stat_stream);
 
 
     benchmark_generator<data_t>([](auto data, size_t size){
@@ -132,7 +141,7 @@ int main(int argc, char *argv[]) {
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(i);
             }
-        }, "sorted", iterations, stat_stream);
+        }, "sorted", outer_its, inner_its, stat_stream);
 
 
     benchmark_generator<data_t>([](auto data, size_t size){
@@ -140,7 +149,7 @@ int main(int argc, char *argv[]) {
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(size - i);
             }
-        }, "reverse", iterations, stat_stream);
+        }, "reverse", outer_its, inner_its, stat_stream);
 
 
     // Benchmark due to Armin Weiß at Universität Stuttgart
@@ -154,7 +163,7 @@ int main(int argc, char *argv[]) {
                 j *= j; j *= j; j *= j; j *= j;
                 data[i] = static_cast<T>(j % flogn);
             }
-        }, "many-dupes", iterations, stat_stream);
+        }, "many-dupes", outer_its, inner_its, stat_stream);
 
 
     /* Benchmark due to Armin Weiß at Universität Stuttgart
@@ -176,14 +185,14 @@ int main(int argc, char *argv[]) {
                 data[i] = static_cast<T>(
                     (offset_zw + temp*temp) % prev_pow_2);
             }
-        }, "few-spikes-with-noise", iterations, stat_stream);
+        }, "few-spikes-with-noise", outer_its, inner_its, stat_stream);
 
 
     benchmark_generator<data_t>([](auto data, size_t size){
             for (size_t i = 0; i < size; ++i) {
                 data[i] = 1;
             }
-        }, "ones", iterations, stat_stream);
+        }, "ones", outer_its, inner_its, stat_stream);
 
 
     if (stat_stream != nullptr) {

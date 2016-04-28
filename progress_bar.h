@@ -77,6 +77,12 @@ public:
         out << "\r";
     }
 
+    void set_extra(const std::string &new_extra) {
+        undraw();
+        extra = new_extra;
+        draw();
+    }
+
 protected:
     // adapted from StackOverflow user "leemes":
     // http://stackoverflow.com/a/14539953
@@ -104,7 +110,7 @@ protected:
 
 private:
     std::ostream &out;
-    const std::string &extra;
+    std::string extra;
     unsigned long long max;
     unsigned long long pos;
     int lastprogress;

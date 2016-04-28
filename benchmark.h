@@ -73,15 +73,13 @@ struct statistics {
 };
 
 template <typename T, typename Sorter>
-statistics run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
-               size_t iterations, const std::string &algoname,
-               bool reset_out = true) {
-    progress_bar bar(iterations + 1, algoname);
+void run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
+         size_t iterations, statistics& stats, progress_bar &bar,
+         bool reset_out = true) {
     // warmup
     sorter(data, out, size);
     ++bar;
 
-    statistics stats;
     Timer timer;
     for (size_t it = 0; it < iterations; ++it) {
         // reset data and timer
@@ -95,61 +93,83 @@ statistics run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
         stats.push(timer.get());
         ++bar;
     }
-    bar.undraw();
-    return stats;
 }
 
 template <typename T, typename Generator>
-size_t benchmark(size_t size, size_t iterations, Generator generator,
-                 const std::string &name, std::ofstream *stat_stream) {
+size_t benchmark(size_t size, Generator generator,  const std::string &name,
+                 size_t outer_its, size_t inner_its,
+                 std::ofstream *stat_stream) {
     T *data = new T[size],
         *out = new T[size],
         *copy = new T[size];
 
-    Timer timer;
-    // Generate random numbers as input
-    size = generator(data, size);
-
-    // create a copy to be able to sort it multiple times
-    std::copy(data, data+size, copy);
-    double t_generate = timer.get_and_reset();
-
     // Number of iterations
-    if (iterations == static_cast<size_t>(-1)) {
-        if (size < (1<<16)) iterations = 1000;
-        else if (size < (1<<18)) iterations = 500;
-        else if (size < (1<<20)) iterations = 250;
-        else if (size < (1<<24)) iterations = 100;
-        else iterations = 50;
+    if (outer_its == static_cast<size_t>(-1)) {
+        if (size < (1<<16)) outer_its = 100;
+        else if (size < (1<<18)) outer_its = 50;
+        else if (size < (1<<20)) outer_its = 25;
+        else if (size < (1<<24)) outer_its = 10;
+        else outer_its = 5;
+    }
+    if (inner_its == static_cast<size_t>(-1)) {
+        inner_its = 10;
     }
 
-    // 1. Super Scalar Sample Sort
-    auto t_ssssort = run(data, copy, out, size,
-                         [](T* data, T* out, size_t size)
-                         { ssssort::ssssort(data, data + size, out); },
-                         iterations, "ssssort: ");
+    // the label maker
+    auto bar_label = [&](size_t it) {
+        return name + " (" + std::to_string(it + 1) + "/" +
+            std::to_string(outer_its) + "): ";
+    };
 
-    // 2. std::sort
-    auto t_stdsort = run(data, copy, out, size,
-                         [](T* data, T* /*ignored*/, size_t size)
-                         { std::sort(data, data + size); },
-                         iterations, "std::sort: ", false);
+    progress_bar bar(2 * outer_its * (inner_its + 1), bar_label(0));
+    Timer timer;
+
+    double t_generate(0.0), t_verify(0.0);
+    bool incorrect = false;
+    statistics t_ssssort, t_stdsort;
+    for (size_t it = 0; it < outer_its; ++it) {
+        bar.set_extra(bar_label(it));
+        // Generate random numbers as input
+        timer.reset();
+        size = generator(data, size);
+
+        // create a copy to be able to sort it multiple times
+        std::copy(data, data+size, copy);
+        t_generate += timer.get_and_reset();
+
+        // Sorting algorithms have their own time tracking
+        // 1. Super Scalar Sample Sort
+        run(data, copy, out, size,
+            [](T* data, T* out, size_t size)
+            { ssssort::ssssort(data, data + size, out); },
+            inner_its, t_ssssort, bar);
+
+        // 2. std::sort
+        run(data, copy, out, size,
+            [](T* data, T* /*ignored*/, size_t size)
+            { std::sort(data, data + size); },
+            inner_its, t_stdsort, bar, false);
 
 
-    // verify
-    timer.reset();
-    bool incorrect = !std::is_sorted(out, out + size);
-    if (incorrect) {
-        std::cerr << "Output data isn't sorted" << std::endl;
-    }
-    for (size_t i = 0; i < size; ++i) {
-        incorrect |= (out[i] != data[i]);
-        if (debug && out[i] != data[i]) {
-            std::cerr << "Err at pos " << i << " expected " << data[i]
-                      << " got " << out[i] << std::endl;
+        // verify
+        timer.reset();
+        bool it_incorrect = !std::is_sorted(out, out + size);
+        if (it_incorrect) {
+            std::cerr << "Output data isn't sorted" << std::endl;
         }
+        for (size_t i = 0; i < size; ++i) {
+            it_incorrect |= (out[i] != data[i]);
+            if (debug && out[i] != data[i]) {
+                std::cerr << "Err at pos " << i << " expected " << data[i]
+                          << " got " << out[i] << std::endl;
+            }
+        }
+        incorrect |= it_incorrect;
+        t_verify += timer.get_and_reset();
+
     }
-    double t_verify = timer.get_and_reset();
+
+    bar.undraw();
 
     delete[] out;
     delete[] data;
@@ -159,7 +179,7 @@ size_t benchmark(size_t size, size_t iterations, Generator generator,
     output << "RESULT algo=ssssort"
            << " name=" << name
            << " size=" << size
-           << " iters=" << iterations
+           << " iters=" << outer_its << "*" << inner_its
            << " time=" << t_ssssort.avg()
            << " stddev=" << t_ssssort.stddev()
            << " t_gen=" << t_generate
@@ -169,7 +189,7 @@ size_t benchmark(size_t size, size_t iterations, Generator generator,
            << "RESULT algo=stdsort"
            << " name=" << name
            << " size=" << size
-           << " iters=" << iterations
+           << " iters=" << outer_its << "*" << inner_its
            << " time=" << t_stdsort.avg()
            << " stddev=" << t_stdsort.stddev()
            << " t_gen=" << t_generate
@@ -186,33 +206,35 @@ size_t benchmark(size_t size, size_t iterations, Generator generator,
 
 template <typename T, typename Generator>
 void benchmark_generator(Generator generator, const std::string &name,
-                         size_t iterations, std::ofstream *stat_stream,
-                         size_t max_log_size = 27) {
+                         const size_t outer_its, const size_t inner_its,
+                         std::ofstream *stat_stream,
+                         const size_t max_log_size = 27) {
     auto wrapped_generator = [generator](auto data, size_t size) {
         generator(data, size);
         return size;
     };
 
     // warmup
-    benchmark<T>(1<<10, 10, wrapped_generator, "warmup", nullptr);
+    benchmark<T>(1<<10, wrapped_generator, "warmup", 1, 10, nullptr);
 
     for (size_t log_size = 10; log_size < max_log_size; ++log_size) {
         size_t size = 1 << log_size;
-        benchmark<T>(size, iterations, wrapped_generator, name, stat_stream);
+        benchmark<T>(size, wrapped_generator, name, outer_its, inner_its, stat_stream);
     }
 }
 
 
 template <typename T, typename Generator>
 void sized_benchmark_generator(Generator generator, const std::string &name,
-                               size_t iterations, std::ofstream *stat_stream,
-                               size_t max_log_size = 27) {
+                               const size_t outer_its, const size_t inner_its,
+                               std::ofstream *stat_stream,
+                               const size_t max_log_size = 27) {
     // warmup
-    benchmark<T>(1<<10, 10, generator, "warmup", nullptr);
+    benchmark<T>(1<<10, 10, generator, "warmup", 0, nullptr);
 
     for (size_t log_size = 10; log_size < max_log_size; ++log_size) {
         size_t size = 1 << log_size;
-        auto last_size = benchmark<T>(size, iterations, generator, name, stat_stream);
+        size_t last_size = benchmark<T>(size, generator, name, outer_its, inner_its, stat_stream);
         if (last_size < size) break;
     }
 }
