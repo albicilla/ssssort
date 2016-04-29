@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(i);
             }
-        }, "sorted", outer_its, inner_its, stat_stream);
+        }, "sorted", outer_its, inner_its, stat_stream, true);
 
 
     benchmark_generator<data_t>([](auto data, size_t size){
@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
             for (size_t i = 0; i < size; ++i) {
                 data[i] = static_cast<T>(size - i);
             }
-        }, "reverse", outer_its, inner_its, stat_stream);
+        }, "reverse", outer_its, inner_its, stat_stream, true);
 
 
     // Benchmark due to Armin Weiß at Universität Stuttgart
@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
                 j *= j; j *= j; j *= j; j *= j;
                 data[i] = static_cast<T>(j % flogn);
             }
-        }, "many-dupes", outer_its, inner_its, stat_stream);
+        }, "many-dupes", outer_its, inner_its, stat_stream, true);
 
 
     /* Benchmark due to Armin Weiß at Universität Stuttgart
@@ -185,14 +185,14 @@ int main(int argc, char *argv[]) {
                 data[i] = static_cast<T>(
                     (offset_zw + temp*temp) % prev_pow_2);
             }
-        }, "few-spikes-with-noise", outer_its, inner_its, stat_stream);
+        }, "few-spikes-with-noise", outer_its, inner_its, stat_stream, true);
 
 
     benchmark_generator<data_t>([](auto data, size_t size){
             for (size_t i = 0; i < size; ++i) {
                 data[i] = 1;
             }
-        }, "ones", outer_its, inner_its, stat_stream);
+        }, "ones", outer_its, inner_its, stat_stream, true);
 
 
     if (stat_stream != nullptr) {

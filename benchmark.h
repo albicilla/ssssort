@@ -98,21 +98,25 @@ void run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
 template <typename T, typename Generator>
 size_t benchmark(size_t size, Generator generator,  const std::string &name,
                  size_t outer_its, size_t inner_its,
-                 std::ofstream *stat_stream) {
+                 std::ofstream *stat_stream, bool deterministic_gen = false) {
     T *data = new T[size],
         *out = new T[size],
         *copy = new T[size];
 
     // Number of iterations
-    if (outer_its == static_cast<size_t>(-1)) {
-        if (size < (1<<16)) outer_its = 100;
-        else if (size < (1<<18)) outer_its = 50;
-        else if (size < (1<<20)) outer_its = 25;
-        else if (size < (1<<24)) outer_its = 10;
-        else outer_its = 5;
-    }
     if (inner_its == static_cast<size_t>(-1)) {
         inner_its = 10;
+    }
+    if (outer_its == static_cast<size_t>(-1)) {
+        if (deterministic_gen) {
+            // boooring
+            outer_its = std::max(size_t{1}, 100 / inner_its);
+        } else {
+            if (size < (1<<16)) outer_its = 100;
+            else if (size < (1<<18)) outer_its = 50;
+            else if (size < (1<<22)) outer_its = 35;
+            else outer_its = 25;
+        }
     }
 
     // the label maker
