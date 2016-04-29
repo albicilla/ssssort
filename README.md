@@ -24,7 +24,7 @@ required comparison.
 `std::sort` is awfully fast on data that is already sorted (both
 [in the right](plots/sorted.png) and [reverse order](plots/reverse.png)). We
 can't match that.  However, as soon as even 0.1% of elements aren't in the right
-place, its advantage [breaks down immediately](plots/99.9pcsorted)!  This is
+place, its advantage [breaks down immediately](plots/99.9pcsorted.png)!  This is
 also true when the first 99% of the array are sorted, and only the
 [last 1% contains random data](plots/99pctail.png).
 
