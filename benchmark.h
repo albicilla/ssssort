@@ -104,19 +104,25 @@ size_t benchmark(size_t size, Generator generator,  const std::string &name,
         *copy = new T[size];
 
     // Number of iterations
-    if (inner_its == static_cast<size_t>(-1)) {
-        inner_its = 10;
-    }
     if (outer_its == static_cast<size_t>(-1)) {
         if (deterministic_gen) {
-            // boooring
-            outer_its = std::max(size_t{1}, 100 / inner_its);
+            // deterministic is boring
+            outer_its = 1;
+            if (inner_its == static_cast<size_t>(-1)) {
+                if (size < (1<<14)) inner_its = 1000;
+                else if (size < (1<<16)) inner_its = 500;
+                else if (size < (1<<18)) inner_its = 250;
+                else inner_its = 100;
+            }
         } else {
             if (size < (1<<16)) outer_its = 100;
             else if (size < (1<<18)) outer_its = 50;
             else if (size < (1<<22)) outer_its = 35;
             else outer_its = 25;
         }
+    }
+    if (inner_its == static_cast<size_t>(-1)) {
+        inner_its = 10;
     }
 
     // the label maker
@@ -212,6 +218,7 @@ template <typename T, typename Generator>
 void benchmark_generator(Generator generator, const std::string &name,
                          const size_t outer_its, const size_t inner_its,
                          std::ofstream *stat_stream,
+                         bool deterministic_gen = false,
                          const size_t max_log_size = 27) {
     auto wrapped_generator = [generator](auto data, size_t size) {
         generator(data, size);
@@ -223,7 +230,8 @@ void benchmark_generator(Generator generator, const std::string &name,
 
     for (size_t log_size = 10; log_size < max_log_size; ++log_size) {
         size_t size = 1 << log_size;
-        benchmark<T>(size, wrapped_generator, name, outer_its, inner_its, stat_stream);
+        benchmark<T>(size, wrapped_generator, name, outer_its, inner_its,
+                     stat_stream, deterministic_gen);
     }
 }
 
@@ -232,13 +240,16 @@ template <typename T, typename Generator>
 void sized_benchmark_generator(Generator generator, const std::string &name,
                                const size_t outer_its, const size_t inner_its,
                                std::ofstream *stat_stream,
+                               bool deterministic_gen = false,
                                const size_t max_log_size = 27) {
     // warmup
     benchmark<T>(1<<10, 10, generator, "warmup", 0, nullptr);
 
     for (size_t log_size = 10; log_size < max_log_size; ++log_size) {
         size_t size = 1 << log_size;
-        size_t last_size = benchmark<T>(size, generator, name, outer_its, inner_its, stat_stream);
+        size_t last_size = benchmark<T>(
+            size, generator, name, outer_its, inner_its,
+            stat_stream, deterministic_gen);
         if (last_size < size) break;
     }
 }
