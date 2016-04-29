@@ -1,16 +1,19 @@
 # ssssort — Super Scalar Sample Sort
 
-This is an implementation of
-[Super Scalar Sample Sort](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.72.366&rep=rep1&type=pdf)
-in modern C++.  It is faster than `std::sort` in many cases, but uses quite a
-bit of additional memory (up to 2-3x input size).  This means that it's not
-applicable in all situations, but when it is, it's pretty damn quick!
+[Super Scalar Sample
+Sort](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.72.366&rep=rep1&type=pdf)
+is a sorting algorithm optimized for modern hardware.  This is an
+implementation in C++14.  It is faster than `std::sort` in many
+cases, often only half to two thirds of the time.  However, ssssort
+uses quite a bit of additional memory (up to 2-3x input size).
+This means that it's not applicable in all situations, but when
+it is, it's pretty quick!
 
 ## Benchmarks
 
 We performed some tests with sorting integers and compared Super Scalar Sample
 Sort to `std::sort`. Most notably, when sorting random integers, our
-implementation was between 35 and 50% faster than `std::sort`! The plot below
+implementation ran inn 50 to 65% of the time taken by `std::sort`! The plot below
 shows the time divided by `n log(n)`, where `n` is the input size. We chose this
 normalization because that's the lower bound on comparison-based sorting you may
 remember from your algorithms class.  Thus the plot shows the time spent per
