@@ -33,7 +33,11 @@ folder, or suggest new benchmarks by filing an issue.
 
 We performed our experiments on a Haswell Core-i7 4790T machine with 16 GiB of
 DDR3-1600, but only used one core to keep things reproducible. All numbers are
-averages over 100 runs.
+averages over several runs - for the randomized inputs, 100 different inputs for
+the small instances down to 25 different ones for the larger ones, each with 10
+repetitions.  For the deterministic input generators, we ran between 1000 and
+100 iterations, again depending on input size.  You can find the exact logic in
+[benchmark.h](benchmark.h).
 
 ## Usage
 
