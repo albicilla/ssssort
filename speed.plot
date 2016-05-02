@@ -45,10 +45,10 @@ set title 'Super Scalar Sample Sort Test: Random'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, size
 plot \
     'speed-data.txt' index 0 notitle ls 3 with lines, \
-    'speed-data.txt' index 1 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 1 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 2 notitle ls 3 with lines, \
     'speed-data.txt' index 3 notitle ls 5 with lines, \
-    'speed-data.txt' index 4 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 4 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 5 notitle ls 5 with lines
 
 
@@ -60,10 +60,10 @@ set title 'Super Scalar Sample Sort Test: 80% Sorted'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, size
 plot \
     'speed-data.txt' index 6 notitle ls 3 with lines, \
-    'speed-data.txt' index 7 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 7 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 8 notitle ls 3 with lines, \
     'speed-data.txt' index 9 notitle ls 5 with lines, \
-    'speed-data.txt' index 10 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 10 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 11 notitle ls 5 with lines
 
 
@@ -75,10 +75,10 @@ set title 'Super Scalar Sample Sort Test: 90% Sorted'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 12 notitle ls 3 with lines, \
-    'speed-data.txt' index 13 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 13 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 14 notitle ls 3 with lines, \
     'speed-data.txt' index 15 notitle ls 5 with lines, \
-    'speed-data.txt' index 16 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 16 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 17 notitle ls 5 with lines
 
 
@@ -90,10 +90,10 @@ set title 'Super Scalar Sample Sort Test: 99% Sorted'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 18 notitle ls 3 with lines, \
-    'speed-data.txt' index 19 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 19 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 20 notitle ls 3 with lines, \
     'speed-data.txt' index 21 notitle ls 5 with lines, \
-    'speed-data.txt' index 22 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 22 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 23 notitle ls 5 with lines
 
 
@@ -105,10 +105,10 @@ set title 'Super Scalar Sample Sort Test: 99.9% Sorted'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 24 notitle ls 3 with lines, \
-    'speed-data.txt' index 25 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 25 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 26 notitle ls 3 with lines, \
     'speed-data.txt' index 27 notitle ls 5 with lines, \
-    'speed-data.txt' index 28 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 28 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 29 notitle ls 5 with lines
 
 
@@ -120,10 +120,10 @@ set title 'Super Scalar Sample Sort Test: 90% Sorted + 10% Random Tail'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 30 notitle ls 3 with lines, \
-    'speed-data.txt' index 31 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 31 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 32 notitle ls 3 with lines, \
     'speed-data.txt' index 33 notitle ls 5 with lines, \
-    'speed-data.txt' index 34 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 34 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 35 notitle ls 5 with lines
 
 
@@ -135,10 +135,10 @@ set title 'Super Scalar Sample Sort Test: 99% Sorted + 1% Random Tail'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 36 notitle ls 3 with lines, \
-    'speed-data.txt' index 37 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 37 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 38 notitle ls 3 with lines, \
     'speed-data.txt' index 39 notitle ls 5 with lines, \
-    'speed-data.txt' index 40 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 40 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 41 notitle ls 5 with lines
 
 
@@ -150,10 +150,10 @@ set title 'Super Scalar Sample Sort Test: Sorted'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 42 notitle ls 3 with lines, \
-    'speed-data.txt' index 43 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 43 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 44 notitle ls 3 with lines, \
     'speed-data.txt' index 45 notitle ls 5 with lines, \
-    'speed-data.txt' index 46 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 46 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 47 notitle ls 5 with lines
 
 
@@ -166,10 +166,10 @@ set title 'Super Scalar Sample Sort Test: Reverse Sorted'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 48 notitle ls 3 with lines, \
-    'speed-data.txt' index 49 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 49 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 50 notitle ls 3 with lines, \
     'speed-data.txt' index 51 notitle ls 5 with lines, \
-    'speed-data.txt' index 52 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 52 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 53 notitle ls 5 with lines
 
 
@@ -181,10 +181,10 @@ set title 'Super Scalar Sample Sort Test: Many duplicates (A[i]=i^{16} mod floor
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 54 notitle ls 3 with lines, \
-    'speed-data.txt' index 55 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 55 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 56 notitle ls 3 with lines, \
     'speed-data.txt' index 57 notitle ls 5 with lines, \
-    'speed-data.txt' index 58 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 58 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 59 notitle ls 5 with lines
 
 
@@ -196,10 +196,10 @@ set title 'Super Scalar Sample Sort Test: Few spikes, lots of noise'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 60 notitle ls 3 with lines, \
-    'speed-data.txt' index 61 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 61 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 62 notitle ls 3 with lines, \
     'speed-data.txt' index 63 notitle ls 5 with lines, \
-    'speed-data.txt' index 64 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 64 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 65 notitle ls 5 with lines
 
 
@@ -211,10 +211,10 @@ set title 'Super Scalar Sample Sort Test: All Ones'
 ## GROUP BY MULTIPLOT, size ORDER BY MULTIPLOT, x
 plot \
     'speed-data.txt' index 66 notitle ls 3 with lines, \
-    'speed-data.txt' index 67 title "algo=ssssort" ls 4 with linespoints, \
+    'speed-data.txt' index 67 title "ssssort" ls 4 with linespoints, \
     'speed-data.txt' index 68 notitle ls 3 with lines, \
     'speed-data.txt' index 69 notitle ls 5 with lines, \
-    'speed-data.txt' index 70 title "algo=stdsort" ls 6 with linespoints, \
+    'speed-data.txt' index 70 title "std::sort" ls 6 with linespoints, \
     'speed-data.txt' index 71 notitle ls 5 with lines
 
 
