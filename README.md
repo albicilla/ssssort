@@ -31,9 +31,9 @@ also true when the first 99% of the array are sorted, and only the
 You can find plots for some more workloads in the [plots](plots/)
 folder, or suggest new benchmarks by filing an issue.
 
-We performed our experiments on a beefy machine with dual Intel Xeon E5-2670 v3
-Haswell 12-core CPUs and 128 GiB of DDR4-2133, but only used one core to keep
-things reproducible. All numbers are averages over 100 runs.
+We performed our experiments on a Haswell Core-i7 4790T machine with 16 GiB of
+DDR3-1600, but only used one core to keep things reproducible. All numbers are
+averages over 100 runs.
 
 ## Usage
 
