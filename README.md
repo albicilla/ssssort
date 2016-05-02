@@ -28,8 +28,9 @@ place, its advantage [breaks down immediately](plots/99.9pcsorted.png)!  This is
 also true when the first 99% of the array are sorted, and only the
 [last 1% contains random data](plots/99pctail.png).
 
-You can find plots for some more workloads in the [plots](plots/)
-folder, or suggest new benchmarks by filing an issue.
+You can find plots for some more workloads in the [plots](plots/) folder, or
+suggest new benchmarks by filing an issue.  The file [speed.pdf](speed.pdf) also
+contains the same plots with additional ±1 standard deviation lines.
 
 We performed our experiments on a Haswell Core-i7 4790T machine with 16 GiB of
 DDR3-1600, but only used one core to keep things reproducible. All numbers are
