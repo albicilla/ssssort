@@ -37,6 +37,8 @@
 #include <iterator>
 #include <random>
 
+// Compiler hints about invariants, inspired by ICC's __assume()
+#define __assume(cond) ({ if (!(cond)) __builtin_unreachable(); })
 
 namespace ssssort {
 
@@ -160,6 +162,7 @@ struct Classifier {
 
     /// recursively builds splitter tree. Used by constructor.
     void build_recursive(const value_type* lo, const value_type* hi, size_t pos) {
+        __assume(hi >= lo);
         const value_type *mid = lo + (hi - lo)/2;
         splitters[pos] = *mid;
 
@@ -171,6 +174,7 @@ struct Classifier {
 
     /// Push an element down the tree one step. Inlined.
     constexpr bucket_t step(bucket_t i, const value_type &key) const {
+        __assume(i > 0);
         return 2*i + (key > splitters[i]);
     }
 
@@ -224,6 +228,7 @@ struct Classifier {
             find_bucket_unroll<U>(it, bktout);
         }
         // process remainder
+        __assume(end-it <= U);
         classify(it, end, bktout);
     }
 
@@ -252,6 +257,7 @@ struct Classifier {
             }
         }
         // process the rest
+        __assume(n-i <= U);
         for (; i < n; ++i) {
             *(out_begin + bktsize[bktout[i]]++) = std::move(*(in_begin + i));
         }
