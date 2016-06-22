@@ -273,7 +273,7 @@ struct Classifier {
 // Factor to multiply number of buckets by to obtain the number of samples drawn
 inline std::size_t oversampling_factor(std::size_t n) {
     double r = std::sqrt(double(n)/(2*numBuckets*(logBuckets+4)));
-    return std::max(static_cast<std::size_t>(r), 1UL);
+    return std::max<std::size_t>(r, 1);
 }
 
 
