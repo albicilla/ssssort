@@ -34,6 +34,7 @@
 #include <cassert>
 #include <cmath>
 #include <cstring>
+#include <ctime>
 #include <iterator>
 #include <memory>
 #include <random>
@@ -71,7 +72,11 @@ using bucket_t = uint32_t;
 // simplicity.  You can swap this out for std::minstd_rand if the Mersenne
 // Twister is too slow on your hardware.  It's only minimally slower on mine
 // (Haswell i7-4790T).
+#ifdef __MINGW32__
+static std::mt19937 gen(std::time(nullptr));
+#else
 static std::mt19937 gen{std::random_device{}()};
+#endif
 
 // Provides different sampling strategies to choose splitters
 template <typename Iterator, typename value_type>
