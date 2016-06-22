@@ -35,6 +35,7 @@
 #include <cmath>
 #include <cstring>
 #include <iterator>
+#include <memory>
 #include <random>
 
 // Compiler hints about invariants, inspired by ICC's __assume()
@@ -142,7 +143,7 @@ struct Classifier {
     /// maps items to buckets
     bucket_t* const bktout;
     /// counts bucket sizes
-    bktsize_t* const bktsize;
+    std::unique_ptr<bktsize_t> bktsize;
 
     /**
      * Constructs the splitter tree from the given samples
@@ -150,14 +151,10 @@ struct Classifier {
     Classifier(const value_type *samples, const size_t sample_size,
                bucket_t* const bktout)
         : bktout(bktout)
-        , bktsize(new bktsize_t[1 << treebits])
+        , bktsize(std::make_unique<bktsize_t[]>(1 << treebits))
     {
         std::fill(bktsize, bktsize + (1 << treebits), 0);
         build_recursive(samples, samples + sample_size, 1);
-    }
-
-    ~Classifier() {
-        delete[] bktsize;
     }
 
     /// recursively builds splitter tree. Used by constructor.
@@ -291,13 +288,13 @@ void ssssort_int(InputIterator begin, InputIterator end,
 
     // draw and sort sample
     const size_t sample_size = oversampling_factor(n) * numBuckets;
-    value_type *samples = new value_type[sample_size];
-    Sampler<InputIterator, value_type>::draw_sample(begin, end, samples, sample_size);
-    std::sort(samples, samples + sample_size);
+    auto samples = std::make_unique<value_type[]>(sample_size);
+    Sampler<InputIterator, value_type>::draw_sample(begin, end, samples.get(), sample_size);
+    std::sort(samples.get(), samples.get() + sample_size);
 
     if (samples[0] == samples[sample_size - 1]) {
         // All samples are equal. Clean up and fall back to std::sort
-        delete[] samples;
+        samples.reset(nullptr);
         std::sort(begin, end);
         if (!begin_is_home) {
             std::move(begin, end, out_begin);
@@ -307,8 +304,8 @@ void ssssort_int(InputIterator begin, InputIterator end,
 
     // classify elements
     Classifier<InputIterator, OutputIterator, value_type, logBuckets>
-        classifier(samples, sample_size, bktout);
-    delete[] samples;
+        classifier(samples.get(), sample_size, bktout);
+    samples.reset(nullptr);
     classifier.template classify_unroll<6>(begin, end);
     classifier.template distribute<4>(begin, end, out_begin);
 
@@ -364,9 +361,8 @@ void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
         return;
     }
 
-    bucket_t *bktout = new bucket_t[n];
+    auto bktout = std::make_unique<bucket_t[]>(n);
     ssssort_int<InputIterator, OutputIterator, value_type>(begin, end, out_begin, bktout, false);
-    delete[] bktout;
 }
 
 /**
@@ -385,11 +381,9 @@ void ssssort(Iterator begin, Iterator end) {
         return;
     }
 
-    value_type* out = new value_type[n];
-    bucket_t *bktout = new bucket_t[n];
-    ssssort_int<Iterator, value_type*, value_type>(begin, end, out, bktout, true);
-    delete[] bktout;
-    delete[] out;
+    auto out = std::make_unique<value_type[]>(n);
+    auto bktout = std::make_unique<bucket_t[]>(n);
+    ssssort_int<Iterator, value_type*, value_type>(begin, end, out.get(), bktout.get(), true);
 }
 
 }
