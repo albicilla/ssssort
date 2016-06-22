@@ -33,6 +33,8 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <cstddef>
+#include <cstdint>
 #include <cstring>
 #include <ctime>
 #include <iterator>
@@ -48,7 +50,7 @@ namespace ssssort {
  * Bucket or input size below which to fall back to the base case sorter
  * (std::sort)
  */
-constexpr size_t basecase_size = 1024;
+constexpr std::size_t basecase_size = 1024;
 
 /**
  * logBuckets determines how many splitters are used.  Sample Sort partitions
@@ -56,8 +58,8 @@ constexpr size_t basecase_size = 1024;
  * specify its base-2 logarithms.  For the partitioning into k buckets, we then
  * need k-1 splitters.  logBuckets is a tuning parameter, typically 7 or 8.
  */
-constexpr size_t logBuckets = 8;
-constexpr size_t numBuckets = 1 << logBuckets;
+constexpr std::size_t logBuckets = 8;
+constexpr std::size_t numBuckets = 1 << logBuckets;
 
 /**
  * Type to be used for bucket indices.  In this case, a uint32_t is overkill,
@@ -65,7 +67,7 @@ constexpr size_t numBuckets = 1 << logBuckets;
  * Intel CPUs.  Needs to fit 2*numBuckets-1 (for the step() function), so
  * uint8_t would work for logBuckets = 7
  */
-using bucket_t = uint32_t;
+using bucket_t = std::uint32_t;
 
 
 // Random number generation engine for sampling.  Declared out-of-class for
@@ -84,15 +86,15 @@ struct Sampler {
     // Draw a random sample without replacement using the Fisher-Yates Shuffle.
     // This reorders the input somewhat but the sorting does that anyway.
     static void draw_sample_fisheryates(Iterator begin, Iterator end,
-                                        value_type* samples, size_t sample_size)
+                                        value_type* samples, std::size_t sample_size)
     {
         // Random generator
         assert(begin <= end);
-        size_t max = static_cast<size_t>(end - begin);
+        std::size_t max = static_cast<std::size_t>(end - begin);
         assert(gen.max() >= max);
 
-        for (size_t i = 0; i < sample_size; ++i) {
-            size_t index = gen() % max--; // biased, don't care
+        for (std::size_t i = 0; i < sample_size; ++i) {
+            std::size_t index = gen() % max--; // biased, don't care
             std::swap(*(begin + index), *(begin + max));
             samples[i] = *(begin + max);
         }
@@ -103,15 +105,15 @@ struct Sampler {
     // machine this results in measurably slower sorting than a
     // Fisher-Yates-based sample, so beware the apparent simplicity.
     static void draw_sample_simplerand(Iterator begin, Iterator end,
-                                       value_type* samples, size_t sample_size)
+                                       value_type* samples, std::size_t sample_size)
     {
         // Random generator
         assert(begin <= end);
-        const size_t size = static_cast<size_t>(end - begin);
+        const std::size_t size = static_cast<std::size_t>(end - begin);
         assert(gen.max() >= size);
 
-        for (size_t i = 0; i < sample_size; ++i) {
-            size_t index = gen() % size; // biased, don't care
+        for (std::size_t i = 0; i < sample_size; ++i) {
+            std::size_t index = gen() % size; // biased, don't care
             samples[i] = *(begin + index);
         }
     }
@@ -120,14 +122,14 @@ struct Sampler {
     // A completely non-random sample that's beyond terrible on sorted inputs
     static void draw_sample_first(Iterator begin,
                                   __attribute__((unused)) Iterator end,
-                                  value_type *samples, size_t sample_size) {
-        for (size_t i = 0; i < sample_size; ++i) {
+                                  value_type *samples, std::size_t sample_size) {
+        for (std::size_t i = 0; i < sample_size; ++i) {
             samples[i] = *(begin + i);
         }
     }
 
     static void draw_sample(Iterator begin, Iterator end,
-                            value_type *samples, size_t sample_size)
+                            value_type *samples, std::size_t sample_size)
     {
         draw_sample_fisheryates(begin, end, samples, sample_size);
     }
@@ -139,10 +141,10 @@ struct Sampler {
  * log2 of the number of buckets (= 1 << treebits).
  */
 template <typename InputIterator,  typename OutputIterator, typename value_type,
-          size_t treebits = logBuckets, typename bktsize_t = size_t>
+          std::size_t treebits = logBuckets, typename bktsize_t = std::size_t>
 struct Classifier {
-    const size_t num_splitters = (1 << treebits) - 1;
-    const size_t splitters_size = 1 << treebits;
+    const std::size_t num_splitters = (1 << treebits) - 1;
+    const std::size_t splitters_size = 1 << treebits;
     value_type splitters[1 << treebits];
 
     /// maps items to buckets
@@ -153,7 +155,7 @@ struct Classifier {
     /**
      * Constructs the splitter tree from the given samples
      */
-    Classifier(const value_type *samples, const size_t sample_size,
+    Classifier(const value_type *samples, const std::size_t sample_size,
                bucket_t* const bktout)
         : bktout(bktout)
         , bktsize(std::make_unique<bktsize_t[]>(1 << treebits))
@@ -163,7 +165,7 @@ struct Classifier {
     }
 
     /// recursively builds splitter tree. Used by constructor.
-    void build_recursive(const value_type* lo, const value_type* hi, size_t pos) {
+    void build_recursive(const value_type* lo, const value_type* hi, std::size_t pos) {
         __assume(hi >= lo);
         const value_type *mid = lo + (hi - lo)/2;
         splitters[pos] = *mid;
@@ -198,7 +200,7 @@ struct Classifier {
         bucket_t i[U];
         for (int u = 0; u < U; ++u) i[u] = 1;
 
-        for (size_t l = 0; l < treebits; ++l) {
+        for (std::size_t l = 0; l < treebits; ++l) {
             // step on all U keys
             for (int u = 0; u < U; ++u) i[u] = step(i[u], *(key + u));
         }
@@ -239,22 +241,22 @@ struct Classifier {
      * storage for which begins at out_begin.  Need to class classify or
      * classify_unroll before to fill the bktout and bktsize arrays.
      */
-    template <size_t U>
+    template <std::size_t U>
     inline void
     distribute(InputIterator in_begin, InputIterator in_end,
                OutputIterator out_begin)
     {
         assert(in_begin <= in_end);
         // exclusive prefix sum
-        for (size_t i = 0, sum = 0; i < numBuckets; ++i) {
+        for (std::size_t i = 0, sum = 0; i < numBuckets; ++i) {
             bktsize_t curr_size = bktsize[i];
             bktsize[i] = sum;
             sum += curr_size;
         }
-        const size_t n = static_cast<size_t>(in_end - in_begin);
-        size_t i;
+        const std::size_t n = static_cast<std::size_t>(in_end - in_begin);
+        std::size_t i;
         for (i = 0; i + U < n; i += U) {
-            for (size_t u = 0; u < U; ++u) {
+            for (std::size_t u = 0; u < U; ++u) {
                 *(out_begin + bktsize[bktout[i+u]]++) = std::move(*(in_begin + i + u));
             }
         }
@@ -269,9 +271,9 @@ struct Classifier {
 
 
 // Factor to multiply number of buckets by to obtain the number of samples drawn
-inline size_t oversampling_factor(size_t n) {
+inline std::size_t oversampling_factor(std::size_t n) {
     double r = std::sqrt(double(n)/(2*numBuckets*(logBuckets+4)));
-    return std::max(static_cast<size_t>(r), 1UL);
+    return std::max(static_cast<std::size_t>(r), 1UL);
 }
 
 
@@ -289,10 +291,10 @@ void ssssort_int(InputIterator begin, InputIterator end,
                  OutputIterator out_begin,
                  bucket_t* __restrict__ bktout, bool begin_is_home) {
     assert(begin <= end);
-    const size_t n = static_cast<size_t>(end - begin);
+    const std::size_t n = static_cast<std::size_t>(end - begin);
 
     // draw and sort sample
-    const size_t sample_size = oversampling_factor(n) * numBuckets;
+    const std::size_t sample_size = oversampling_factor(n) * numBuckets;
     auto samples = std::make_unique<value_type[]>(sample_size);
     Sampler<InputIterator, value_type>::draw_sample(begin, end, samples.get(), sample_size);
     std::sort(samples.get(), samples.get() + sample_size);
@@ -316,8 +318,8 @@ void ssssort_int(InputIterator begin, InputIterator end,
 
     // Recursive calls. offset is the offset into the arrays (/iterators) for
     // the current bucket.
-    size_t offset = 0;
-    for (size_t i = 0; i < numBuckets; ++i) {
+    std::size_t offset = 0;
+    for (std::size_t i = 0; i < numBuckets; ++i) {
         auto size = classifier.bktsize[i] - offset;
         if (size == 0) continue; // empty bucket
         if (size <= basecase_size || (n / size) < 2) {
@@ -358,7 +360,7 @@ template <typename InputIterator, typename OutputIterator,
           typename value_type = typename std::iterator_traits<InputIterator>::value_type>
 void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
     assert(begin <= end);
-    const size_t n = static_cast<size_t>(end - begin);
+    const std::size_t n = static_cast<std::size_t>(end - begin);
     if (n < basecase_size) {
         // base case
         std::sort(begin, end);
@@ -378,7 +380,7 @@ void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
 template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
 void ssssort(Iterator begin, Iterator end) {
     assert(begin <= end);
-    const size_t n = static_cast<size_t>(end - begin);
+    const std::size_t n = static_cast<std::size_t>(end - begin);
 
     if (n < basecase_size) {
         // base case
