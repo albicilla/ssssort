@@ -55,12 +55,3 @@ C++14 compiler, even though `g++` is happy to compile it with `-std=c++11`.  The
 requirement stems from the use of a variable declaration in the `find_bucket`
 function, which is marked `constexpr`.  You can simply replace `constexpr` with
 `inline` to make it valid C++11.
-
-## Todo list
-
-It doesn't quite work that well with complex objects yet - it does sort them
-using `operator<`, but leaks objects all over the place.  I'll have to figure
-out where those are lost at some point.
-
-Also, the paper authors' original implementation is still a bit faster than this
-one, but it's not open source, nor is it in publishable condition...
