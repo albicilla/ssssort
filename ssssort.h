@@ -150,7 +150,7 @@ struct Classifier {
     /// maps items to buckets
     bucket_t* const bktout;
     /// counts bucket sizes
-    std::unique_ptr<bktsize_t> bktsize;
+    std::unique_ptr<bktsize_t[]> bktsize;
 
     /**
      * Constructs the splitter tree from the given samples
@@ -160,7 +160,7 @@ struct Classifier {
         : bktout(bktout)
         , bktsize(std::make_unique<bktsize_t[]>(1 << treebits))
     {
-        std::fill(bktsize, bktsize + (1 << treebits), 0);
+        std::fill(bktsize.get(), bktsize.get() + (1 << treebits), 0);
         build_recursive(samples, samples + sample_size, 1);
     }
 
@@ -369,7 +369,7 @@ void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
     }
 
     auto bktout = std::make_unique<bucket_t[]>(n);
-    ssssort_int<InputIterator, OutputIterator, value_type>(begin, end, out_begin, bktout, false);
+    ssssort_int<InputIterator, OutputIterator, value_type>(begin, end, out_begin, bktout.get(), false);
 }
 
 /**
