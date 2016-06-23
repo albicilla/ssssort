@@ -39,11 +39,12 @@
 #include "benchmark.h"
 
 int main(int argc, char *argv[]) {
-    size_t iterations = 10;
-    if (argc > 1) iterations = atoi(argv[1]);
+    size_t outer_its = 5, inner_its = 3;
+    if (argc > 1) outer_its = static_cast<size_t>(atol(argv[1]));
+    if (argc > 2) inner_its = static_cast<size_t>(atol(argv[2]));
 
     std::string input_file = "input.txt";
-    if (argc > 2) input_file = std::string{argv[2]};
+    if (argc > 3) input_file = std::string{argv[3]};
     // Read input file
     std::ifstream input(input_file);
     std::vector<std::string> lines;
@@ -67,7 +68,7 @@ int main(int argc, char *argv[]) {
             size_t num_lines = std::min(size, lines.size());
             std::copy(lines.cbegin(), lines.cbegin() + num_lines, data);
             return num_lines;
-        }, "file", iterations, stat_stream);
+        }, "file", outer_its, inner_its, stat_stream, true);
 
 /*
     benchmark_generator<data_t>([](auto data, size_t size){

@@ -243,7 +243,7 @@ void sized_benchmark_generator(Generator generator, const std::string &name,
                                bool deterministic_gen = false,
                                const size_t max_log_size = 27) {
     // warmup
-    benchmark<T>(1<<10, 10, generator, "warmup", 0, nullptr);
+    benchmark<T>(1<<10, generator, "warmup", 1, 10, nullptr);
 
     for (size_t log_size = 10; log_size < max_log_size; ++log_size) {
         size_t size = 1 << log_size;
