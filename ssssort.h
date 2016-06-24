@@ -75,9 +75,9 @@ using bucket_t = std::uint32_t;
 // Twister is too slow on your hardware.  It's only minimally slower on mine
 // (Haswell i7-4790T).
 #ifdef __MINGW32__
-static std::mt19937 gen(std::time(nullptr));
+thread_local std::mt19937 gen(std::time(nullptr));
 #else
-static std::mt19937 gen{std::random_device{}()};
+thread_local std::mt19937 gen{std::random_device{}()};
 #endif
 
 // Provides different sampling strategies to choose splitters
@@ -120,8 +120,7 @@ struct Sampler {
 
 
     // A completely non-random sample that's beyond terrible on sorted inputs
-    static void draw_sample_first(Iterator begin,
-                                  __attribute__((unused)) Iterator end,
+    static void draw_sample_first(Iterator begin, Iterator /* end */,
                                   value_type *samples, std::size_t sample_size) {
         for (std::size_t i = 0; i < sample_size; ++i) {
             samples[i] = *(begin + i);
