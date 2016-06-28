@@ -154,6 +154,7 @@ struct Sampler {
  * log2 of the number of buckets (= 1 << treebits).
  */
 template <typename InputIterator,  typename OutputIterator, typename value_type,
+          typename Compare,
           std::size_t treebits = logBuckets, typename bktsize_t = std::size_t>
 struct Classifier {
     const std::size_t num_splitters = (1 << treebits) - 1;
@@ -165,13 +166,16 @@ struct Classifier {
     /// counts bucket sizes
     std::unique_ptr<bktsize_t[]> bktsize;
 
+    Compare compare;
+
     /**
      * Constructs the splitter tree from the given samples
      */
     Classifier(const value_type *samples, const std::size_t sample_size,
-               bucket_t* const bktout)
+               bucket_t* const bktout, Compare compare)
         : bktout(bktout)
         , bktsize(std::make_unique<bktsize_t[]>(1 << treebits))
+        , compare(compare)
     {
         std::fill(bktsize.get(), bktsize.get() + (1 << treebits), 0);
         build_recursive(samples, samples + sample_size, 1);
@@ -192,7 +196,7 @@ struct Classifier {
     /// Push an element down the tree one step. Inlined.
     constexpr bucket_t step(bucket_t i, const value_type &key) const {
         __assume(i > 0);
-        return 2*i + (key > splitters[i]);
+        return 2*i + compare(splitters[i], key);
     }
 
     /// Find the bucket for a single element
@@ -299,9 +303,10 @@ inline std::size_t oversampling_factor(std::size_t n) {
  *
  * It is assumed that the range out_begin to out_begin + (end - begin) is valid.
  */
-template <typename InputIterator, typename OutputIterator, typename value_type>
+template <typename InputIterator, typename OutputIterator, typename value_type,
+          typename Compare>
 void ssssort_int(InputIterator begin, InputIterator end,
-                 OutputIterator out_begin,
+                 OutputIterator out_begin, Compare compare,
                  bucket_t* __restrict__ bktout, bool begin_is_home) {
     assert(begin <= end);
     const std::size_t n = static_cast<std::size_t>(end - begin);
@@ -310,12 +315,12 @@ void ssssort_int(InputIterator begin, InputIterator end,
     const std::size_t sample_size = oversampling_factor(n) * numBuckets;
     auto samples = std::make_unique<value_type[]>(sample_size);
     Sampler<InputIterator, value_type>::draw_sample(begin, end, samples.get(), sample_size);
-    std::sort(samples.get(), samples.get() + sample_size);
+    std::sort(samples.get(), samples.get() + sample_size, compare);
 
     if (samples[0] == samples[sample_size - 1]) {
         // All samples are equal. Clean up and fall back to std::sort
         samples.reset(nullptr);
-        std::sort(begin, end);
+        std::sort(begin, end, compare);
         if (!begin_is_home) {
             std::move(begin, end, out_begin);
         }
@@ -323,8 +328,8 @@ void ssssort_int(InputIterator begin, InputIterator end,
     }
 
     // classify elements
-    Classifier<InputIterator, OutputIterator, value_type, logBuckets>
-        classifier(samples.get(), sample_size, bktout);
+    Classifier<InputIterator, OutputIterator, value_type, Compare, logBuckets>
+        classifier(samples.get(), sample_size, bktout, compare);
     samples.reset(nullptr);
     classifier.template classify_unroll<6>(begin, end);
     classifier.template distribute<4>(begin, end, out_begin);
@@ -343,7 +348,7 @@ void ssssort_int(InputIterator begin, InputIterator end,
             // because a single value made up the majority of the items in the
             // previous recursion level, but it's also surrounded by lots of
             // other infrequent elements, passing the "all-samples-equal" test.
-            std::sort(out_begin + offset, out_begin + classifier.bktsize[i]);
+            std::sort(out_begin + offset, out_begin + classifier.bktsize[i], compare);
             if (begin_is_home) {
                 // uneven recursion level, we have to move the result
                 std::move(out_begin + offset,
@@ -352,10 +357,11 @@ void ssssort_int(InputIterator begin, InputIterator end,
             }
         } else {
             // large bucket, apply sample sort recursively
-            ssssort_int<OutputIterator, InputIterator, value_type>(
+            ssssort_int<OutputIterator, InputIterator, value_type, Compare>(
                 out_begin + offset,
                 out_begin + classifier.bktsize[i], // = out_begin + offset + size
                 begin + offset,
+                compare,
                 bktout + offset,
                 !begin_is_home);
         }
@@ -370,8 +376,12 @@ void ssssort_int(InputIterator begin, InputIterator end,
  * Uses <= 2*(end-begin)*sizeof(value_type) bytes of additional memory.
  */
 template <typename InputIterator, typename OutputIterator,
-          typename value_type = typename std::iterator_traits<InputIterator>::value_type>
-void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
+          typename value_type = typename std::iterator_traits<InputIterator>::value_type,
+          typename Compare = std::less<>,
+          typename std::enable_if_t<
+              std::is_convertible<bool, std::result_of_t<Compare(value_type, value_type)>>::value
+          >* = nullptr>
+void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin, Compare compare = Compare()) {
     assert(begin <= end);
     const std::size_t n = static_cast<std::size_t>(end - begin);
     if (n < basecase_size) {
@@ -382,7 +392,8 @@ void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
     }
 
     auto bktout = std::make_unique<bucket_t[]>(n);
-    ssssort_int<InputIterator, OutputIterator, value_type>(begin, end, out_begin, bktout.get(), false);
+    ssssort_int<InputIterator, OutputIterator, value_type, Compare>(
+        begin, end, out_begin, compare, bktout.get(), false);
 }
 
 /**
@@ -390,8 +401,12 @@ void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin) {
  *
  * Uses <= 3*(end-begin)*sizeof(value_type) bytes of additional memory
  */
-template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type>
-void ssssort(Iterator begin, Iterator end) {
+template <typename Iterator, typename value_type = typename std::iterator_traits<Iterator>::value_type,
+          typename Compare = std::less<>,
+          typename std::enable_if_t<
+              std::is_convertible<bool, std::result_of_t<Compare(value_type, value_type)>>::value
+          >* = nullptr>
+void ssssort(Iterator begin, Iterator end, Compare compare = Compare()) {
     assert(begin <= end);
     const std::size_t n = static_cast<std::size_t>(end - begin);
 
@@ -403,7 +418,8 @@ void ssssort(Iterator begin, Iterator end) {
 
     auto out = std::make_unique<value_type[]>(n);
     auto bktout = std::make_unique<bucket_t[]>(n);
-    ssssort_int<Iterator, value_type*, value_type>(begin, end, out.get(), bktout.get(), true);
+    ssssort_int<Iterator, value_type*, value_type, Compare>(
+        begin, end, out.get(), compare, bktout.get(), true);
 }
 
 }

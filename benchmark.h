@@ -95,10 +95,11 @@ void run(T* data, const T* const copy, T* out, size_t size, Sorter sorter,
     }
 }
 
-template <typename T, typename Generator>
+template <typename T, typename Generator, typename Compare = std::less<>>
 size_t benchmark(size_t size, Generator generator,  const std::string &name,
                  size_t outer_its, size_t inner_its,
-                 std::ofstream *stat_stream, bool deterministic_gen = false) {
+                 std::ofstream *stat_stream, bool deterministic_gen = false,
+                 Compare compare = Compare()) {
     T *data = new T[size],
         *out = new T[size],
         *copy = new T[size];
@@ -150,20 +151,20 @@ size_t benchmark(size_t size, Generator generator,  const std::string &name,
         // Sorting algorithms have their own time tracking
         // 1. Super Scalar Sample Sort
         run(data, copy, out, size,
-            [](T* data, T* out, size_t size)
-            { ssssort::ssssort(data, data + size, out); },
+            [compare](T* data, T* out, size_t size)
+            { ssssort::ssssort(data, data + size, out, compare); },
             inner_its, t_ssssort, bar);
 
         // 2. std::sort
         run(data, copy, out, size,
-            [](T* data, T* /*ignored*/, size_t size)
-            { std::sort(data, data + size); },
+            [compare](T* data, T* /*ignored*/, size_t size)
+            { std::sort(data, data + size, compare); },
             inner_its, t_stdsort, bar, false);
 
 
         // verify
         timer.reset();
-        bool it_incorrect = !std::is_sorted(out, out + size);
+        bool it_incorrect = !std::is_sorted(out, out + size, compare);
         if (it_incorrect) {
             std::cerr << "Output data isn't sorted" << std::endl;
         }
