@@ -6,6 +6,7 @@
  *******************************************************************************
  * Copyright (C) 2014 Timo Bingmann <tb@panthema.net>
  * Copyright (C) 2016 Lorenz Hübschle-Schneider <lorenz@4z2.de>
+ * Copyright (C) 2016 Morwenn <morwenn29@hotmail.fr>
  *
  * The MIT License (MIT)
  *
@@ -293,6 +294,21 @@ inline std::size_t oversampling_factor(std::size_t n) {
 
 
 /**
+ * Stupid wrapper to prevent libstdc++ from wrapping the compare object (because
+ * it internally uses a compare function on iterators)
+ */
+template <typename Iterator, typename Compare>
+void stl_sort(Iterator begin, Iterator end, Compare compare) {
+    std::sort(begin, end, compare);
+}
+
+template <typename Iterator>
+void stl_sort(Iterator begin, Iterator end, std::less<>) {
+    std::sort(begin, end);
+}
+
+
+/**
  * Internal sorter (argument list isn't all that pretty).
  *
  * begin_is_home indicates whether the output should be stored in the range
@@ -314,12 +330,12 @@ void ssssort_int(InputIterator begin, InputIterator end,
     const std::size_t sample_size = oversampling_factor(n) * numBuckets;
     auto samples = std::make_unique<value_type[]>(sample_size);
     Sampler<InputIterator>::draw_sample(begin, end, samples.get(), sample_size);
-    std::sort(samples.get(), samples.get() + sample_size, compare);
+    stl_sort(samples.get(), samples.get() + sample_size, compare);
 
     if (samples[0] == samples[sample_size - 1]) {
         // All samples are equal. Clean up and fall back to std::sort
         samples.reset(nullptr);
-        std::sort(begin, end, compare);
+        stl_sort(begin, end, compare);
         if (!begin_is_home) {
             std::move(begin, end, out_begin);
         }
@@ -347,7 +363,7 @@ void ssssort_int(InputIterator begin, InputIterator end,
             // because a single value made up the majority of the items in the
             // previous recursion level, but it's also surrounded by lots of
             // other infrequent elements, passing the "all-samples-equal" test.
-            std::sort(out_begin + offset, out_begin + classifier.bktsize[i], compare);
+            stl_sort(out_begin + offset, out_begin + classifier.bktsize[i], compare);
             if (begin_is_home) {
                 // uneven recursion level, we have to move the result
                 std::move(out_begin + offset,
@@ -385,7 +401,7 @@ void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin, C
     const std::size_t n = static_cast<std::size_t>(end - begin);
     if (n < basecase_size) {
         // base case
-        std::sort(begin, end, compare);
+        stl_sort(begin, end, compare);
         std::move(begin, end, out_begin);
         return;
     }
@@ -410,7 +426,7 @@ void ssssort(Iterator begin, Iterator end, Compare compare = {}) {
 
     if (n < basecase_size) {
         // base case
-        std::sort(begin, end, compare);
+        stl_sort(begin, end, compare);
         return;
     }
 
