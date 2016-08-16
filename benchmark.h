@@ -132,12 +132,12 @@ size_t benchmark(size_t size, Generator generator,  const std::string &name,
             std::to_string(outer_its) + "): ";
     };
 
-    progress_bar bar(2 * outer_its * (inner_its + 1), bar_label(0));
+    progress_bar bar(3 * outer_its * (inner_its + 1), bar_label(0));
     Timer timer;
 
     double t_generate(0.0), t_verify(0.0);
     bool incorrect = false;
-    statistics t_ssssort, t_stdsort;
+    statistics t_ssssort, t_stdsort, t_pdqsort;
     for (size_t it = 0; it < outer_its; ++it) {
         bar.set_extra(bar_label(it));
         // Generate random numbers as input
@@ -155,7 +155,13 @@ size_t benchmark(size_t size, Generator generator,  const std::string &name,
             { ssssort::ssssort(data, data + size, out, compare); },
             inner_its, t_ssssort, bar);
 
-        // 2. std::sort
+        // 2. pdqsort
+        run(data, copy, out, size,
+            [](T* data, T* /*ignored*/, size_t size)
+            { pdqsort(data, data + size); },
+            inner_its, t_pdqsort, bar, false);
+
+        // 3. std::sort
         run(data, copy, out, size,
             [compare](T* data, T* /*ignored*/, size_t size)
             { std::sort(data, data + size, compare); },
@@ -196,6 +202,16 @@ size_t benchmark(size_t size, Generator generator,  const std::string &name,
            << " t_gen=" << t_generate
            << " t_check=" << t_verify
            << " ok=" << !incorrect
+           << std::endl
+           << "RESULT algo=pdqsort"
+           << " name=" << name
+           << " size=" << size
+           << " iters=" << outer_its << "*" << inner_its
+           << " time=" << t_pdqsort.avg()
+           << " stddev=" << t_pdqsort.stddev()
+           << " t_gen=" << t_generate
+           << " t_check=0"
+           << " ok=1"
            << std::endl
            << "RESULT algo=stdsort"
            << " name=" << name

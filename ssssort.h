@@ -42,6 +42,8 @@
 #include <memory>
 #include <random>
 
+#include "pdqsort/pdqsort.h"
+
 // Compiler hints about invariants, inspired by ICC's __assume()
 #define __assume(cond) ({ if (!(cond)) __builtin_unreachable(); })
 
@@ -361,12 +363,12 @@ void ssssort_int(InputIterator begin, InputIterator end,
     const std::size_t sample_size = oversampling_factor(n) * numBuckets;
     auto samples = std::make_unique<value_type[]>(sample_size);
     Sampler<InputIterator>::draw_sample(begin, end, samples.get(), sample_size);
-    stl_sort(samples.get(), samples.get() + sample_size, compare);
+    pdqsort(samples.get(), samples.get() + sample_size, compare);
 
     if (samples[0] == samples[sample_size - 1]) {
-        // All samples are equal. Clean up and fall back to std::sort
+        // All samples are equal. Clean up and fall back to pdqsort
         samples.reset(nullptr);
-        stl_sort(begin, end, compare);
+        pdqsort(begin, end, compare);
         if (!begin_is_home) {
             std::move(begin, end, out_begin);
         }
@@ -388,13 +390,13 @@ void ssssort_int(InputIterator begin, InputIterator end,
         if (size == 0) continue; // empty bucket
         if (size <= basecase_size || (n / size) < 2) {
             // Either it's a small bucket, or very large (more than half of all
-            // elements). In either case, we fall back to std::sort.  The reason
-            // we're falling back to std::sort in the second case is that the
+            // elements). In either case, we fall back to pdqsort.  The reason
+            // we're falling back to pdqsort in the second case is that the
             // partitioning into buckets is obviously not working (likely
             // because a single value made up the majority of the items in the
             // previous recursion level, but it's also surrounded by lots of
             // other infrequent elements, passing the "all-samples-equal" test.
-            stl_sort(out_begin + offset, out_begin + classifier.bktsize[i], compare);
+            pdqsort(out_begin + offset, out_begin + classifier.bktsize[i], compare);
             if (begin_is_home) {
                 // uneven recursion level, we have to move the result
                 std::move(out_begin + offset,
@@ -432,7 +434,7 @@ void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin, C
     const std::size_t n = static_cast<std::size_t>(end - begin);
     if (n < basecase_size) {
         // base case
-        stl_sort(begin, end, compare);
+        pdqsort(begin, end, compare);
         std::move(begin, end, out_begin);
         return;
     }
@@ -457,7 +459,7 @@ void ssssort(Iterator begin, Iterator end, Compare compare = {}) {
 
     if (n < basecase_size) {
         // base case
-        stl_sort(begin, end, compare);
+        pdqsort(begin, end, compare);
         return;
     }
 
