@@ -1,4 +1,4 @@
-FLAGS=-std=c++14 -Wall -Wextra -Werror
+FLAGS=-std=c++14 -Wall -Wextra -Werror -march=native
 # if you want to be pedantic, uncomment this line (for CXX=clang++):
 #FLAGS+=-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-shadow -Wno-global-constructors -Wno-padded
 
