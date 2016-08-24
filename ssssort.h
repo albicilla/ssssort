@@ -168,6 +168,11 @@ struct Sampler {
 
 };
 
+// Whether to use Branch-Free Binary Search or an Eytzinger tree. The
+// branch-free binary search seems to be slower but
+// http://cglab.ca/~morin/misc/arraylayout-v2/ says it should be faster?
+constexpr bool branchfree = true;
+
 /**
  * Classify elements into buckets. Template parameter treebits specifies the
  * log2 of the number of buckets (= 1 << treebits).
@@ -187,15 +192,34 @@ struct Classifier {
     std::unique_ptr<bktsize_t[]> bktsize;
 
     /**
-     * Constructs the splitter tree from the given samples
+     * Constructs the splitter tree from the given samples, Eytzinger layout
      */
+    template <bool bf = branchfree>
     Classifier(const value_type *samples, const std::size_t sample_size,
-               bucket_t* const bktout)
+               bucket_t* const bktout, typename std::enable_if<!bf>::type* = 0)
         : bktout(bktout)
         , bktsize(std::make_unique<bktsize_t[]>(1 << treebits))
     {
         std::fill(bktsize.get(), bktsize.get() + (1 << treebits), 0);
         build_recursive(samples, samples + sample_size, 1);
+    }
+
+    /**
+     * Constructs the splitter array from the given samples, for branchfree
+     * version
+     */
+    template <bool bf = branchfree>
+    Classifier(const value_type *samples, const std::size_t sample_size,
+               bucket_t* const bktout, typename std::enable_if<bf>::type* = 0)
+        : bktout(bktout)
+        , bktsize(std::make_unique<bktsize_t[]>(1 << treebits))
+    {
+        std::fill(bktsize.get(), bktsize.get() + (1 << treebits), 0);
+        size_t scale = sample_size / splitters_size;
+        for (size_t i = 0; i < splitters_size; ++i) {
+            splitters[i] = samples[i * scale];
+        }
+        //build_recursive(samples, samples + sample_size, 1);
     }
 
     /// recursively builds splitter tree. Used by constructor.
@@ -234,19 +258,43 @@ struct Classifier {
     }
 
     /// Find the bucket for a single element
-    constexpr bucket_t find_bucket(const value_type &key, Compare compare) const {
+    template <bool bf = branchfree>
+    constexpr bucket_t find_bucket(const value_type &key, Compare compare,
+                                   typename std::enable_if<!bf>::type* = 0) const
+    {
         bucket_t i = 1;
         while (i <= num_splitters) i = step(i, key, compare);
         return (i - static_cast<bucket_t>(splitters_size));
     }
+
+    /// Find the bucket for a single element using branch-free binary search
+    template <bool bf = branchfree>
+    constexpr bucket_t find_bucket(const value_type &key, Compare compare,
+                                   typename std::enable_if<bf>::type* = 0) const
+    {
+        const value_type *base = splitters;
+        bucket_t n = num_splitters;
+        for (size_t i = 0; i < treebits; ++i) {
+            assert(n > 1);
+            bucket_t half = n / 2;
+            base = compare(base[half], key) ? base+half : base;
+            n -= half;
+        }
+        assert (n <= 1);
+        return (*base < key) + base - splitters;
+    }
+
 
     /**
      * Find the bucket for U elements at the same time. This version will be
      * unrolled by the compiler.  Degree of unrolling is a template parameter, 4
      * is a good choice usually.
      */
-    template <int U>
-    inline void find_bucket_unroll(InputIterator key, bucket_t* __restrict__ obkt, Compare compare)
+    template <int U, bool bf=branchfree>
+    //__attribute__((noinline))
+    inline void
+    find_bucket_unroll(InputIterator key, bucket_t* __restrict__ obkt,
+                       Compare compare, typename std::enable_if<!bf>::type* = 0)
     {
         bucket_t i[U];
         for (int u = 0; u < U; ++u) i[u] = 1;
@@ -259,6 +307,37 @@ struct Classifier {
             i[u] -= splitters_size;
             obkt[u] = i[u];
             bktsize[i[u]]++;
+        }
+    }
+
+    /**
+     * Find the bucket for U elements at the same time, using branch-free binary
+     * search. This version will be unrolled by the compiler.  Degree of
+     * unrolling is a template parameter, 4 is a good choice usually.
+     */
+    template <int U, bool bf = branchfree>
+    //__attribute__((noinline))
+    void
+    find_bucket_unroll(InputIterator key, bucket_t* __restrict__ obkt,
+                       Compare compare, typename std::enable_if<bf>::type* = 0)
+    {
+        bucket_t n = num_splitters;
+        bucket_t i[U];
+        for (int u = 0; u < U; ++u) {
+            i[u] = 0;
+        }
+
+        for (std::size_t l = 0; l < treebits; ++l) {
+            // step on all U keys
+            bucket_t half = n / 2;
+            for (int u = 0; u < U; ++u) {
+                i[u] += compare(splitters[i[u]+half], *(key + u)) ? half : 0;
+            }
+            n -= half;
+        }
+        for (int u = 0; u < U; ++u) {
+            obkt[u] = i[u] + compare(splitters[i[u]], *(key + u));
+            bktsize[obkt[u]]++;
         }
     }
 
