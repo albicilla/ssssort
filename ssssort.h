@@ -194,8 +194,25 @@ struct Classifier {
         }
     }
 
+    /*
+     * What follows is an ugly SFINAE switch.  Theoretically, the first case
+     * suffices for all types - there's no reason why passing const int& should
+     * be slower than int.  However, g++ emits weird code when `key` is passed
+     * by reference, so force it to dereference `key` for the call. It generates
+     * the same code as when using operator>(key, splitters[i]) instead of
+     * compare(splitters[i], key), which it doesn't if `key` is a reference.
+     */
     /// Push an element down the tree one step. Inlined.
-    constexpr bucket_t step(bucket_t i, const value_type &key, Compare compare) const {
+    template <typename T = value_type,
+              typename std::enable_if_t<!std::is_integral<T>::value>* = nullptr>
+    constexpr bucket_t step(bucket_t i, const T &key, Compare compare) const {
+        __assume(i > 0);
+        return 2*i + compare(splitters[i], key);
+    }
+
+    template <typename T = value_type,
+              typename std::enable_if_t<std::is_integral<T>::value>* = nullptr>
+    constexpr bucket_t step(bucket_t i, const T key, Compare compare) const {
         __assume(i > 0);
         return 2*i + compare(splitters[i], key);
     }
