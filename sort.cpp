@@ -68,11 +68,10 @@ int main(int argc, char *argv[]) {
         stat_stream->open(stat_file);
     }
 
-    auto random_gen = [](auto data, size_t size){
-        using T = std::remove_reference_t<decltype(*data)>;
+    auto random_gen = [](data_t* data, size_t size){
         std::mt19937 rng{ std::random_device{}() };
         for (size_t i = 0; i < size; ++i) {
-            data[i] = static_cast<T>(rng());
+            data[i] = static_cast<data_t>(rng());
         }
     };
 
@@ -87,17 +86,16 @@ int main(int argc, char *argv[]) {
 
     // nearly sorted data generator factory
     auto nearly_sorted_gen = [](size_t rfrac) {
-        return [rfrac=rfrac](auto data, size_t size) {
-            using T = std::remove_reference_t<decltype(*data)>;
+        return [rfrac](data_t* data, size_t size) {
             std::mt19937 rng{ std::random_device{}() };
             // fill with sorted data, using entire range of RNG
             size_t factor = static_cast<size_t>(static_cast<double>(rng.max()) / size);
             for (size_t i = 0; i < size; ++i) {
-                data[i] = static_cast<T>(i * factor);
+                data[i] = static_cast<data_t>(i * factor);
             }
             // set 1/rfrac of the items to random values
             for (size_t i = 0; i < size/rfrac; ++i) {
-                data[rng() % size] = static_cast<T>(rng());
+                data[rng() % size] = static_cast<data_t>(rng());
             }
         };
     };
@@ -114,18 +112,17 @@ int main(int argc, char *argv[]) {
 
     // nearly sorted data generator factory
     auto unsorted_tail_gen = [](size_t rfrac) {
-        return [rfrac=rfrac](auto data, size_t size) {
-            using T = std::remove_reference_t<decltype(*data)>;
+        return [rfrac](data_t* data, size_t size) {
             std::mt19937 rng{ std::random_device{}() };
             // fill with sorted data, using entire range of RNG
             size_t ordered_max = size - (size / rfrac);
             size_t factor = static_cast<size_t>(static_cast<double>(rng.max()) / ordered_max);
             for (size_t i = 0; i < ordered_max; ++i) {
-                data[i] = static_cast<T>(i * factor);
+                data[i] = static_cast<data_t>(i * factor);
             }
             // set 1/rfrac of the items to random values
             for (size_t i = ordered_max; i < size; ++i) {
-                data[i] = static_cast<T>(rng());
+                data[i] = static_cast<data_t>(rng());
             }
         };
     };
@@ -136,32 +133,29 @@ int main(int argc, char *argv[]) {
                                 outer_its, inner_its, stat_stream);
 
 
-    benchmark_generator<data_t>([](auto data, size_t size){
-            using T = std::remove_reference_t<decltype(*data)>;
+    benchmark_generator<data_t>([](data_t* data, size_t size){
             for (size_t i = 0; i < size; ++i) {
-                data[i] = static_cast<T>(i);
+                data[i] = static_cast<data_t>(i);
             }
         }, "sorted", outer_its, inner_its, stat_stream, true);
 
 
-    benchmark_generator<data_t>([](auto data, size_t size){
-            using T = std::remove_reference_t<decltype(*data)>;
+    benchmark_generator<data_t>([](data_t* data, size_t size){
             for (size_t i = 0; i < size; ++i) {
-                data[i] = static_cast<T>(size - i);
+                data[i] = static_cast<data_t>(size - i);
             }
         }, "reverse", outer_its, inner_its, stat_stream, true);
 
 
     // Benchmark due to Armin Weiß at Universität Stuttgart
-    benchmark_generator<data_t>([](auto data, size_t size) {
-            using T = std::remove_reference_t<decltype(*data)>;
+    benchmark_generator<data_t>([](data_t* data, size_t size) {
             size_t flogn = 0, s = size;
             while (s >>= 1) ++flogn; // floor(log2(n))
 
             for (size_t i = 0; i < size; ++i) {
                 size_t j = i;
                 j *= j; j *= j; j *= j; j *= j;
-                data[i] = static_cast<T>(j % flogn);
+                data[i] = static_cast<data_t>(j % flogn);
             }
         }, "many-dupes", outer_its, inner_its, stat_stream, true);
 
@@ -172,9 +166,7 @@ int main(int argc, char *argv[]) {
      * spikes and lots of elements around them. Thus the buckets aren't
      * all-equal, and without a break on big buckets, it would recurse a lot.
      */
-    benchmark_generator<data_t>([](auto data, size_t size){
-            using T = std::remove_reference_t<decltype(*data)>;
-
+    benchmark_generator<data_t>([](data_t* data, size_t size){
             uint64_t prev_pow_2 = 1;
             while (2 * prev_pow_2 <= size) { prev_pow_2 *= 2; }
             const size_t offset_zw = prev_pow_2 / 2;
@@ -182,13 +174,13 @@ int main(int argc, char *argv[]) {
             for (size_t i = 0; i < size; i++) {
                 uint64_t temp = (i*i) % prev_pow_2;
                 temp = (temp*temp) % prev_pow_2;
-                data[i] = static_cast<T>(
+                data[i] = static_cast<data_t>(
                     (offset_zw + temp*temp) % prev_pow_2);
             }
         }, "few-spikes-with-noise", outer_its, inner_its, stat_stream, true);
 
 
-    benchmark_generator<data_t>([](auto data, size_t size){
+    benchmark_generator<data_t>([](data_t* data, size_t size){
             for (size_t i = 0; i < size; ++i) {
                 data[i] = 1;
             }

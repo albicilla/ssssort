@@ -44,6 +44,20 @@
 // Compiler hints about invariants, inspired by ICC's __assume()
 #define __assume(cond) ({ if (!(cond)) __builtin_unreachable(); })
 
+// C++11 compatibility
+#if  __cplusplus < 201402L
+//
+namespace std {
+// std::make_unique for arrays of unknown bound
+template<typename T>
+inline unique_ptr<T> make_unique(size_t size) {
+    using scalar_t = typename remove_extent<T>::type;
+    return unique_ptr<T>(new scalar_t[size]());
+}
+}
+#endif
+
+
 namespace ssssort {
 
 /**

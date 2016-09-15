@@ -220,7 +220,7 @@ void benchmark_generator(Generator generator, const std::string &name,
                          std::ofstream *stat_stream,
                          bool deterministic_gen = false,
                          const size_t max_log_size = 27) {
-    auto wrapped_generator = [generator](auto data, size_t size) {
+    auto wrapped_generator = [generator](T* data, size_t size) {
         generator(data, size);
         return size;
     };
