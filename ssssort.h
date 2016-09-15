@@ -55,6 +55,20 @@ inline unique_ptr<T> make_unique(size_t size) {
     using scalar_t = typename remove_extent<T>::type;
     return unique_ptr<T>(new scalar_t[size]());
 }
+
+template <>
+struct less<void> {
+    template <typename T>
+    bool operator()(const T& x, const T& y) const {
+        return x < y;
+    }
+};
+
+template <typename T>
+using result_of_t = typename result_of<T>::type;
+
+template <bool B, typename T = void>
+using enable_if_t = typename enable_if<B, T>::type;
 }
 #endif
 
@@ -320,7 +334,7 @@ void stl_sort(Iterator begin, Iterator end, Compare compare) {
 }
 
 template <typename Iterator>
-void stl_sort(Iterator begin, Iterator end, std::less<>) {
+void stl_sort(Iterator begin, Iterator end, std::less<void>) {
     std::sort(begin, end);
 }
 
@@ -408,7 +422,7 @@ void ssssort_int(InputIterator begin, InputIterator end,
  * Uses <= 2*(end-begin)*sizeof(value_type) bytes of additional memory.
  */
 template <typename InputIterator, typename OutputIterator,
-          typename Compare = std::less<>>
+          typename Compare = std::less<void>>
 void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin, Compare compare = {}) {
     using value_type = typename std::iterator_traits<InputIterator>::value_type;
     static_assert(std::is_convertible<bool, std::result_of_t<Compare(value_type, value_type)>>::value,
@@ -432,7 +446,7 @@ void ssssort(InputIterator begin, InputIterator end, OutputIterator out_begin, C
  *
  * Uses <= 3*(end-begin)*sizeof(value_type) bytes of additional memory
  */
-template <typename Iterator, typename Compare = std::less<>>
+template <typename Iterator, typename Compare = std::less<void>>
 void ssssort(Iterator begin, Iterator end, Compare compare = {}) {
     using value_type = typename std::iterator_traits<Iterator>::value_type;
     static_assert(std::is_convertible<bool, std::result_of_t<Compare(value_type, value_type)>>::value,
