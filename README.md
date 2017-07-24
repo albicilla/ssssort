@@ -9,6 +9,11 @@ uses quite a bit of additional memory (up to 2-3x input size).
 This means that it's not applicable in all situations, but when
 it is, it's pretty quick!
 
+You might also be interested in [IPS⁴o](https://github.com/SaschaWitt/ips4o)
+("In-Place Super Scalar Sample Sort"), which mitigates the space issue and was
+developed by some of my colleagues. It's pretty great. You should probably use
+it instead, unless you want to compare something to Super Scalar Sample Sort :)
+
 ## Benchmarks
 
 We performed some tests with sorting integers and compared Super Scalar Sample
