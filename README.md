@@ -18,7 +18,7 @@ it instead, unless you want to compare something to Super Scalar Sample Sort :)
 
 We performed some tests with sorting integers and compared Super Scalar Sample
 Sort to `std::sort`. Most notably, when sorting random integers, our
-implementation ran inn 50 to 65% of the time taken by `std::sort`! The plot below
+implementation ran in 50 to 65% of the time taken by `std::sort`! The plot below
 shows the time divided by `n log(n)`, where `n` is the input size. We chose this
 normalization because that's the lower bound on comparison-based sorting you may
 remember from your algorithms class.  Thus the plot shows the time spent per
