@@ -2,17 +2,16 @@
 
 [Super Scalar Sample
 Sort](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.72.366&rep=rep1&type=pdf)
-is a sorting algorithm optimized for modern hardware.  This is an
+is a sorting algorithm optimized for modern-ish hardware.  This is an
 implementation in C++14.  It is faster than `std::sort` in many
 cases, often only half to two thirds of the time.  However, ssssort
 uses quite a bit of additional memory (up to 2-3x input size).
 This means that it's not applicable in all situations, but when
 it is, it's pretty quick!
 
-You might also be interested in [IPS⁴o](https://github.com/SaschaWitt/ips4o)
-("In-Place Super Scalar Sample Sort"), which mitigates the space issue and was
-developed by some of my colleagues. It's pretty great. You should probably use
-it instead, unless you want to compare something to Super Scalar Sample Sort :)
+**But you shouldn't use this code** because there are even quicker methods around.  In particular, [IPS⁴o](https://github.com/ips4o/ips4o) outperforms this code almost all of the time (benchmarks can be found in [the paper](https://arxiv.org/pdf/2009.13569.pdf), which is freely available) *and* doesn't have as much memory overhead.  You should go and use IPS⁴o instead, and disregard this repository.  Its main purpose is to serve as an implementation of Super Scalar Sample Sort for those wo want to compare their sorter to SSSS specifically.
+
+### tl;dr: use [IPS⁴o](https://github.com/ips4o/ips4o) instead of this code if you want a fast sorting algorithm
 
 ## Benchmarks
 
